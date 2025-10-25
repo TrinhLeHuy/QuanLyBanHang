@@ -48,7 +48,7 @@ Chạy lệnh SQL sau để tạo database:
 
 ```sql
 CREATE DATABASE QuanLyBanHang CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
-
+```
 3️⃣ Cập nhật chuỗi kết nối
 "ConnectionStrings": {
   "DefaultConnection": "server=localhost;port=3306;database=QuanLyBanHang;user=root;password="
@@ -96,3 +96,4 @@ git checkout -b feature/add-product-ui
 Trịnh Lê Huy
 📧 Email: huytrinh.22032004@gmail.com
 📂 GitHub: @TrinhLeHuy
+
