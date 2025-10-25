@@ -50,21 +50,26 @@ Chạy lệnh SQL sau để tạo database:
 CREATE DATABASE QuanLyBanHang CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
 ```
 3️⃣ Cập nhật chuỗi kết nối
+
 "ConnectionStrings": {
   "DefaultConnection": "server=localhost;port=3306;database=QuanLyBanHang;user=root;password="
 }
 4️⃣ Chạy migration (tạo bảng tự động)
+
 D:\.Net\QuanLyBanHang\QuanLyBanHang.Web
 dotnet tool install --global dotnet-ef
 dotnet ef migrations add InitialCreate --project ../QuanLyBanHang.Data
 dotnet ef database update --project ../QuanLyBanHang.Data
 Applying migration 'InitialCreate'
 Done.
+
 5️⃣ Chạy ứng dụng web
+
 dotnet run
 https://localhost:5001
 hoặc
 http://localhost:5000
+
 🧱 Các bảng trong cơ sở dữ liệu
 
 Customers — Thông tin khách hàng
