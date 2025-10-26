@@ -1,0 +1,15 @@
+@model QuanLyBanHang.Data.Entities.Order
+
+<h2>Thêm đơn hàng mới</h2>
+
+<form asp-action="Create" method="post">
+    <div class="form-group">
+        <label>Khách hàng</label>
+        <select asp-for="CustomerId" class="form-control" asp-items="@(new SelectList(ViewBag.Customers, "CustomerId", "Name"))"></select>
+    </div>
+    <div class="form-group">
+        <label>Nhân viên phụ trách</label>
+        <select asp-for="Id" class="form-control" asp-items="@(new SelectList(ViewBag.Employees, "EmployeeId", "Name"))"></select>
+    </div>
+    <button type="submit" class="btn btn-success">Tạo đơn hàng</button>
+</form>

@@ -99,6 +99,9 @@ namespace QuanLyBanHang.Data.Migrations
                     b.Property<int>("CustomerId")
                         .HasColumnType("int");
 
+                    b.Property<int>("EmployeeId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("OrderDate")
                         .HasColumnType("datetime(6)");
 
@@ -108,6 +111,8 @@ namespace QuanLyBanHang.Data.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CustomerId");
+
+                    b.HasIndex("EmployeeId");
 
                     b.ToTable("Orders");
                 });
@@ -202,7 +207,15 @@ namespace QuanLyBanHang.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("QuanLyBanHang.Data.Entities.Employee", "Employee")
+                        .WithMany()
+                        .HasForeignKey("EmployeeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Customer");
+
+                    b.Navigation("Employee");
                 });
 
             modelBuilder.Entity("QuanLyBanHang.Data.Entities.OrderDetail", b =>

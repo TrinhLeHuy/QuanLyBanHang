@@ -1,0 +1,31 @@
+@model IEnumerable<QuanLyBanHang.Data.Entities.Product>
+
+<h2>Danh sách sản phẩm</h2>
+<a href="/Product/Create" class="btn btn-primary mb-3">Thêm sản phẩm</a>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Tên</th>
+            <th>Giá</th>
+            <th>Số lượng</th>
+            <th>Hành động</th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.Id</td>
+            <td>@item.Name</td>
+            <td>@item.Price</td>
+            <td>@item.Stock</td>
+            <td>
+                <a href="/Product/Edit/@item.Id" class="btn btn-warning">Sửa</a>
+                <a href="/Product/Delete/@item.Id" class="btn btn-danger">Xóa</a>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
