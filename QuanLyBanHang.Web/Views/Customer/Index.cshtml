@@ -1,33 +1,38 @@
 @model IEnumerable<QuanLyBanHang.Data.Entities.Customer>
+@{
+    ViewData["Title"] = "Danh sách khách hàng";
+}
 
-<h2>Danh sách khách hàng</h2>
-<a href="/Customer/Create" class="btn btn-primary mb-3">Thêm khách hàng</a>
+<h2>@ViewData["Title"]</h2>
 
-<table class="table table-bordered">
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>Tên</th>
-            <th>Email</th>
-            <th>Điện thoại</th>
-            <th>Địa chỉ</th>
-            <th>Hành động</th>
-        </tr>
-    </thead>
-    <tbody>
+<form method="get" asp-action="Index">
+    <input type="text" name="keyword" value="@ViewBag.Keyword" placeholder="Tìm kiếm khách hàng..." />
+    <button type="submit">Tìm</button>
+    <a asp-action="Create">+ Thêm mới</a>
+</form>
+
+<table border="1" cellpadding="5">
+    <tr>
+        <th>ID</th>
+        <th>Tên</th>
+        <th>Email</th>
+        <th>Số điện thoại</th>
+        <th>Địa chỉ</th>
+        <th>Hành động</th>
+    </tr>
+
     @foreach (var c in Model)
     {
         <tr>
-            <td>@c.Id</td>
-            <td>@c.Name</td>
+            <td>@c.CustomerId</td>
+            <td>@c.FullName</td>
             <td>@c.Email</td>
             <td>@c.Phone</td>
             <td>@c.Address</td>
             <td>
-                <a href="/Customer/Edit/@c.Id" class="btn btn-warning">Sửa</a>
-                <a href="/Customer/Delete/@c.Id" class="btn btn-danger">Xóa</a>
+                <a asp-action="Edit" asp-route-id="@c.CustomerId">Sửa</a> |
+                <a asp-action="Delete" asp-route-id="@c.CustomerId" onclick="return confirm('Xóa khách hàng này?')">Xóa</a>
             </td>
         </tr>
     }
-    </tbody>
 </table>

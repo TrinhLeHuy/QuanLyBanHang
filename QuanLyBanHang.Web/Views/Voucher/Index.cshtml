@@ -1,0 +1,48 @@
+@model IEnumerable<QuanLyBanHang.Data.Entities.Voucher>
+
+<h2>Quản Lý Voucher</h2>
+
+<form method="get" class="mb-3">
+    <input type="text" name="search" placeholder="Tìm mã hoặc mô tả..." class="form-control d-inline w-25" />
+    <select name="active" class="form-select d-inline w-25">
+        <option value="">-- Tất cả --</option>
+        <option value="true">Đang hoạt động</option>
+        <option value="false">Ngừng hoạt động</option>
+    </select>
+    <button type="submit" class="btn btn-primary">Lọc</button>
+</form>
+
+<a asp-action="Create" class="btn btn-success mb-3">Thêm Voucher Mới</a>
+
+<table class="table table-bordered">
+    <thead class="table-light">
+        <tr>
+            <th>Mã</th>
+            <th>Mô tả</th>
+            <th>Giảm (%)</th>
+            <th>Thời gian</th>
+            <th>Số lượng</th>
+            <th>Đã dùng</th>
+            <th>Trạng thái</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var v in Model)
+    {
+        <tr>
+            <td>@v.Code</td>
+            <td>@v.Description</td>
+            <td>@v.DiscountPercent</td>
+            <td>@v.StartDate.ToShortDateString() - @v.EndDate.ToShortDateString()</td>
+            <td>@v.Quantity</td>
+            <td>@v.UsedCount</td>
+            <td>@(v.IsActive ? "Hoạt động" : "Ngừng")</td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@v.Id" class="btn btn-warning btn-sm">Sửa</a>
+                <a asp-action="Delete" asp-route-id="@v.Id" class="btn btn-danger btn-sm">Xóa</a>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>

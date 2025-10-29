@@ -1,0 +1,54 @@
+@model QuanLyBanHang.Data.Entities.Voucher
+@{
+    ViewData["Title"] = "Thêm Voucher";
+}
+
+<h2>Thêm Voucher</h2>
+<hr />
+
+<form asp-action="Create" method="post" class="row g-3">
+    <div class="col-md-6">
+        <label asp-for="Code" class="form-label"></label>
+        <input asp-for="Code" class="form-control" />
+        <span asp-validation-for="Code" class="text-danger"></span>
+    </div>
+
+    <div class="col-md-6">
+        <label asp-for="DiscountPercent" class="form-label"></label>
+        <input asp-for="DiscountPercent" class="form-control" />
+    </div>
+
+    <div class="col-md-12">
+        <label asp-for="Description" class="form-label"></label>
+        <textarea asp-for="Description" class="form-control"></textarea>
+    </div>
+
+    <div class="col-md-6">
+        <label asp-for="StartDate" class="form-label"></label>
+        <input asp-for="StartDate" class="form-control" type="date" />
+    </div>
+
+    <div class="col-md-6">
+        <label asp-for="EndDate" class="form-label"></label>
+        <input asp-for="EndDate" class="form-control" type="date" />
+    </div>
+
+    <div class="col-md-6">
+        <label asp-for="Quantity" class="form-label"></label>
+        <input asp-for="Quantity" class="form-control" />
+    </div>
+
+    <div class="col-md-6">
+        <label asp-for="IsActive" class="form-label"></label>
+        <input asp-for="IsActive" class="form-check-input" type="checkbox" />
+    </div>
+
+    <div class="col-12">
+        <button type="submit" class="btn btn-success">Lưu</button>
+        <a asp-action="Index" class="btn btn-secondary">Hủy</a>
+    </div>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

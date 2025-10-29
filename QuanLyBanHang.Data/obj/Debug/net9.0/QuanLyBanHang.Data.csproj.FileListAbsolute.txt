@@ -12,3 +12,4 @@ D:\.Net\QuanLyBanHang\QuanLyBanHang.Data\obj\Debug\net9.0\refint\QuanLyBanHang.D
 D:\.Net\QuanLyBanHang\QuanLyBanHang.Data\obj\Debug\net9.0\QuanLyBanHang.Data.pdb
 D:\.Net\QuanLyBanHang\QuanLyBanHang.Data\obj\Debug\net9.0\QuanLyBanHang.Data.genruntimeconfig.cache
 D:\.Net\QuanLyBanHang\QuanLyBanHang.Data\obj\Debug\net9.0\ref\QuanLyBanHang.Data.dll
+D:\.Net\QuanLyBanHang\QuanLyBanHang.Data\obj\Debug\net9.0\QuanLyBanHang.Data.sourcelink.json

@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("QuanLyBanHang.Data")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9f8d6867aeddacae1878234a87779e2d8df2ed20")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6c46aa105fea500f7a24df6889fd9cf351b0fae4")]
 [assembly: System.Reflection.AssemblyProductAttribute("QuanLyBanHang.Data")]
 [assembly: System.Reflection.AssemblyTitleAttribute("QuanLyBanHang.Data")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -1,24 +1,28 @@
 using Microsoft.AspNetCore.Mvc;
-using QuanLyBanHang.Data.DataContext;
 using QuanLyBanHang.Data.Entities;
+using QuanLyBanHang.Data.Repositories;
 
 namespace QuanLyBanHang.Web.Controllers
 {
     public class CustomerController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly CustomerRepository _customerRepository;
 
-        public CustomerController(ApplicationDbContext context)
+        public CustomerController(CustomerRepository customerRepository)
         {
-            _context = context;
+            _customerRepository = customerRepository;
         }
 
-        public IActionResult Index()
+        // Danh sách khách hàng
+        public IActionResult Index(string keyword = "")
         {
-            var customers = _context.Customers.ToList();
+            var customers = _customerRepository.GetAll(keyword);
+            ViewBag.Keyword = keyword;
             return View(customers);
         }
 
+        // Tạo khách hàng mới
+        [HttpGet]
         public IActionResult Create()
         {
             return View();
@@ -29,17 +33,20 @@ namespace QuanLyBanHang.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Customers.Add(customer);
-                _context.SaveChanges();
+                _customerRepository.Add(customer);
                 return RedirectToAction("Index");
             }
             return View(customer);
         }
 
+        // Chỉnh sửa khách hàng
+        [HttpGet]
         public IActionResult Edit(int id)
         {
-            var customer = _context.Customers.Find(id);
-            if (customer == null) return NotFound();
+            var customer = _customerRepository.GetById(id);
+            if (customer == null)
+                return NotFound();
+
             return View(customer);
         }
 
@@ -48,20 +55,16 @@ namespace QuanLyBanHang.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Customers.Update(customer);
-                _context.SaveChanges();
+                _customerRepository.Update(customer);
                 return RedirectToAction("Index");
             }
             return View(customer);
         }
 
+        // Xóa khách hàng
         public IActionResult Delete(int id)
         {
-            var customer = _context.Customers.Find(id);
-            if (customer == null) return NotFound();
-
-            _context.Customers.Remove(customer);
-            _context.SaveChanges();
+            _customerRepository.Delete(id);
             return RedirectToAction("Index");
         }
     }

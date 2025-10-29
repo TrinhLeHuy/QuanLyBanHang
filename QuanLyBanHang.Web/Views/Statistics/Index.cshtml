@@ -1,0 +1,29 @@
+@{
+    ViewData["Title"] = "Thống kê doanh thu - Tổng quan";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<form method="get" asp-action="Index" class="mb-3">
+    <label>Từ ngày:</label>
+    <input type="date" name="startDate" value="@ViewBag.StartDate" />
+    <label>Đến ngày:</label>
+    <input type="date" name="endDate" value="@ViewBag.EndDate" />
+    <button type="submit">Thống kê</button>
+</form>
+
+<div>
+    <h4>Tổng kết</h4>
+    <ul>
+        <li><strong>Tổng doanh thu:</strong> @string.Format("{0:N0}", ViewBag.TotalRevenue ?? 0) VNĐ</li>
+        <li><strong>Tổng đơn hàng:</strong> @ViewBag.TotalOrders</li>
+        <li><strong>Tổng sản phẩm bán ra:</strong> @ViewBag.TotalProducts</li>
+    </ul>
+</div>
+
+<hr />
+<p>
+    <a asp-action="RevenueByDate">Doanh thu theo ngày</a> |
+    <a asp-action="RevenueByMonth">Doanh thu theo tháng</a> |
+    <a asp-action="RevenueByEmployee">Doanh thu theo nhân viên</a>
+</p>

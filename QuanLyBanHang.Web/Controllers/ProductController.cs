@@ -1,9 +1,12 @@
 using Microsoft.AspNetCore.Mvc;
 using QuanLyBanHang.Data.DataContext;
 using QuanLyBanHang.Data.Entities;
+using QuanLyBanHang.Web.Attributes;
+using System.Linq;
 
 namespace QuanLyBanHang.Web.Controllers
 {
+    [AdminAuthorize] // ✅ Chỉ Admin mới được vào toàn bộ ProductController
     public class ProductController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -21,6 +24,7 @@ namespace QuanLyBanHang.Web.Controllers
 
         public IActionResult Create()
         {
+            ViewBag.Categories = _context.Categories.ToList();
             return View();
         }
 
@@ -31,8 +35,10 @@ namespace QuanLyBanHang.Web.Controllers
             {
                 _context.Products.Add(product);
                 _context.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction(nameof(Index));
             }
+
+            ViewBag.Categories = _context.Categories.ToList();
             return View(product);
         }
 
@@ -40,6 +46,8 @@ namespace QuanLyBanHang.Web.Controllers
         {
             var product = _context.Products.Find(id);
             if (product == null) return NotFound();
+
+            ViewBag.Categories = _context.Categories.ToList();
             return View(product);
         }
 
@@ -50,19 +58,22 @@ namespace QuanLyBanHang.Web.Controllers
             {
                 _context.Products.Update(product);
                 _context.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction(nameof(Index));
             }
+
+            ViewBag.Categories = _context.Categories.ToList();
             return View(product);
         }
 
         public IActionResult Delete(int id)
         {
             var product = _context.Products.Find(id);
-            if (product == null) return NotFound();
-
-            _context.Products.Remove(product);
-            _context.SaveChanges();
-            return RedirectToAction("Index");
+            if (product != null)
+            {
+                _context.Products.Remove(product);
+                _context.SaveChanges();
+            }
+            return RedirectToAction(nameof(Index));
         }
     }
 }

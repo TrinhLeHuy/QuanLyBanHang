@@ -1,0 +1,126 @@
+@model QuanLyBanHang.Web.Controllers.POSViewModel
+@{
+    ViewData["Title"] = "Thanh toán tại quầy";
+    var products = ViewBag.Products as List<QuanLyBanHang.Data.Entities.Product>;
+    var customers = ViewBag.Customers as List<QuanLyBanHang.Data.Entities.Customer>;
+    var employees = ViewBag.Employees as List<QuanLyBanHang.Data.Entities.Employee>;
+}
+
+<h2 class="mb-4">💰 Thanh toán tại quầy (POS)</h2>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+}
+
+<form asp-action="Checkout" method="post">
+    <div class="row mb-3">
+        <div class="col-md-4">
+            <label>Khách hàng</label>
+            <select asp-for="CustomerId" class="form-select"
+                    asp-items="@(new SelectList(customers, "Id", "Name"))"></select>
+        </div>
+        <div class="col-md-4">
+            <label>Nhân viên</label>
+            <select asp-for="EmployeeId" class="form-select"
+                    asp-items="@(new SelectList(employees, "Id", "Name"))"></select>
+        </div>
+    </div>
+
+    <h5>Danh sách sản phẩm</h5>
+    <table class="table table-bordered" id="posTable">
+        <thead class="table-light">
+            <tr>
+                <th>Sản phẩm</th>
+                <th>Đơn giá</th>
+                <th>Số lượng</th>
+                <th>Thành tiền</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody id="posBody"></tbody>
+    </table>
+
+    <div class="mb-3">
+        <label>Thêm sản phẩm</label>
+        <select id="productSelect" class="form-select">
+            <option value="">-- Chọn sản phẩm --</option>
+            @foreach (var p in products)
+            {
+                <option value="@p.Id" data-price="@p.Price">@p.Name</option>
+            }
+        </select>
+    </div>
+
+    <div class="text-end">
+        <h4>Tổng tiền: <span id="totalAmount">0</span> ₫</h4>
+    </div>
+
+    <input type="hidden" name="ItemsJson" id="ItemsJson" />
+
+    <button type="submit" class="btn btn-success mt-3">Xác nhận thanh toán</button>
+</form>
+
+@section Scripts {
+<script>
+    let items = [];
+
+    const productSelect = document.getElementById("productSelect");
+    const posBody = document.getElementById("posBody");
+    const totalAmount = document.getElementById("totalAmount");
+    const itemsJson = document.getElementById("ItemsJson");
+
+    productSelect.addEventListener("change", function () {
+        const selected = this.options[this.selectedIndex];
+        const id = selected.value;
+        const name = selected.text;
+        const price = parseFloat(selected.getAttribute("data-price"));
+
+        if (!id) return;
+
+        // Kiểm tra nếu sản phẩm đã có trong giỏ
+        let existing = items.find(x => x.productId === parseInt(id));
+        if (existing) {
+            existing.quantity++;
+        } else {
+            items.push({ productId: parseInt(id), productName: name, quantity: 1, unitPrice: price });
+        }
+
+        renderItems();
+        this.value = "";
+    });
+
+    function renderItems() {
+        posBody.innerHTML = "";
+        let total = 0;
+
+        items.forEach((item, i) => {
+            const subtotal = item.quantity * item.unitPrice;
+            total += subtotal;
+
+            posBody.innerHTML += `
+                <tr>
+                    <td>${item.productName}</td>
+                    <td>${item.unitPrice.toLocaleString()}</td>
+                    <td><input type="number" value="${item.quantity}" min="1" class="form-control"
+                        onchange="updateQty(${i}, this.value)" /></td>
+                    <td>${subtotal.toLocaleString()}</td>
+                    <td><button type="button" class="btn btn-danger btn-sm" onclick="removeItem(${i})">X</button></td>
+                </tr>`;
+        });
+
+        totalAmount.textContent = total.toLocaleString();
+        itemsJson.value = JSON.stringify(items);
+    }
+
+    function updateQty(index, qty) {
+        items[index].quantity = parseInt(qty);
+        renderItems();
+    }
+
+    function removeItem(index) {
+        items.splice(index, 1);
+        renderItems();
+    }
+</script>
+}

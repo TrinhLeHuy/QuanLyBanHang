@@ -1,0 +1,18 @@
+@model QuanLyBanHang.Data.Entities.Categories
+@{
+    ViewData["Title"] = "Thêm danh mục";
+}
+<h2>Thêm danh mục mới</h2>
+<hr />
+<form asp-action="Create" method="post">
+    <div class="mb-3">
+        <label>Tên danh mục</label>
+        <input asp-for="Name" class="form-control" required />
+    </div>
+    <div class="mb-3">
+        <label>Mô tả</label>
+        <textarea asp-for="Description" class="form-control"></textarea>
+    </div>
+    <button type="submit" class="btn btn-success">Lưu</button>
+    <a asp-action="Index" class="btn btn-secondary">Hủy</a>
+</form>

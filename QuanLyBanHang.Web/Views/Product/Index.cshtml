@@ -1,31 +1,37 @@
 @model IEnumerable<QuanLyBanHang.Data.Entities.Product>
 
 <h2>Danh sách sản phẩm</h2>
-<a href="/Product/Create" class="btn btn-primary mb-3">Thêm sản phẩm</a>
 
-<table class="table table-bordered">
+<form method="get" asp-action="Index">
+    <input type="text" name="search" value="@ViewBag.Search" placeholder="Tìm kiếm..." />
+    <button type="submit">Tìm</button>
+</form>
+
+<a asp-action="Create">+ Thêm sản phẩm</a>
+
+<table>
     <thead>
         <tr>
-            <th>ID</th>
-            <th>Tên</th>
+            <th>Tên sản phẩm</th>
             <th>Giá</th>
-            <th>Số lượng</th>
-            <th>Hành động</th>
+            <th>Tồn kho</th>
+            <th>Danh mục</th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>@item.Id</td>
-            <td>@item.Name</td>
-            <td>@item.Price</td>
-            <td>@item.Stock</td>
-            <td>
-                <a href="/Product/Edit/@item.Id" class="btn btn-warning">Sửa</a>
-                <a href="/Product/Delete/@item.Id" class="btn btn-danger">Xóa</a>
-            </td>
-        </tr>
-    }
+        @foreach (var p in Model)
+        {
+            <tr>
+                <td>@p.Name</td>
+                <td>@p.Price</td>
+                <td>@p.Stock</td>
+                <td>@p.Categories</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@p.Id">Sửa</a> |
+                    <a asp-action="Delete" asp-route-id="@p.Id" onclick="return confirm('Xóa sản phẩm này?')">Xóa</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
