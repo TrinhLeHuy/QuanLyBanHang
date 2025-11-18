@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using QuanLyBanHang.Data.DataContext;
 using QuanLyBanHang.Data.Entities;
@@ -18,27 +17,32 @@ namespace QuanLyBanHang.Web.Controllers
             _context = context;
         }
 
-        // ------------------ INDEX (Giao diện POS chính) ------------------
+        // ===================== Giao diện POS =====================
         public IActionResult Index()
         {
-            ViewBag.Products = _context.Products.ToList();
-            ViewBag.Customers = _context.Customers.ToList();
-            ViewBag.Employees = _context.Employees.ToList();
-
+            LoadViewBags();
             return View(new POSViewModel());
         }
 
-        // ------------------ Thanh toán ------------------
+        // ===================== Thanh toán =====================
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Checkout(POSViewModel model)
+        public IActionResult Checkout(POSViewModel model, string ItemsJson)
         {
-            if (model == null || model.Items == null || !model.Items.Any())
+            if (string.IsNullOrEmpty(ItemsJson))
+            {
+                ModelState.AddModelError("", "Chưa có sản phẩm nào trong đơn.");
+                LoadViewBags();
+                return View("Index", model);
+            }
+
+            // Chuyển JSON sang danh sách item
+            model.Items = System.Text.Json.JsonSerializer.Deserialize<List<POSItem>>(ItemsJson);
+
+            if (model.Items == null || !model.Items.Any())
             {
                 ModelState.AddModelError("", "Vui lòng chọn ít nhất một sản phẩm.");
-                ViewBag.Products = _context.Products.ToList();
-                ViewBag.Customers = _context.Customers.ToList();
-                ViewBag.Employees = _context.Employees.ToList();
+                LoadViewBags();
                 return View("Index", model);
             }
 
@@ -55,19 +59,16 @@ namespace QuanLyBanHang.Web.Controllers
             foreach (var item in model.Items)
             {
                 var product = _context.Products.Find(item.ProductId);
+
                 if (product == null || product.Stock < item.Quantity)
                 {
-                    ModelState.AddModelError("", $"Sản phẩm '{item.ProductName}' không đủ hàng tồn.");
-                    ViewBag.Products = _context.Products.ToList();
-                    ViewBag.Customers = _context.Customers.ToList();
-                    ViewBag.Employees = _context.Employees.ToList();
+                    ModelState.AddModelError("", $"Sản phẩm '{item.ProductName}' không đủ hàng tồn kho.");
+                    LoadViewBags();
                     return View("Index", model);
                 }
 
-                // Trừ tồn kho
                 product.Stock -= item.Quantity;
 
-                // Thêm vào chi tiết đơn hàng
                 order.OrderDetails.Add(new OrderDetail
                 {
                     ProductId = item.ProductId,
@@ -79,12 +80,20 @@ namespace QuanLyBanHang.Web.Controllers
             _context.Orders.Add(order);
             _context.SaveChanges();
 
-            TempData["SuccessMessage"] = "Thanh toán thành công! Hóa đơn đã được lưu.";
+            TempData["SuccessMessage"] = "Thanh toán thành công!";
             return RedirectToAction(nameof(Index));
+        }
+
+        // ===================== Load dữ liệu chống NULL =====================
+        private void LoadViewBags()
+        {
+            ViewBag.Products = _context.Products?.ToList() ?? new List<Product>();
+            ViewBag.Customers = _context.Customers?.ToList() ?? new List<Customer>();
+            ViewBag.Employees = _context.Employees?.ToList() ?? new List<Employee>();
         }
     }
 
-    // ------------------ ViewModel cho POS ------------------
+    // ===================== ViewModel =====================
     public class POSViewModel
     {
         public int CustomerId { get; set; }

@@ -217,10 +217,7 @@ namespace QuanLyBanHang.Data.Migrations
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("CategoriesId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("CategoryId")
+                    b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
                     b.Property<string>("Description")
@@ -405,7 +402,9 @@ namespace QuanLyBanHang.Data.Migrations
                 {
                     b.HasOne("QuanLyBanHang.Data.Entities.Categories", "Categories")
                         .WithMany("Products")
-                        .HasForeignKey("CategoryId");
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Categories");
                 });

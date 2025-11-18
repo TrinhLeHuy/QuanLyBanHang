@@ -1,0 +1,79 @@
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<div class="container-fluid">
+    <div class="row">
+
+        <!-- SIDEBAR -->
+        <div class="col-2 bg-dark text-white vh-100 p-3">
+            <h4 class="text-center mb-4">QUẢN LÝ BÁN HÀNG</h4>
+
+            <a asp-controller="Dashboard" asp-action="Index" class="text-white d-block mb-3">🏠 Dashboard</a>
+            <a asp-controller="Home" asp-action="Index" class="text-white d-block mb-3">🏡 Home</a>
+            <a asp-controller="Product" asp-action="Index" class="text-white d-block mb-3">📦 Sản phẩm</a>
+            <a asp-controller="Categories" asp-action="Index" class="text-white d-block mb-3">📂 Danh mục</a>
+            <a asp-controller="Customer" asp-action="Index" class="text-white d-block mb-3">👤 Khách hàng</a>
+            <a asp-controller="Employee" asp-action="Index" class="text-white d-block mb-3">👥 Nhân viên</a>
+            <a asp-controller="Order" asp-action="Index" class="text-white d-block mb-3">🧾 Đơn hàng</a>
+            <a asp-controller="POS" asp-action="Index" class="text-white d-block mb-3">💰 POS (Thanh toán)</a>
+            <a asp-controller="Statistics" asp-action="Index" class="text-white d-block mb-3">� Thống kê</a>
+        </div>
+
+        <!-- CONTENT -->
+        <div class="col-10 p-4">
+            <h2 class="mb-4">📊 Dashboard Tổng Quan</h2>
+
+            <div class="row">
+
+                <div class="col-md-3">
+                    <a asp-controller="Product" asp-action="Index" class="text-decoration-none">
+                        <div class="card text-white bg-primary mb-3">
+                            <div class="card-body">
+                                <h5 class="card-title">Tổng Sản Phẩm</h5>
+                                <p class="card-text">Xem tất cả sản phẩm trong kho</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="col-md-3">
+                    <a asp-controller="Customer" asp-action="Index" class="text-decoration-none">
+                        <div class="card text-white bg-success mb-3">
+                            <div class="card-body">
+                                <h5 class="card-title">Khách Hàng</h5>
+                                <p class="card-text">Quản lý danh sách khách hàng</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="col-md-3">
+                    <a asp-controller="Employee" asp-action="Index" class="text-decoration-none">
+                        <div class="card text-white bg-warning mb-3">
+                            <div class="card-body">
+                                <h5 class="card-title">Nhân Viên</h5>
+                                <p class="card-text">Quản lý nhân viên bán hàng</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="col-md-3">
+                    <a asp-controller="POS" asp-action="Index" class="text-decoration-none">
+                        <div class="card text-white bg-danger mb-3">
+                            <div class="card-body">
+                                <h5 class="card-title">POS</h5>
+                                <p class="card-text">Đi đến màn hình thanh toán</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+            </div>
+
+            <hr />
+            <p>Chọn mục ở thanh bên trái để tiếp tục quản lý.</p>
+        </div>
+    </div>
+</div>

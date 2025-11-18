@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("QuanLyBanHang.Web")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+07b78e34e87fbe5dfa3ce6678036c1c5333a3586")]
 [assembly: System.Reflection.AssemblyProductAttribute("QuanLyBanHang.Web")]
 [assembly: System.Reflection.AssemblyTitleAttribute("QuanLyBanHang.Web")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

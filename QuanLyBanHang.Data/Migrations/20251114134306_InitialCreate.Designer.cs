@@ -12,7 +12,7 @@ using QuanLyBanHang.Data.DataContext;
 namespace QuanLyBanHang.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20251029113516_InitialCreate")]
+    [Migration("20251114134306_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -220,10 +220,7 @@ namespace QuanLyBanHang.Data.Migrations
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("CategoriesId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("CategoryId")
+                    b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
                     b.Property<string>("Description")
@@ -408,7 +405,9 @@ namespace QuanLyBanHang.Data.Migrations
                 {
                     b.HasOne("QuanLyBanHang.Data.Entities.Categories", "Categories")
                         .WithMany("Products")
-                        .HasForeignKey("CategoryId");
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Categories");
                 });

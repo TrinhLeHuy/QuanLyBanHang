@@ -151,8 +151,7 @@ namespace QuanLyBanHang.Data.Migrations
                     Stock = table.Column<int>(type: "int", nullable: false),
                     Description = table.Column<string>(type: "varchar(500)", maxLength: 500, nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    CategoriesId = table.Column<int>(type: "int", nullable: false),
-                    CategoryId = table.Column<int>(type: "int", nullable: true)
+                    CategoryId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -161,7 +160,8 @@ namespace QuanLyBanHang.Data.Migrations
                         name: "FK_Products_Categories_CategoryId",
                         column: x => x.CategoryId,
                         principalTable: "Categories",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
