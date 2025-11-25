@@ -2,23 +2,8 @@
     ViewData["Title"] = "Dashboard";
 }
 
-<div class="container-fluid">
+-+-<div class="container-fluid">
     <div class="row">
-
-        <!-- SIDEBAR -->
-        <div class="col-2 bg-dark text-white vh-100 p-3">
-            <h4 class="text-center mb-4">QUẢN LÝ BÁN HÀNG</h4>
-
-            <a asp-controller="Dashboard" asp-action="Index" class="text-white d-block mb-3">🏠 Dashboard</a>
-            <a asp-controller="Home" asp-action="Index" class="text-white d-block mb-3">🏡 Home</a>
-            <a asp-controller="Product" asp-action="Index" class="text-white d-block mb-3">📦 Sản phẩm</a>
-            <a asp-controller="Categories" asp-action="Index" class="text-white d-block mb-3">📂 Danh mục</a>
-            <a asp-controller="Customer" asp-action="Index" class="text-white d-block mb-3">👤 Khách hàng</a>
-            <a asp-controller="Employee" asp-action="Index" class="text-white d-block mb-3">👥 Nhân viên</a>
-            <a asp-controller="Order" asp-action="Index" class="text-white d-block mb-3">🧾 Đơn hàng</a>
-            <a asp-controller="POS" asp-action="Index" class="text-white d-block mb-3">💰 POS (Thanh toán)</a>
-            <a asp-controller="Statistics" asp-action="Index" class="text-white d-block mb-3">� Thống kê</a>
-        </div>
 
         <!-- CONTENT -->
         <div class="col-10 p-4">
@@ -65,6 +50,16 @@
                             <div class="card-body">
                                 <h5 class="card-title">POS</h5>
                                 <p class="card-text">Đi đến màn hình thanh toán</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-md-3">
+                    <a asp-controller="Voucher" asp-action="Index" class="text-decoration-none">
+                        <div class="card text-white bg-danger mb-3">
+                            <div class="card-body">
+                                <h5 class="card-title">Voucher</h5>
+                                <p class="card-text">Quản lý mã giảm giá</p>
                             </div>
                         </div>
                     </a>

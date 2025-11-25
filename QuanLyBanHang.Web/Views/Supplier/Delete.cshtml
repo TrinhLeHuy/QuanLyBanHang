@@ -1,0 +1,33 @@
+﻿@model QuanLyBanHang.Data.Entities.Supplier
+
+@{
+    ViewData["Title"] = "Xóa Nhà Cung Cấp";
+}
+
+<h2 class="my-3 text-danger">⚠️ Xóa Nhà Cung Cấp</h2>
+
+<div class="alert alert-warning">
+    Bạn có chắc chắn muốn xóa nhà cung cấp sau không?
+</div>
+
+<div class="mb-3">
+    <strong>Mã NCC:</strong> @Model.SupplierId
+</div>
+<div class="mb-3">
+    <strong>Tên nhà cung cấp:</strong> @Model.SupplierName
+</div>
+<div class="mb-3">
+    <strong>Địa chỉ:</strong> @Model.Address
+</div>
+<div class="mb-3">
+    <strong>Điện thoại:</strong> @Model.Phone
+</div>
+<div class="mb-3">
+    <strong>Email:</strong> @Model.Email
+</div>
+
+<form asp-action="Delete" method="post">
+    <input type="hidden" asp-for="SupplierId" />
+    <button type="submit" class="btn btn-danger">Xóa</button>
+    <a asp-action="Index" class="btn btn-secondary">Hủy</a>
+</form>

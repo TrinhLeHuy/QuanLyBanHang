@@ -1,34 +1,44 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 using QuanLyBanHang.Data.DataContext;
 using QuanLyBanHang.Data.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// 🟢 Đăng ký các dịch vụ cần thiết
+// Controllers + Views
 builder.Services.AddControllersWithViews();
 
-// 🟢 Đăng ký Repository
+// Repository
 builder.Services.AddScoped<ProductRepository>();
 builder.Services.AddScoped<CustomerRepository>();
 builder.Services.AddScoped<VoucherRepository>();
 builder.Services.AddScoped<OrderRepository>();
+builder.Services.AddScoped<WarehouseRepository>();
+builder.Services.AddScoped<SupplierRepository>();
+builder.Services.AddScoped<InventoryRepository>();
 
-// 🟢 Thêm Session để lưu thông tin đăng nhập
+// Session
 builder.Services.AddSession();
 builder.Services.AddHttpContextAccessor();
 
-// ✅ Cấu hình MySQL
+// MySQL
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
 
-// ====================================================
+// 🟢 THÊM COOKIE AUTH
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options =>
+    {
+        options.LoginPath = "/Auth/Login";
+        options.LogoutPath = "/Auth/Logout";
+        options.AccessDeniedPath = "/Auth/Login";
+    });
 
 var app = builder.Build();
 
-// ====================================================
-// 🔥 Cấu hình pipeline
-// ====================================================
+// ================================================
+
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
@@ -40,12 +50,14 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-// 🟢 Bắt buộc thêm dòng này TRƯỚC Authorization
+// 🟢 Session phải trước Auth
 app.UseSession();
 
+// 🟢 THÊM DÒNG NÀY
+app.UseAuthentication();
 app.UseAuthorization();
 
-// ✅ Đặt trang đăng nhập là mặc định
+// Default Route
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Auth}/{action=Login}/{id?}");

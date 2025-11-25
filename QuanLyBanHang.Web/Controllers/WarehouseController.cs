@@ -20,7 +20,6 @@ namespace QuanLyBanHang.Web.Controllers
             return View(warehouses);
         }
 
-        // Thêm mới
         [HttpGet]
         public IActionResult Create()
         {
@@ -28,15 +27,32 @@ namespace QuanLyBanHang.Web.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Create(Warehouse warehouse)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
+                return View(warehouse);
+
+            // Kiểm tra trùng: Name OR Location OR Phone
+            var isDuplicate = _context.Warehouses.Any(w =>
+                w.WarehouseName.Trim().ToLower() == warehouse.WarehouseName.Trim().ToLower()
+                || w.Location.Trim().ToLower() == warehouse.Location.Trim().ToLower()
+                || w.Phone.Trim() == warehouse.Phone.Trim()
+            );
+
+            if (isDuplicate)
             {
-                _context.Warehouses.Add(warehouse);
-                _context.SaveChanges();
-                return RedirectToAction(nameof(Index));
+                ModelState.AddModelError(string.Empty,
+                    "Kho hàng này đã tồn tại (trùng tên, địa chỉ hoặc số điện thoại).");
+
+                return View(warehouse);
             }
-            return View(warehouse);
+
+            // Nếu không trùng → lưu
+            _context.Warehouses.Add(warehouse);
+            _context.SaveChanges();
+
+            return RedirectToAction(nameof(Index));
         }
 
         // Sửa kho

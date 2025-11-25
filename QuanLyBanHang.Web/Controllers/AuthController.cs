@@ -1,6 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using QuanLyBanHang.Data.DataContext;
 using QuanLyBanHang.Web.Models;
+using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -15,16 +18,11 @@ namespace QuanLyBanHang.Web.Controllers
             _context = context;
         }
 
-        // 🟢 Hiển thị trang đăng nhập
         [HttpGet]
-        public IActionResult Login()
-        {
-            return View();
-        }
+        public IActionResult Login() => View();
 
-        // 🟢 Xử lý đăng nhập
         [HttpPost]
-        public IActionResult Login(LoginViewModel model)
+        public async Task<IActionResult> Login(LoginViewModel model)
         {
             if (!ModelState.IsValid)
                 return View(model);
@@ -40,19 +38,35 @@ namespace QuanLyBanHang.Web.Controllers
                 return View(model);
             }
 
+            // Lưu Session
             HttpContext.Session.SetString("EmployeeName", employee.FullName);
             HttpContext.Session.SetString("EmployeeRole", employee.Role);
-            HttpContext.Session.SetInt32("EmployeeId", employee.EmployeeId);
 
+            // 🟢 Tạo Claims để Identity nhận dạng
+            var claims = new List<Claim>
+            {
+                new Claim(ClaimTypes.Name, employee.FullName),
+                new Claim(ClaimTypes.Role, employee.Role)
+            };
+
+            var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+            var principal = new ClaimsPrincipal(identity);
+
+            // 🟢 Tạo Cookie đăng nhập
+            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
+
+           
             if (employee.Role == "Admin")
                 return RedirectToAction("Index", "Dashboard");
             else
                 return RedirectToAction("Index", "Home");
+        
         }
 
-        public IActionResult Logout()
+        public async Task<IActionResult> Logout()
         {
             HttpContext.Session.Clear();
+            await HttpContext.SignOutAsync();
             return RedirectToAction("Login");
         }
 

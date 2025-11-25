@@ -23,21 +23,42 @@ namespace QuanLyBanHang.Web.Controllers
 
         // Thêm mới
         [HttpGet]
+        // GET: Suppliers/Create
         public IActionResult Create()
         {
             return View();
         }
 
+        // POST: Suppliers/Create
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Create(Supplier supplier)
         {
-            if (ModelState.IsValid)
+            // Nếu có lỗi validate (Required, Email, v.v) thì trả lại luôn
+            if (!ModelState.IsValid)
             {
-                _context.Suppliers.Add(supplier);
-                _context.SaveChanges();
-                return RedirectToAction(nameof(Index));
+                return View(supplier);
             }
-            return View(supplier);
+
+            // CHECK TRÙNG: TÊN + EMAIL + PHONE (tất cả giống nhau)
+            var isDuplicate = _context.Suppliers.Any(s =>
+            s.SupplierName.Trim().ToLower() == supplier.SupplierName.Trim().ToLower()
+            || s.Email.Trim().ToLower() == supplier.Email.Trim().ToLower()
+            || s.Phone.Trim() == supplier.Phone.Trim()
+);
+
+            if (isDuplicate)
+            {
+                ModelState.AddModelError(string.Empty,
+                    "Tên, Email hoặc Số điện thoại đã tồn tại trong hệ thống.");
+                return View(supplier);
+            }
+
+            // Không trùng -> lưu
+            _context.Suppliers.Add(supplier);
+            _context.SaveChanges();
+
+            return RedirectToAction(nameof(Index));
         }
 
         // Sửa
@@ -62,14 +83,26 @@ namespace QuanLyBanHang.Web.Controllers
         }
 
         // Xóa
+        [HttpGet]
         public IActionResult Delete(int id)
+        {
+            var supplier = _context.Suppliers.Find(id);
+            if (supplier == null) return NotFound();
+
+            return View(supplier); // 👈 TRẢ VỀ VIEW XÁC NHẬN
+        }
+
+        [HttpPost, ActionName("Delete")]
+        public IActionResult DeleteConfirmed(int id)
         {
             var supplier = _context.Suppliers.Find(id);
             if (supplier == null) return NotFound();
 
             _context.Suppliers.Remove(supplier);
             _context.SaveChanges();
+
             return RedirectToAction(nameof(Index));
         }
+
     }
 }

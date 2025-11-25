@@ -12,7 +12,7 @@ using QuanLyBanHang.Data.DataContext;
 namespace QuanLyBanHang.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20251114134306_InitialCreate")]
+    [Migration("20251125081743_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -154,6 +154,50 @@ namespace QuanLyBanHang.Data.Migrations
                     b.ToTable("Inventories");
                 });
 
+            modelBuilder.Entity("QuanLyBanHang.Data.Entities.InventoryTransaction", b =>
+                {
+                    b.Property<int>("TransactionId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("TransactionId"));
+
+                    b.Property<string>("Note")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("varchar(200)");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("SupplierId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("TransactionDate")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("TransactionType")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("varchar(10)");
+
+                    b.Property<int>("WarehouseId")
+                        .HasColumnType("int");
+
+                    b.HasKey("TransactionId");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("SupplierId");
+
+                    b.HasIndex("WarehouseId");
+
+                    b.ToTable("InventoryTransactions");
+                });
+
             modelBuilder.Entity("QuanLyBanHang.Data.Entities.Order", b =>
                 {
                     b.Property<int>("OrderId")
@@ -243,6 +287,32 @@ namespace QuanLyBanHang.Data.Migrations
                     b.HasIndex("CategoryId");
 
                     b.ToTable("Products");
+                });
+
+            modelBuilder.Entity("QuanLyBanHang.Data.Entities.ProductWarehouse", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("QuantityOnHand")
+                        .HasColumnType("int");
+
+                    b.Property<int>("WarehouseId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("WarehouseId");
+
+                    b.ToTable("ProductWarehouses");
                 });
 
             modelBuilder.Entity("QuanLyBanHang.Data.Entities.Supplier", b =>
@@ -363,6 +433,31 @@ namespace QuanLyBanHang.Data.Migrations
                     b.Navigation("Warehouse");
                 });
 
+            modelBuilder.Entity("QuanLyBanHang.Data.Entities.InventoryTransaction", b =>
+                {
+                    b.HasOne("QuanLyBanHang.Data.Entities.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("QuanLyBanHang.Data.Entities.Supplier", "Supplier")
+                        .WithMany()
+                        .HasForeignKey("SupplierId");
+
+                    b.HasOne("QuanLyBanHang.Data.Entities.Warehouse", "Warehouse")
+                        .WithMany()
+                        .HasForeignKey("WarehouseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+
+                    b.Navigation("Supplier");
+
+                    b.Navigation("Warehouse");
+                });
+
             modelBuilder.Entity("QuanLyBanHang.Data.Entities.Order", b =>
                 {
                     b.HasOne("QuanLyBanHang.Data.Entities.Customer", "Customer")
@@ -410,6 +505,25 @@ namespace QuanLyBanHang.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("Categories");
+                });
+
+            modelBuilder.Entity("QuanLyBanHang.Data.Entities.ProductWarehouse", b =>
+                {
+                    b.HasOne("QuanLyBanHang.Data.Entities.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("QuanLyBanHang.Data.Entities.Warehouse", "Warehouse")
+                        .WithMany()
+                        .HasForeignKey("WarehouseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+
+                    b.Navigation("Warehouse");
                 });
 
             modelBuilder.Entity("QuanLyBanHang.Data.Entities.Categories", b =>

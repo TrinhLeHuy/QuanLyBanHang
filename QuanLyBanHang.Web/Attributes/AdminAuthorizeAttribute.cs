@@ -13,7 +13,10 @@ namespace QuanLyBanHang.Web.Attributes
             // Nếu chưa đăng nhập hoặc không phải Admin → quay lại trang Login
             if (string.IsNullOrEmpty(role) || role != "Admin")
             {
-                context.Result = new RedirectToActionResult("Login", "Auth", null);
+                 context.Result = new ContentResult
+                 {
+                     Content = "Bạn không có quyền truy cập!"
+                 };
             }
         }
     }

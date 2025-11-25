@@ -31,7 +31,8 @@ namespace QuanLyBanHang.Data.DataContext
         public DbSet<Supplier> Suppliers { get; set; }
         public DbSet<Warehouse> Warehouses { get; set; }
         public DbSet<Inventory> Inventories { get; set; }
-
+        public DbSet<ProductWarehouse> ProductWarehouses { get; set; }
+        public DbSet<InventoryTransaction> InventoryTransactions { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
