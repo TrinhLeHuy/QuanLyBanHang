@@ -5,6 +5,18 @@
       "PackagePath": "staticwebassets\\QuanLyBanHang.Web.f4j85tdnth.bundle.scp.css"
     },
     {
+      "Id": "D:\\.Net\\QuanLyBanHang\\QuanLyBanHang.Web\\wwwroot\\css\\customerEdit.css",
+      "PackagePath": "staticwebassets\\css\\customerEdit.css"
+    },
+    {
+      "Id": "D:\\.Net\\QuanLyBanHang\\QuanLyBanHang.Web\\wwwroot\\css\\customerIndex.css",
+      "PackagePath": "staticwebassets\\css\\customerIndex.css"
+    },
+    {
+      "Id": "D:\\.Net\\QuanLyBanHang\\QuanLyBanHang.Web\\wwwroot\\css\\custumerAdd.css",
+      "PackagePath": "staticwebassets\\css\\custumerAdd.css"
+    },
+    {
       "Id": "D:\\.Net\\QuanLyBanHang\\QuanLyBanHang.Web\\wwwroot\\css\\site.css",
       "PackagePath": "staticwebassets\\css\\site.css"
     },

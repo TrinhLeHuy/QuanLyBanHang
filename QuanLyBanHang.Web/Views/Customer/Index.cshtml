@@ -2,13 +2,15 @@
 @{
     ViewData["Title"] = "Danh sách khách hàng";
 }
+<link rel="stylesheet" href="~/css/customerIndex.css" />
 
 <h2>@ViewData["Title"]</h2>
 
 <form method="get" asp-action="Index">
     <input type="text" name="keyword" value="@ViewBag.Keyword" placeholder="Tìm kiếm khách hàng..." />
     <button type="submit">Tìm</button>
-    <a asp-action="Create">+ Thêm mới</a>
+    @* <a asp-action="Create">+ Thêm mới</a> *@
+    <button type="button" id="btnAdd">+ Thêm mới</button>
 </form>
 
 <table border="1" cellpadding="5">
@@ -30,9 +32,116 @@
             <td>@c.Phone</td>
             <td>@c.Address</td>
             <td>
-                <a asp-action="Edit" asp-route-id="@c.CustomerId">Sửa</a> |
-                <a asp-action="Delete" asp-route-id="@c.CustomerId" onclick="return confirm('Xóa khách hàng này?')">Xóa</a>
+                <a asp-action="Edit" asp-route-id="@c.CustomerId" class="btn-edit">Sửa</a> |
+                @* <a asp-action="Delete" asp-route-id="@c.CustomerId" onclick="return confirm('Xóa khách hàng này?')">Xóa</a> *@
+                <a href="@Url.Action("Delete", "Customer", new { id = c.CustomerId })" class="btn-delete">Xóa</a>
+
             </td>
         </tr>
     }
 </table>
+<!-- Overlay chứa form Create -->
+<div id="overlay" class="hidden">
+    <div id="overlay-content"></div>
+</div>
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        // Khi nhấn nút "Thêm mới"
+        $("#btnAdd").click(function () {
+            $.get("@Url.Action("Create", "Customer")", function (html) {
+                $("#overlay-content").html(html);
+                $("#overlay").removeClass("hidden");
+            });
+        });
+        // Khi nhấn nút "Sửa"
+        $(document).on("click", ".btn-edit", function (e) {
+            e.preventDefault();
+            const url = $(this).attr("href");
+            $.get(url, function (html) {
+                $("#overlay-content").html(html);
+                $("#overlay").removeClass("hidden");
+            });
+        });
+        // Khi nhấn "Quay lại" trong form Create
+        $(document).on("click", "#overlay a[asp-action='Index']", function (e) {
+            e.preventDefault();
+            $("#overlay").addClass("hidden");
+            $("#overlay-content").html("");
+        });
+        // ✅ Khi submit form Create trong overlay
+        $(document).on("submit", "#createForm", function (e) {
+            e.preventDefault(); // Ngăn reload trang
+            var form = $(this);
+            var formData = form.serialize();
+            $.post(form.attr("action"), formData)
+                .done(function (html) {
+                    // Nếu backend trả về lại form (có lỗi)
+                    if ($(html).find("#createForm").length > 0) {
+                        $("#overlay-content").html(html); // render lại form (hiển thị lỗi)
+                    } else {
+                        // Nếu thêm thành công (redirect Index)
+                        location.reload();
+                    }
+                })
+                .fail(function () {
+                    alert("Đã xảy ra lỗi, vui lòng thử lại!");
+                });
+        });
+        // ✅ Khi submit form Edit trong overlay
+        $(document).on("submit", "#customerEditForm", function (e) {
+            e.preventDefault(); // Ngăn reload trang
+
+            var form = $(this);
+            var formData = form.serialize();
+
+            $.post(form.attr("action"), formData)
+                .done(function (html) {
+                    // Nếu backend trả về lại form Edit (có lỗi)
+                    if ($(html).find("#customerEditForm").length > 0) {
+                        $("#overlay-content").html(html); // render lại form lỗi
+                    } else {
+                        // Nếu cập nhật thành công (redirect Index)
+                        location.reload();
+                    }
+                })
+                .fail(function () {
+                    alert("Đã xảy ra lỗi, vui lòng thử lại!");
+                });
+        });
+        // ✅ Khi nhấn nút "Xóa"
+        $(document).on("click", ".btn-delete", function (e) {
+            e.preventDefault();
+            const url = $(this).attr("href");
+            Swal.fire({
+                title: "Bạn có chắc muốn xóa khách hàng này?",
+                text: "Hành động này không thể hoàn tác!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonText: "Xóa",
+                cancelButtonText: "Hủy",
+                confirmButtonColor: "#d33",
+                cancelButtonColor: "#3085d6"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.post(url)
+                        .done(function () {
+                            Swal.fire({
+                                title: "Đã xóa!",
+                                text: "Khách hàng đã được xóa thành công.",
+                                icon: "success",
+                                timer: 1500,
+                                showConfirmButton: false
+                            });
+                            setTimeout(() => location.reload(), 1500);
+                        })
+                        .fail(function () {
+                            Swal.fire("Lỗi!", "Không thể xóa khách hàng.", "error");
+                        });
+                }
+            });
+        });
+    </script>
+}

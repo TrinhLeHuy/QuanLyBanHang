@@ -235,3 +235,6 @@ D:\.Net\QuanLyBanHang\QuanLyBanHang.Web\obj\Debug\net9.0\compressed\vyyav40woz-j
 D:\.Net\QuanLyBanHang\QuanLyBanHang.Web\obj\Debug\net9.0\compressed\yj3ut5dxjr-9vr69e8ynj.gz
 D:\.Net\QuanLyBanHang\QuanLyBanHang.Web\bin\Debug\net9.0\BCrypt.Net-Next.dll
 D:\.Net\QuanLyBanHang\QuanLyBanHang.Web\obj\Debug\net9.0\QuanLyBanHang.Web.sourcelink.json
+D:\.Net\QuanLyBanHang\QuanLyBanHang.Web\obj\Debug\net9.0\compressed\deg1o33etk-6ve0fu8xzn.gz
+D:\.Net\QuanLyBanHang\QuanLyBanHang.Web\obj\Debug\net9.0\compressed\ge1hvwyvtl-8qmik50wvu.gz
+D:\.Net\QuanLyBanHang\QuanLyBanHang.Web\obj\Debug\net9.0\compressed\4oitogct44-5k5ruuqd4m.gz

@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "4w9wJ8yu/Vf9tSQ3xxwlqSU36Z1jAPQNMhiO6vr0WsA=",
+  "Hash": "g8SLOHpRm4Zjh53C8QxEq6eHQFqb7mKVhVYf2OCppyc=",
   "Source": "QuanLyBanHang.Web",
   "BasePath": "_content/QuanLyBanHang.Web",
   "Mode": "Default",
@@ -204,6 +204,27 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "D:\\.Net\\QuanLyBanHang\\QuanLyBanHang.Web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css"
+    },
+    {
+      "Identity": "D:\\.Net\\QuanLyBanHang\\QuanLyBanHang.Web\\obj\\Debug\\net9.0\\compressed\\4oitogct44-5k5ruuqd4m.gz",
+      "SourceId": "QuanLyBanHang.Web",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\.Net\\QuanLyBanHang\\QuanLyBanHang.Web\\obj\\Debug\\net9.0\\compressed\\",
+      "BasePath": "_content/QuanLyBanHang.Web",
+      "RelativePath": "css/custumerAdd#[.{fingerprint=5k5ruuqd4m}]?.css.gz",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Alternative",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "D:\\.Net\\QuanLyBanHang\\QuanLyBanHang.Web\\wwwroot\\css\\custumerAdd.css",
+      "AssetTraitName": "Content-Encoding",
+      "AssetTraitValue": "gzip",
+      "Fingerprint": "c6ioi0ik0g",
+      "Integrity": "/Bv1CZ3rtpqQEo8KbysnTPz75AgciYK58Oc8yTNcoew=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "D:\\.Net\\QuanLyBanHang\\QuanLyBanHang.Web\\wwwroot\\css\\custumerAdd.css"
     },
     {
       "Identity": "D:\\.Net\\QuanLyBanHang\\QuanLyBanHang.Web\\obj\\Debug\\net9.0\\compressed\\5h77lxtbe5-48y08845bh.gz",
@@ -584,6 +605,27 @@
       "OriginalItemSpec": "D:\\.Net\\QuanLyBanHang\\QuanLyBanHang.Web\\wwwroot\\lib\\jquery-validation-unobtrusive\\dist\\jquery.validate.unobtrusive.js"
     },
     {
+      "Identity": "D:\\.Net\\QuanLyBanHang\\QuanLyBanHang.Web\\obj\\Debug\\net9.0\\compressed\\deg1o33etk-6ve0fu8xzn.gz",
+      "SourceId": "QuanLyBanHang.Web",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\.Net\\QuanLyBanHang\\QuanLyBanHang.Web\\obj\\Debug\\net9.0\\compressed\\",
+      "BasePath": "_content/QuanLyBanHang.Web",
+      "RelativePath": "css/customerEdit#[.{fingerprint=6ve0fu8xzn}]?.css.gz",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Alternative",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "D:\\.Net\\QuanLyBanHang\\QuanLyBanHang.Web\\wwwroot\\css\\customerEdit.css",
+      "AssetTraitName": "Content-Encoding",
+      "AssetTraitValue": "gzip",
+      "Fingerprint": "ap93brvj3w",
+      "Integrity": "IsVP1HuXG+m97IXzaSUetCztgNqcD+thOU9WJGuhDm0=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "D:\\.Net\\QuanLyBanHang\\QuanLyBanHang.Web\\wwwroot\\css\\customerEdit.css"
+    },
+    {
       "Identity": "D:\\.Net\\QuanLyBanHang\\QuanLyBanHang.Web\\obj\\Debug\\net9.0\\compressed\\duwtcnr2g9-c2oey78nd0.gz",
       "SourceId": "QuanLyBanHang.Web",
       "SourceType": "Discovered",
@@ -666,6 +708,27 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "D:\\.Net\\QuanLyBanHang\\QuanLyBanHang.Web\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css.map"
+    },
+    {
+      "Identity": "D:\\.Net\\QuanLyBanHang\\QuanLyBanHang.Web\\obj\\Debug\\net9.0\\compressed\\ge1hvwyvtl-8qmik50wvu.gz",
+      "SourceId": "QuanLyBanHang.Web",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\.Net\\QuanLyBanHang\\QuanLyBanHang.Web\\obj\\Debug\\net9.0\\compressed\\",
+      "BasePath": "_content/QuanLyBanHang.Web",
+      "RelativePath": "css/customerIndex#[.{fingerprint=8qmik50wvu}]?.css.gz",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Alternative",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "D:\\.Net\\QuanLyBanHang\\QuanLyBanHang.Web\\wwwroot\\css\\customerIndex.css",
+      "AssetTraitName": "Content-Encoding",
+      "AssetTraitValue": "gzip",
+      "Fingerprint": "yghipgwn4z",
+      "Integrity": "Dh4uWUzvqjDUsUtsjZ2wznGXAHO3OWcAUUnVwympR0g=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "D:\\.Net\\QuanLyBanHang\\QuanLyBanHang.Web\\wwwroot\\css\\customerIndex.css"
     },
     {
       "Identity": "D:\\.Net\\QuanLyBanHang\\QuanLyBanHang.Web\\obj\\Debug\\net9.0\\compressed\\ge7ycnrn3q-fsbi9cje9m.gz",
@@ -1401,6 +1464,69 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "D:\\.Net\\QuanLyBanHang\\QuanLyBanHang.Web\\obj\\Debug\\net9.0\\scopedcss\\projectbundle\\QuanLyBanHang.Web.bundle.scp.css"
+    },
+    {
+      "Identity": "D:\\.Net\\QuanLyBanHang\\QuanLyBanHang.Web\\wwwroot\\css\\customerEdit.css",
+      "SourceId": "QuanLyBanHang.Web",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\.Net\\QuanLyBanHang\\QuanLyBanHang.Web\\wwwroot\\",
+      "BasePath": "_content/QuanLyBanHang.Web",
+      "RelativePath": "css/customerEdit#[.{fingerprint}]?.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "6ve0fu8xzn",
+      "Integrity": "QrJNR5FJVKxqmjKQEEo+PlB7Nd1DOAm2BFvL1JTEwTw=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\css\\customerEdit.css"
+    },
+    {
+      "Identity": "D:\\.Net\\QuanLyBanHang\\QuanLyBanHang.Web\\wwwroot\\css\\customerIndex.css",
+      "SourceId": "QuanLyBanHang.Web",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\.Net\\QuanLyBanHang\\QuanLyBanHang.Web\\wwwroot\\",
+      "BasePath": "_content/QuanLyBanHang.Web",
+      "RelativePath": "css/customerIndex#[.{fingerprint}]?.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "8qmik50wvu",
+      "Integrity": "cPQdx8/1XBihzXIz0WtGStpUMBvvF/aEPMrZKwTUJms=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\css\\customerIndex.css"
+    },
+    {
+      "Identity": "D:\\.Net\\QuanLyBanHang\\QuanLyBanHang.Web\\wwwroot\\css\\custumerAdd.css",
+      "SourceId": "QuanLyBanHang.Web",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\.Net\\QuanLyBanHang\\QuanLyBanHang.Web\\wwwroot\\",
+      "BasePath": "_content/QuanLyBanHang.Web",
+      "RelativePath": "css/custumerAdd#[.{fingerprint}]?.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "5k5ruuqd4m",
+      "Integrity": "G7U/QAFZ0jTLFJOs03LfcCl3EY4p1soGzUTKokLKMaM=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\css\\custumerAdd.css"
     },
     {
       "Identity": "D:\\.Net\\QuanLyBanHang\\QuanLyBanHang.Web\\wwwroot\\css\\site.css",
@@ -2727,6 +2853,900 @@
     }
   ],
   "Endpoints": [
+    {
+      "Route": "css/customerEdit.6ve0fu8xzn.css",
+      "AssetFile": "D:\\.Net\\QuanLyBanHang\\QuanLyBanHang.Web\\obj\\Debug\\net9.0\\compressed\\deg1o33etk-6ve0fu8xzn.gz",
+      "Selectors": [
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip",
+          "Quality": "0.001310615990"
+        }
+      ],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "762"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"IsVP1HuXG+m97IXzaSUetCztgNqcD+thOU9WJGuhDm0=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 25 Nov 2025 15:23:32 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "W/\"QrJNR5FJVKxqmjKQEEo+PlB7Nd1DOAm2BFvL1JTEwTw=\""
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "6ve0fu8xzn"
+        },
+        {
+          "Name": "label",
+          "Value": "css/customerEdit.css"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-QrJNR5FJVKxqmjKQEEo+PlB7Nd1DOAm2BFvL1JTEwTw="
+        }
+      ]
+    },
+    {
+      "Route": "css/customerEdit.6ve0fu8xzn.css",
+      "AssetFile": "D:\\.Net\\QuanLyBanHang\\QuanLyBanHang.Web\\wwwroot\\css\\customerEdit.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "2004"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"QrJNR5FJVKxqmjKQEEo+PlB7Nd1DOAm2BFvL1JTEwTw=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 25 Nov 2025 15:23:32 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "6ve0fu8xzn"
+        },
+        {
+          "Name": "label",
+          "Value": "css/customerEdit.css"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-QrJNR5FJVKxqmjKQEEo+PlB7Nd1DOAm2BFvL1JTEwTw="
+        }
+      ]
+    },
+    {
+      "Route": "css/customerEdit.6ve0fu8xzn.css.gz",
+      "AssetFile": "D:\\.Net\\QuanLyBanHang\\QuanLyBanHang.Web\\obj\\Debug\\net9.0\\compressed\\deg1o33etk-6ve0fu8xzn.gz",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "762"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"IsVP1HuXG+m97IXzaSUetCztgNqcD+thOU9WJGuhDm0=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 25 Nov 2025 15:23:32 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "6ve0fu8xzn"
+        },
+        {
+          "Name": "label",
+          "Value": "css/customerEdit.css.gz"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-IsVP1HuXG+m97IXzaSUetCztgNqcD+thOU9WJGuhDm0="
+        }
+      ]
+    },
+    {
+      "Route": "css/customerEdit.css",
+      "AssetFile": "D:\\.Net\\QuanLyBanHang\\QuanLyBanHang.Web\\obj\\Debug\\net9.0\\compressed\\deg1o33etk-6ve0fu8xzn.gz",
+      "Selectors": [
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip",
+          "Quality": "0.001310615990"
+        }
+      ],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "762"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"IsVP1HuXG+m97IXzaSUetCztgNqcD+thOU9WJGuhDm0=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 25 Nov 2025 15:23:32 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "W/\"QrJNR5FJVKxqmjKQEEo+PlB7Nd1DOAm2BFvL1JTEwTw=\""
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-QrJNR5FJVKxqmjKQEEo+PlB7Nd1DOAm2BFvL1JTEwTw="
+        }
+      ]
+    },
+    {
+      "Route": "css/customerEdit.css",
+      "AssetFile": "D:\\.Net\\QuanLyBanHang\\QuanLyBanHang.Web\\wwwroot\\css\\customerEdit.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "2004"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"QrJNR5FJVKxqmjKQEEo+PlB7Nd1DOAm2BFvL1JTEwTw=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 25 Nov 2025 15:23:32 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-QrJNR5FJVKxqmjKQEEo+PlB7Nd1DOAm2BFvL1JTEwTw="
+        }
+      ]
+    },
+    {
+      "Route": "css/customerEdit.css.gz",
+      "AssetFile": "D:\\.Net\\QuanLyBanHang\\QuanLyBanHang.Web\\obj\\Debug\\net9.0\\compressed\\deg1o33etk-6ve0fu8xzn.gz",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "762"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"IsVP1HuXG+m97IXzaSUetCztgNqcD+thOU9WJGuhDm0=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 25 Nov 2025 15:23:32 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-IsVP1HuXG+m97IXzaSUetCztgNqcD+thOU9WJGuhDm0="
+        }
+      ]
+    },
+    {
+      "Route": "css/customerIndex.8qmik50wvu.css",
+      "AssetFile": "D:\\.Net\\QuanLyBanHang\\QuanLyBanHang.Web\\obj\\Debug\\net9.0\\compressed\\ge1hvwyvtl-8qmik50wvu.gz",
+      "Selectors": [
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip",
+          "Quality": "0.000982318271"
+        }
+      ],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1017"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"Dh4uWUzvqjDUsUtsjZ2wznGXAHO3OWcAUUnVwympR0g=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 25 Nov 2025 15:23:37 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "W/\"cPQdx8/1XBihzXIz0WtGStpUMBvvF/aEPMrZKwTUJms=\""
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "8qmik50wvu"
+        },
+        {
+          "Name": "label",
+          "Value": "css/customerIndex.css"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-cPQdx8/1XBihzXIz0WtGStpUMBvvF/aEPMrZKwTUJms="
+        }
+      ]
+    },
+    {
+      "Route": "css/customerIndex.8qmik50wvu.css",
+      "AssetFile": "D:\\.Net\\QuanLyBanHang\\QuanLyBanHang.Web\\wwwroot\\css\\customerIndex.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "3107"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"cPQdx8/1XBihzXIz0WtGStpUMBvvF/aEPMrZKwTUJms=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 25 Nov 2025 15:23:37 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "8qmik50wvu"
+        },
+        {
+          "Name": "label",
+          "Value": "css/customerIndex.css"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-cPQdx8/1XBihzXIz0WtGStpUMBvvF/aEPMrZKwTUJms="
+        }
+      ]
+    },
+    {
+      "Route": "css/customerIndex.8qmik50wvu.css.gz",
+      "AssetFile": "D:\\.Net\\QuanLyBanHang\\QuanLyBanHang.Web\\obj\\Debug\\net9.0\\compressed\\ge1hvwyvtl-8qmik50wvu.gz",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1017"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"Dh4uWUzvqjDUsUtsjZ2wznGXAHO3OWcAUUnVwympR0g=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 25 Nov 2025 15:23:37 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "8qmik50wvu"
+        },
+        {
+          "Name": "label",
+          "Value": "css/customerIndex.css.gz"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-Dh4uWUzvqjDUsUtsjZ2wznGXAHO3OWcAUUnVwympR0g="
+        }
+      ]
+    },
+    {
+      "Route": "css/customerIndex.css",
+      "AssetFile": "D:\\.Net\\QuanLyBanHang\\QuanLyBanHang.Web\\obj\\Debug\\net9.0\\compressed\\ge1hvwyvtl-8qmik50wvu.gz",
+      "Selectors": [
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip",
+          "Quality": "0.000982318271"
+        }
+      ],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1017"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"Dh4uWUzvqjDUsUtsjZ2wznGXAHO3OWcAUUnVwympR0g=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 25 Nov 2025 15:23:37 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "W/\"cPQdx8/1XBihzXIz0WtGStpUMBvvF/aEPMrZKwTUJms=\""
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-cPQdx8/1XBihzXIz0WtGStpUMBvvF/aEPMrZKwTUJms="
+        }
+      ]
+    },
+    {
+      "Route": "css/customerIndex.css",
+      "AssetFile": "D:\\.Net\\QuanLyBanHang\\QuanLyBanHang.Web\\wwwroot\\css\\customerIndex.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "3107"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"cPQdx8/1XBihzXIz0WtGStpUMBvvF/aEPMrZKwTUJms=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 25 Nov 2025 15:23:37 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-cPQdx8/1XBihzXIz0WtGStpUMBvvF/aEPMrZKwTUJms="
+        }
+      ]
+    },
+    {
+      "Route": "css/customerIndex.css.gz",
+      "AssetFile": "D:\\.Net\\QuanLyBanHang\\QuanLyBanHang.Web\\obj\\Debug\\net9.0\\compressed\\ge1hvwyvtl-8qmik50wvu.gz",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1017"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"Dh4uWUzvqjDUsUtsjZ2wznGXAHO3OWcAUUnVwympR0g=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 25 Nov 2025 15:23:37 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-Dh4uWUzvqjDUsUtsjZ2wznGXAHO3OWcAUUnVwympR0g="
+        }
+      ]
+    },
+    {
+      "Route": "css/custumerAdd.5k5ruuqd4m.css",
+      "AssetFile": "D:\\.Net\\QuanLyBanHang\\QuanLyBanHang.Web\\obj\\Debug\\net9.0\\compressed\\4oitogct44-5k5ruuqd4m.gz",
+      "Selectors": [
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip",
+          "Quality": "0.001607717042"
+        }
+      ],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "621"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"/Bv1CZ3rtpqQEo8KbysnTPz75AgciYK58Oc8yTNcoew=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 28 Nov 2025 11:51:19 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "W/\"G7U/QAFZ0jTLFJOs03LfcCl3EY4p1soGzUTKokLKMaM=\""
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "5k5ruuqd4m"
+        },
+        {
+          "Name": "label",
+          "Value": "css/custumerAdd.css"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-G7U/QAFZ0jTLFJOs03LfcCl3EY4p1soGzUTKokLKMaM="
+        }
+      ]
+    },
+    {
+      "Route": "css/custumerAdd.5k5ruuqd4m.css",
+      "AssetFile": "D:\\.Net\\QuanLyBanHang\\QuanLyBanHang.Web\\wwwroot\\css\\custumerAdd.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1613"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"G7U/QAFZ0jTLFJOs03LfcCl3EY4p1soGzUTKokLKMaM=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 28 Nov 2025 11:51:19 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "5k5ruuqd4m"
+        },
+        {
+          "Name": "label",
+          "Value": "css/custumerAdd.css"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-G7U/QAFZ0jTLFJOs03LfcCl3EY4p1soGzUTKokLKMaM="
+        }
+      ]
+    },
+    {
+      "Route": "css/custumerAdd.5k5ruuqd4m.css.gz",
+      "AssetFile": "D:\\.Net\\QuanLyBanHang\\QuanLyBanHang.Web\\obj\\Debug\\net9.0\\compressed\\4oitogct44-5k5ruuqd4m.gz",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "621"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"/Bv1CZ3rtpqQEo8KbysnTPz75AgciYK58Oc8yTNcoew=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 28 Nov 2025 11:51:19 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "5k5ruuqd4m"
+        },
+        {
+          "Name": "label",
+          "Value": "css/custumerAdd.css.gz"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-/Bv1CZ3rtpqQEo8KbysnTPz75AgciYK58Oc8yTNcoew="
+        }
+      ]
+    },
+    {
+      "Route": "css/custumerAdd.css",
+      "AssetFile": "D:\\.Net\\QuanLyBanHang\\QuanLyBanHang.Web\\obj\\Debug\\net9.0\\compressed\\4oitogct44-5k5ruuqd4m.gz",
+      "Selectors": [
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip",
+          "Quality": "0.001607717042"
+        }
+      ],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "621"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"/Bv1CZ3rtpqQEo8KbysnTPz75AgciYK58Oc8yTNcoew=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 28 Nov 2025 11:51:19 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "W/\"G7U/QAFZ0jTLFJOs03LfcCl3EY4p1soGzUTKokLKMaM=\""
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-G7U/QAFZ0jTLFJOs03LfcCl3EY4p1soGzUTKokLKMaM="
+        }
+      ]
+    },
+    {
+      "Route": "css/custumerAdd.css",
+      "AssetFile": "D:\\.Net\\QuanLyBanHang\\QuanLyBanHang.Web\\wwwroot\\css\\custumerAdd.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1613"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"G7U/QAFZ0jTLFJOs03LfcCl3EY4p1soGzUTKokLKMaM=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 28 Nov 2025 11:51:19 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-G7U/QAFZ0jTLFJOs03LfcCl3EY4p1soGzUTKokLKMaM="
+        }
+      ]
+    },
+    {
+      "Route": "css/custumerAdd.css.gz",
+      "AssetFile": "D:\\.Net\\QuanLyBanHang\\QuanLyBanHang.Web\\obj\\Debug\\net9.0\\compressed\\4oitogct44-5k5ruuqd4m.gz",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "621"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"/Bv1CZ3rtpqQEo8KbysnTPz75AgciYK58Oc8yTNcoew=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 28 Nov 2025 11:51:19 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-/Bv1CZ3rtpqQEo8KbysnTPz75AgciYK58Oc8yTNcoew="
+        }
+      ]
+    },
     {
       "Route": "css/site.b9sayid5wm.css",
       "AssetFile": "D:\\.Net\\QuanLyBanHang\\QuanLyBanHang.Web\\obj\\Debug\\net9.0\\compressed\\ocujaxdp2e-b9sayid5wm.gz",

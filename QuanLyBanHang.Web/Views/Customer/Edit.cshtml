@@ -1,22 +1,42 @@
 @model QuanLyBanHang.Data.Entities.Customer
 @{
     ViewData["Title"] = "Chỉnh sửa khách hàng";
+    Layout = null; // ⚡ Không dùng Layout để nạp vào overlay
 }
+<link rel="stylesheet" href="~/css/customerEdit.css" />
+<div class="customer-edit-container">
+    <h2 class="customer-edit-title">@ViewData["Title"]</h2>
 
-<h2>@ViewData["Title"]</h2>
+    <form asp-action="Edit" method="post" class="customer-edit-form" id="customerEditForm">
+        <input type="hidden" asp-for="CustomerId" id="editCustomerId" />
 
-<form asp-action="Edit" method="post">
-    <input type="hidden" asp-for="CustomerId" />
+        <div class="customer-edit-field">
+            <label for="editFullName" class="customer-edit-label">Tên:</label>
+            <input asp-for="FullName" id="editFullName" class="customer-edit-input" />
+            <span asp-validation-for="FullName" class="customer-edit-error"></span>
+        </div>
 
-    <label>Tên:</label>
-    <input asp-for="FullName" /><br />
-    <label>Email:</label>
-    <input asp-for="Email" /><br />
-    <label>Điện thoại:</label>
-    <input asp-for="Phone" /><br />
-    <label>Địa chỉ:</label>
-    <input asp-for="Address" /><br />
+        <div class="customer-edit-field">
+            <label for="editEmail" class="customer-edit-label">Email:</label>
+            <input asp-for="Email" id="editEmail" class="customer-edit-input" />
+            <span asp-validation-for="Email" class="customer-edit-error"></span>
+        </div>
 
-    <button type="submit">Cập nhật</button>
-    <a asp-action="Index">Quay lại</a>
-</form>
+        <div class="customer-edit-field">
+            <label for="editPhone" class="customer-edit-label">Điện thoại:</label>
+            <input asp-for="Phone" id="editPhone" class="customer-edit-input" />
+            <span asp-validation-for="Phone" class="customer-edit-error"></span>
+        </div>
+
+        <div class="customer-edit-field">
+            <label for="editAddress" class="customer-edit-label">Địa chỉ:</label>
+            <input asp-for="Address" id="editAddress" class="customer-edit-input" />
+            <span asp-validation-for="Address" class="customer-edit-error"></span>
+        </div>
+
+        <div class="customer-edit-actions">
+            <button type="submit" class="customer-edit-btn-save">Cập nhật</button>
+            <a asp-action="Index" class="customer-edit-btn-cancel">Quay lại</a>
+        </div>
+    </form>
+</div>

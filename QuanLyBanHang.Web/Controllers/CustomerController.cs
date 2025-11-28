@@ -27,16 +27,45 @@ namespace QuanLyBanHang.Web.Controllers
         {
             return View();
         }
-
+        // chức năng thêm khách hàng
         [HttpPost]
         public IActionResult Create(Customer customer)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                _customerRepository.Add(customer);
-                return RedirectToAction("Index");
+                if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
+                {
+                    // 🚀 Nếu là AJAX, trả lại partial form (chỉ form thôi)
+                    return PartialView("Create", customer);
+                }
+                // Nếu dữ liệu chưa hợp lệ (trống, sai định dạng) → hiển thị lại form với lỗi
+                return View(customer);
             }
-            return View(customer);
+            // ✅ Kiểm tra trùng email
+            var existingEmail = _customerRepository.GetAll().FirstOrDefault(c => c.Email == customer.Email);
+            if (existingEmail != null)
+            {
+                ModelState.AddModelError("Email", "Email này đã được đăng ký");
+                if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
+                {
+                    return PartialView("Create", customer);
+                }
+                return View(customer);
+            }
+            // ✅ Kiểm tra trùng số điện thoại
+            var existingPhone = _customerRepository.GetAll().FirstOrDefault(c => c.Phone == customer.Phone);
+            if (existingPhone != null)
+            {
+                ModelState.AddModelError("Phone", "Số điện thoại này đã tồn tại");
+                if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
+                {
+                    return PartialView("Create", customer);
+                }
+                return View(customer);
+            }
+            // ✅ Nếu hợp lệ → thêm mới
+            _customerRepository.Add(customer);
+            return RedirectToAction("Index");
         }
 
         // Chỉnh sửa khách hàng
@@ -53,12 +82,33 @@ namespace QuanLyBanHang.Web.Controllers
         [HttpPost]
         public IActionResult Edit(Customer customer)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                _customerRepository.Update(customer);
-                return RedirectToAction("Index");
+                // Nếu dữ liệu chưa hợp lệ (trống, sai định dạng)
+                return View(customer);
             }
-            return View(customer);
+
+            // ✅ Kiểm tra trùng Email (ngoại trừ chính khách hàng đang sửa)
+            var existingEmail = _customerRepository.GetAll()
+                .FirstOrDefault(c => c.Email == customer.Email && c.CustomerId != customer.CustomerId);
+            if (existingEmail != null)
+            {
+                ModelState.AddModelError("Email", "Email này đã được sử dụng bởi khách hàng khác");
+                return View(customer);
+            }
+
+            // ✅ Kiểm tra trùng Số điện thoại (ngoại trừ chính khách hàng đang sửa)
+            var existingPhone = _customerRepository.GetAll()
+                .FirstOrDefault(c => c.Phone == customer.Phone && c.CustomerId != customer.CustomerId);
+            if (existingPhone != null)
+            {
+                ModelState.AddModelError("Phone", "Số điện thoại này đã tồn tại");
+                return View(customer);
+            }
+
+            // ✅ Nếu hợp lệ → cập nhật dữ liệu
+            _customerRepository.Update(customer);
+            return RedirectToAction("Index");
         }
 
         // Xóa khách hàng
