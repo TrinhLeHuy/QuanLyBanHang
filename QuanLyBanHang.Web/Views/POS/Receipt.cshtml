@@ -1,0 +1,129 @@
+@model QuanLyBanHang.Data.Entities.Order
+
+@{
+    ViewData["Title"] = "Hóa đơn hoàn tất";
+    Layout = "_Layout";
+    var customerName = Model.Customer?.FullName ?? "Khách lẻ";
+    var employeeName = Model.Employee?.FullName ?? "N/A";
+}
+
+<div class="container py-4 print-area">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-sm">
+                <div class="card-header bg-success text-white d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0"><i class="fa fa-check-circle"></i> Hóa đơn hoàn tất</h5>
+                    <span>Trạng thái: <strong>Completed</strong></span>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <div class="d-flex justify-content-between">
+                            <span>Mã hóa đơn:</span>
+                            <strong>#@Model.OrderId</strong>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <span>Ngày:</span>
+                            <span>@Model.OrderDate.ToString("dd/MM/yyyy HH:mm")</span>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <span>Khách hàng:</span>
+                            <span>@customerName</span>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <span>Thu ngân:</span>
+                            <span>@employeeName</span>
+                        </div>
+                    </div>
+
+                    <hr />
+
+                    <h6>Sản phẩm</h6>
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th>Tên</th>
+                                <th class="text-right">SL</th>
+                                <th class="text-right">Đơn giá</th>
+                                <th class="text-right">Thành tiền</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        @foreach (var item in Model.OrderDetails)
+                        {
+                            <tr>
+                                <td>@item.Product?.Name</td>
+                                <td class="text-right">@item.Quantity</td>
+                                <td class="text-right">@item.UnitPrice.ToString("N0") ₫</td>
+                                <td class="text-right">@((item.UnitPrice * item.Quantity).ToString("N0")) ₫</td>
+                            </tr>
+                        }
+                        </tbody>
+                    </table>
+
+                    <hr />
+
+                    <div class="d-flex justify-content-between">
+                        <span>Tạm tính:</span>
+                        <strong>@((Model.TotalAmount + Model.DiscountAmount).ToString("N0")) ₫</strong>
+                    </div>
+                    <div class="d-flex justify-content-between text-danger">
+                        <span>Giảm giá:</span>
+                        <strong>-@Model.DiscountAmount.ToString("N0") ₫</strong>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <span>Phương thức thanh toán:</span>
+                        <strong>@Model.PaymentMethod</strong>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <span>Khách đưa:</span>
+                        <strong>@Model.CashGiven.ToString("N0") ₫</strong>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <span>Tiền thừa:</span>
+                        <strong class="text-success">@Model.ChangeAmount.ToString("N0") ₫</strong>
+                    </div>
+                    <div class="d-flex justify-content-between mt-2">
+                        <span class="h5">Tổng tiền:</span>
+                        <span class="h4 text-primary">@Model.TotalAmount.ToString("N0") ₫</span>
+                    </div>
+                </div>
+                <div class="card-footer d-flex justify-content-between no-print">
+                    <a class="btn btn-outline-secondary" asp-action="Index">Tạo đơn mới</a>
+                    <button class="btn btn-primary" onclick="window.print();"><i class="fa fa-print"></i> In hóa đơn</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Styles {
+    <style>
+        @media print {
+            /* Ẩn tất cả, chỉ hiện vùng in */
+            body * {
+                visibility: hidden;
+            }
+            .print-area, .print-area * {
+                visibility: visible;
+            }
+            .print-area {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+            }
+
+            /* Ẩn các vùng không cần thiết */
+            .no-print,
+            header, nav, footer,
+            .navbar, .sidebar, .btn-group {
+                display: none !important;
+            }
+
+            .card {
+                box-shadow: none;
+                border: none;
+            }
+        }
+    </style>
+}

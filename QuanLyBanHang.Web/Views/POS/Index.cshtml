@@ -1,136 +1,557 @@
-@model QuanLyBanHang.Web.Controllers.POSViewModel
+@model QuanLyBanHang.Web.Models.POSViewModel
 
 @{
-    ViewData["Title"] = "POS - Thanh toán tại quầy";
-
-    var products = ViewBag.Products as List<QuanLyBanHang.Data.Entities.Product> ?? new();
-    var customers = ViewBag.Customers as List<QuanLyBanHang.Data.Entities.Customer> ?? new();
-    var employees = ViewBag.Employees as List<QuanLyBanHang.Data.Entities.Employee> ?? new();
+    ViewData["Title"] = $"POS System - Thu Ngân: {Model.CurrentEmployee?.FullName ?? "N/A"}";
+    Layout = "_Layout"; // Giữ lại navigation của layout chung
 }
-
-<h2 class="mb-4">💰 Thanh toán tại quầy (POS)</h2>
-
-@if (TempData["SuccessMessage"] != null)
-{
-    <div class="alert alert-success">@TempData["SuccessMessage"]</div>
-}
-
-<form asp-action="Checkout" method="post">
-
-    <div class="row mb-3">
-        <div class="col-md-4">
-            <label>Khách hàng</label>
-            <select asp-for="CustomerId" class="form-select"
-                    asp-items="@(customers.Any() 
-                        ? new SelectList(customers, "CustomerId", "FullName") 
-                        : new SelectList(new List<QuanLyBanHang.Data.Entities.Customer>(), "CustomerId", "FullName"))">
-            </select>
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show position-fixed" style="top: 10px; right: 10px; z-index: 9999;">
+            @TempData["SuccessMessage"]
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
         </div>
+    }
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show position-fixed" style="top: 10px; right: 10px; z-index: 9999;">
+            @TempData["ErrorMessage"]
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+        </div>
+    }
 
-        <div class="col-md-4">
-            <label>Nhân viên</label>
-            <select asp-for="EmployeeId" class="form-select"
-                    asp-items="@(employees.Any() 
-                        ? new SelectList(employees, "EmployeeId", "FullName") 
-                        : new SelectList(new List<QuanLyBanHang.Data.Entities.Employee>(), "EmployeeId", "FullName"))">
-            </select>
+    <div class="container-fluid h-100">
+        <div class="row h-100">
+            <!-- Cột trái: Danh sách sản phẩm -->
+            <div class="col-md-8 bg-light p-0 h-100 d-flex flex-column products-column">
+                <div class="p-3 bg-white shadow-sm">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fa fa-barcode"></i></span>
+                        </div>
+                        <input type="text" id="txtBarcode" class="form-control form-control-lg" placeholder="Quét mã vạch hoặc nhập tên sản phẩm (F1)..." autofocus>
+                    </div>
+                    
+                    <ul class="nav nav-pills mt-2" id="categoryTabs">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#" onclick="filterCategory('all'); return false;">Tất cả</a>
+                        </li>
+                        @foreach (var cat in Model.Categories)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" href="#" onclick="filterCategory('@cat.Id'); return false;">@cat.Name</a>
+                            </li>
+                        }
+                    </ul>
+                </div>
+                <div class="flex-grow-1 overflow-auto p-3" id="product-list-container">
+                    <div class="row">
+                        @foreach (var item in Model.Products)
+                        {
+                            <div class="col-md-3 col-sm-4 mb-3 product-item" data-cat="@item.CategoryId" data-name="@item.Name.ToLower()">
+                                <div class="card h-100 shadow-sm pointer" onclick="addToCart(@item.Id, '@item.Name.Replace("'", "\\'")', @item.Price, @item.Stock)">
+                                    <div class="card-img-top bg-light d-flex align-items-center justify-content-center" style="height: 100px;">
+                                        <i class="fa fa-image fa-3x text-muted"></i>
+                                    </div>
+                                    <div class="card-body p-2 text-center">
+                                        <h6 class="card-title text-truncate">@item.Name</h6>
+                                        <p class="card-text font-weight-bold text-primary">@item.Price.ToString("N0") ₫</p>
+                                        <small class="text-muted">Kho: @item.Stock</small>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+
+            <!-- Cột phải: Giỏ hàng và thanh toán -->
+            <div class="col-md-4 bg-white h-100 d-flex flex-column border-left p-0">
+                <form asp-action="Checkout" method="post" id="checkoutForm">
+                    @Html.AntiForgeryToken()
+                    
+                    <div class="p-3 bg-light border-bottom">
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="customerSearch" placeholder="Tìm khách (SĐT/Tên)...">
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-primary" type="button" onclick="showCustomerModal(); return false;"><i class="fa fa-plus"></i></button>
+                            </div>
+                        </div>
+                        <div id="customerResults" class="list-group small mt-1" style="max-height: 180px; overflow-y: auto; display: none;"></div>
+                        <div class="mt-2">
+                            <select asp-for="CustomerId" class="form-select form-select-sm" id="customerSelect">
+                                <option value="0">Khách lẻ (Mặc định)</option>
+                                @foreach (var customer in Model.Customers)
+                                {
+                                    <option value="@customer.CustomerId">@customer.FullName - @customer.Phone</option>
+                                }
+                            </select>
+                        </div>
+                        <input type="hidden" asp-for="EmployeeId" value="@Model.EmployeeId" />
+                    </div>
+
+                    <div class="flex-grow-1 overflow-auto p-0">
+                        <table class="table table-hover table-sm mb-0">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th width="40%">Món</th>
+                                    <th width="20%">SL</th>
+                                    <th width="30%" class="text-right">Thành tiền</th>
+                                    <th width="10%"></th>
+                                </tr>
+                            </thead>
+                            <tbody id="cart-body">
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="p-3 bg-light border-top checkout-footer">
+                        <div class="input-group mb-2">
+                            <input type="text" class="form-control form-control-sm" id="voucherCode" name="VoucherCode" placeholder="Mã giảm giá (Voucher)...">
+                            <div class="input-group-append">
+                                <button class="btn btn-secondary btn-sm" type="button" onclick="applyVoucher(); return false;">Áp dụng</button>
+                            </div>
+                        </div>
+                        <div id="voucherMessage" class="small text-muted mb-2"></div>
+                        <div class="d-flex justify-content-between mb-1">
+                            <span>Tạm tính:</span>
+                            <span id="subTotal" class="font-weight-bold">0 ₫</span>
+                        </div>
+                        <div class="d-flex justify-content-between mb-1 text-danger">
+                            <span>Giảm giá:</span>
+                            <span id="discountAmount">-0 ₫</span>
+                        </div>
+                        <div class="form-group mb-2">
+                            <label class="small mb-1" for="paymentMethod">Phương thức thanh toán</label>
+                            <select class="form-control form-control-sm" id="paymentMethod" name="PaymentMethod">
+                                <option value="Cash">Tiền mặt</option>
+                                <option value="Card">Thẻ</option>
+                                <option value="Transfer">Chuyển khoản</option>
+                            </select>
+                        </div>
+                        <div class="d-flex justify-content-between mb-3">
+                            <span class="h5">TỔNG CỘNG:</span>
+                            <span class="h4 text-primary" id="finalTotal">0 ₫</span>
+                        </div>
+                        <div class="form-group mb-2">
+                            <label class="small mb-1" for="cashGiven">Khách đưa</label>
+                            <input type="number" min="0" step="1000" class="form-control form-control-sm" id="cashGiven" name="CashGiven" placeholder="Nhập số tiền khách đưa..." oninput="handleCashGiven(this.value)">
+                        </div>
+                        <div class="d-flex justify-content-between mb-3">
+                            <span>Tiền thừa:</span>
+                            <span class="h5 text-success" id="changeAmount">0 ₫</span>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <button type="button" class="btn btn-danger btn-block h-100" onclick="clearCart(); return false;">Hủy (Esc)</button>
+                            </div>
+                            <div class="col-6">
+                                <button type="submit" class="btn btn-success btn-lg btn-block">
+                                    <i class="fa fa-print"></i> Thanh Toán (F12)
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <input type="hidden" name="ItemsJson" id="ItemsJson" />
+                </form>
+            </div>
         </div>
     </div>
-
-    <h5>Danh sách sản phẩm</h5>
-
-    <table class="table table-bordered" id="posTable">
-        <thead class="table-light">
-            <tr>
-                <th>Sản phẩm</th>
-                <th>Đơn giá</th>
-                <th>Số lượng</th>
-                <th>Thành tiền</th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody id="posBody"></tbody>
-    </table>
-
-    <div class="mb-3">
-        <label>Thêm sản phẩm</label>
-        <select id="productSelect" class="form-select">
-            <option value="">-- Chọn sản phẩm --</option>
-            @foreach (var p in products)
-            {
-                <option value="@p.Id" data-price="@p.Price">@p.Name</option>
-            }
-        </select>
-    </div>
-
-    <div class="text-end">
-        <h4>Tổng tiền: <span id="totalAmount">0</span> ₫</h4>
-    </div>
-
-    <input type="hidden" name="ItemsJson" id="ItemsJson" />
-
-    <button type="submit" class="btn btn-success mt-3">Xác nhận thanh toán</button>
-</form>
 
 @section Scripts {
-<script>
-    let items = [];
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // === BIẾN TOÀN CỤC ===
+        var cart = []; // Mảng chứa các item trong giỏ hàng
+        var discountAmount = 0; // Số tiền giảm giá
+        var currentCategoryFilter = 'all'; // Danh mục đang được lọc
+        var $voucherMessage;
+        var customersData = [];
+        var defaultCustomerOption = '';
+        var $customerResults;
+        var lastFinalTotal = 0;
+        var cashGiven = 0;
 
-    const productSelect = document.getElementById("productSelect");
-    const posBody = document.getElementById("posBody");
-    const totalAmount = document.getElementById("totalAmount");
-    const itemsJson = document.getElementById("ItemsJson");
+        // === KHỞI TẠO ===
+        $(document).ready(function() {
+            // Focus vào ô tìm kiếm khi load trang
+            $('#txtBarcode').focus();
+            
+            // Xử lý tìm kiếm sản phẩm
+            $('#txtBarcode').on('input', function() {
+                var searchTerm = $(this).val().toLowerCase();
+                filterProducts(searchTerm);
+            });
 
-    productSelect.addEventListener("change", function () {
-        const selected = this.options[this.selectedIndex];
-        const id = selected.value;
-        const name = selected.text;
-        const price = parseFloat(selected.getAttribute("data-price"));
+            // Xử lý tìm kiếm khách hàng
+            $('#customerSearch').on('input', function() {
+                var searchTerm = $(this).val().toLowerCase();
+                filterCustomers(searchTerm);
+                renderCustomerResults(searchTerm);
+            });
 
-        if (!id) return;
+            // Phím tắt
+            $(document).keydown(function(e) {
+                // F1: Focus vào ô tìm kiếm
+                if (e.key === 'F1') {
+                    e.preventDefault();
+                    $('#txtBarcode').focus();
+                }
+                // F12: Thanh toán
+                if (e.key === 'F12') {
+                    e.preventDefault();
+                    if (cart.length > 0) {
+                        $('#checkoutForm').submit();
+                    }
+                }
+                // Esc: Hủy giỏ hàng
+                if (e.key === 'Escape') {
+                    e.preventDefault();
+                    if (confirm('Bạn có chắc muốn hủy đơn hàng này?')) {
+                        clearCart();
+                    }
+                }
+            });
 
-        let existing = items.find(x => x.productId === parseInt(id));
-        if (existing) {
-            existing.quantity++;
-        } else {
-            items.push({ productId: parseInt(id), productName: name, quantity: 1, unitPrice: price });
-        }
+            renderCart();
+            $voucherMessage = $('#voucherMessage');
 
-        renderItems();
-        this.value = "";
-    });
-
-    function renderItems() {
-        posBody.innerHTML = "";
-        let total = 0;
-
-        items.forEach((item, i) => {
-            const subtotal = item.quantity * item.unitPrice;
-            total += subtotal;
-
-            posBody.innerHTML += `
-                <tr>
-                    <td>${item.productName}</td>
-                    <td>${item.unitPrice.toLocaleString()}</td>
-                    <td><input type="number" value="${item.quantity}" min="1" class="form-control"
-                        onchange="updateQty(${i}, this.value)" /></td>
-                    <td>${subtotal.toLocaleString()}</td>
-                    <td><button type="button" class="btn btn-danger btn-sm" onclick="removeItem(${i})">X</button></td>
-                </tr>`;
+            // Lưu danh sách khách hàng gốc để filter
+            var $customerSelect = $('#customerSelect');
+            var $options = $customerSelect.find('option');
+            if ($options.length > 0) {
+                defaultCustomerOption = $options.eq(0).prop('outerHTML'); // Khách lẻ
+                customersData = $options.toArray().slice(1).map(function (opt) {
+                    var $opt = $(opt);
+                    var text = ($opt.text() || '').trim();
+                    return {
+                        value: $opt.val(),
+                        text: text,
+                        search: text.toLowerCase()
+                    };
+                });
+            }
+            $customerResults = $('#customerResults');
         });
 
-        totalAmount.textContent = total.toLocaleString();
-        itemsJson.value = JSON.stringify(items);
-    }
+        function setVoucherMessage(text, isError) {
+            if (!$voucherMessage) return;
+            $voucherMessage
+                .text(text || '')
+                .removeClass('text-danger text-success text-muted')
+                .addClass(text ? (isError ? 'text-danger' : 'text-success') : 'text-muted');
+        }
 
-    function updateQty(index, qty) {
-        items[index].quantity = parseInt(qty);
-        renderItems();
-    }
+        function handleCashGiven(value) {
+            var amount = parseFloat(value);
+            cashGiven = isNaN(amount) || amount < 0 ? 0 : amount;
+            updateChange();
+        }
 
-    function removeItem(index) {
-        items.splice(index, 1);
-        renderItems();
-    }
-</script>
+        function updateChange() {
+            var change = Math.max(0, cashGiven - lastFinalTotal);
+            $('#changeAmount').text(change.toLocaleString('vi-VN') + ' ₫');
+        }
+
+        // === THÊM SẢN PHẨM VÀO GIỎ HÀNG ===
+        function addToCart(id, name, price, stock) {
+            if (stock <= 0) {
+                alert("Sản phẩm tạm hết hàng!");
+                return;
+            }
+
+            var existingItem = cart.find(x => x.productId === id);
+            if (existingItem) {
+                if (existingItem.quantity >= stock) {
+                    alert("Không đủ hàng trong kho!");
+                    return;
+                }
+                existingItem.quantity++;
+            } else {
+                cart.push({ 
+                    productId: id, 
+                    productName: name, 
+                    quantity: 1, 
+                    unitPrice: price 
+                });
+            }
+
+            renderCart();
+            $('#txtBarcode').val('').focus();
+        }
+
+        // === HIỂN THỊ GIỎ HÀNG ===
+        function renderCart() {
+            var html = '';
+            var total = 0;
+
+            cart.forEach((item, index) => {
+                var subtotal = item.quantity * item.unitPrice;
+                total += subtotal;
+
+                html += `<tr>
+                    <td class="align-middle">${item.productName}</td>
+                    <td class="align-middle">
+                        <input type="number" min="1" value="${item.quantity}" class="form-control form-control-sm p-1 text-center" 
+                               onchange="updateQty(${index}, this.value)" style="width: 60px;">
+                    </td>
+                    <td class="align-middle text-right">${subtotal.toLocaleString('vi-VN')} ₫</td>
+                    <td class="align-middle text-center">
+                        <i class="fa fa-trash text-danger pointer" onclick="removeItem(${index})" style="cursor: pointer;"></i>
+                    </td>
+                </tr>`;
+            });
+
+            $('#cart-body').html(html);
+            $('#subTotal').text(total.toLocaleString('vi-VN') + ' ₫');
+            
+            var finalTotal = Math.max(0, total - discountAmount);
+            lastFinalTotal = finalTotal;
+            $('#finalTotal').text(finalTotal.toLocaleString('vi-VN') + ' ₫');
+            $('#discountAmount').text('-' + discountAmount.toLocaleString('vi-VN') + ' ₫');
+
+            // Cập nhật ItemsJson để submit form
+            var itemsForSubmit = cart.map(item => ({
+                ProductId: item.productId,
+                ProductName: item.productName,
+                Quantity: item.quantity,
+                UnitPrice: item.unitPrice
+            }));
+            $('#ItemsJson').val(JSON.stringify(itemsForSubmit));
+
+            updateChange();
+        }
+
+        // === CẬP NHẬT SỐ LƯỢNG ===
+        function updateQty(index, qty) {
+            var quantity = parseInt(qty);
+            if (quantity < 1) quantity = 1;
+            cart[index].quantity = quantity;
+            renderCart();
+        }
+
+        // === XÓA SẢN PHẨM ===
+        function removeItem(index) {
+            cart.splice(index, 1);
+            renderCart();
+        }
+
+        // === LỌC SẢN PHẨM THEO DANH MỤC ===
+        function filterCategory(categoryId) {
+            currentCategoryFilter = categoryId;
+            
+            // Cập nhật active tab
+            $('#categoryTabs .nav-link').removeClass('active');
+            $('#categoryTabs .nav-link').each(function() {
+                if ($(this).attr('onclick') && $(this).attr('onclick').includes("'" + categoryId + "'")) {
+                    $(this).addClass('active');
+                }
+            });
+
+            // Lọc sản phẩm
+            $('.product-item').each(function() {
+                if (categoryId === 'all' || $(this).data('cat') == categoryId) {
+                    $(this).show();
+                } else {
+                    $(this).hide();
+                }
+            });
+        }
+
+        // === TÌM KIẾM SẢN PHẨM ===
+        function filterProducts(searchTerm) {
+            $('.product-item').each(function() {
+                var productName = $(this).data('name') || '';
+                var categoryId = $(this).data('cat');
+                
+                var matchSearch = !searchTerm || productName.includes(searchTerm);
+                var matchCategory = currentCategoryFilter === 'all' || categoryId == currentCategoryFilter;
+                
+                if (matchSearch && matchCategory) {
+                    $(this).show();
+                } else {
+                    $(this).hide();
+                }
+            });
+        }
+
+        // === TÌM KIẾM KHÁCH HÀNG ===
+        function filterCustomers(searchTerm) {
+            var term = (searchTerm || '').trim().toLowerCase();
+            var $customerSelect = $('#customerSelect');
+            var current = $customerSelect.val();
+
+            var filtered = term
+                ? customersData.filter(function (c) { return c.search.includes(term); })
+                : customersData;
+
+            var html = defaultCustomerOption;
+            filtered.forEach(function (c) {
+                html += `<option value="${c.value}">${c.text}</option>`;
+            });
+
+            $customerSelect.html(html);
+
+            // Giữ nguyên lựa chọn nếu còn tồn tại sau filter, ngược lại về Khách lẻ
+            if (current && $customerSelect.find(`option[value="${current}"]`).length) {
+                $customerSelect.val(current);
+            } else {
+                $customerSelect.val('0');
+            }
+        }
+
+        // === HIỂN THỊ KẾT QUẢ TÌM KHÁCH DƯỚI TEXTBOX ===
+        function renderCustomerResults(searchTerm) {
+            if (!$customerResults) return;
+            var term = (searchTerm || '').trim().toLowerCase();
+            var filtered = term
+                ? customersData.filter(function (c) { return c.search.includes(term); })
+                : customersData.slice(0, 10); // hiển thị tối đa 10 nếu chưa nhập
+
+            if (filtered.length === 0) {
+                $customerResults.hide().empty();
+                return;
+            }
+
+            var html = filtered.map(function (c) {
+                return `<a href="#" class="list-group-item list-group-item-action" data-id="${c.value}">${c.text}</a>`;
+            }).join('');
+
+            $customerResults.html(html).show();
+
+            $customerResults.find('a').off('click').on('click', function (e) {
+                e.preventDefault();
+                var id = $(this).data('id');
+                $('#customerSelect').val(id);
+                $('#customerSearch').val($(this).text());
+                $customerResults.hide();
+            });
+
+            // Ẩn khi bấm ra ngoài
+            $(document).off('click.customerResults').on('click.customerResults', function (e) {
+                if (!$(e.target).closest('#customerResults, #customerSearch').length) {
+                    $customerResults.hide();
+                }
+            });
+        }
+
+        // === ÁP DỤNG VOUCHER ===
+        function applyVoucher() {
+            var code = $('#voucherCode').val().trim();
+            if (!code) {
+                setVoucherMessage('Vui lòng nhập mã giảm giá!', true);
+                return;
+            }
+            if (cart.length === 0) {
+                setVoucherMessage('Giỏ hàng đang trống, hãy thêm sản phẩm trước.', true);
+                return;
+            }
+
+            // Tính tạm tính hiện tại
+            var subTotal = cart.reduce((sum, item) => sum + (item.quantity * item.unitPrice), 0);
+
+            $.getJSON('@Url.Action("ValidateVoucher", "POS")', { code: code })
+                .done(function (res) {
+                    if (!res || res.success !== true) {
+                        discountAmount = 0;
+                        renderCart();
+                        setVoucherMessage(res && res.message ? res.message : 'Mã voucher không hợp lệ.', true);
+                        return;
+                    }
+
+                    var percent = parseFloat(res.discountPercent) || 0;
+                    var calculated = Math.floor(subTotal * percent / 100);
+                    discountAmount = Math.min(subTotal, calculated);
+
+                    renderCart();
+                    setVoucherMessage(res.message || 'Áp dụng voucher thành công!', false);
+                })
+                .fail(function () {
+                    setVoucherMessage('Không thể kiểm tra voucher. Vui lòng thử lại.', true);
+                });
+        }
+
+        // === XÓA GIỎ HÀNG ===
+        function clearCart() {
+            if (cart.length === 0) return;
+            if (confirm('Bạn có chắc muốn xóa toàn bộ giỏ hàng?')) {
+                cart = [];
+                discountAmount = 0;
+                $('#voucherCode').val('');
+                renderCart();
+            }
+        }
+
+        // === HIỂN THỊ MODAL KHÁCH HÀNG ===
+        function showCustomerModal() {
+            alert('Tính năng thêm khách hàng mới đang được phát triển!');
+        }
+    </script>
+}
+
+@section Styles {
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <style>
+        /* CSS Tùy chỉnh */
+        body, html { 
+            height: 100%; 
+            overflow: hidden; 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+        }
+        #product-list-container {
+            flex: 1 1 auto;
+            min-height: 0;
+            max-height: none;
+            overflow-y: auto;
+        }
+        .products-column {
+            min-height: 0;
+        }
+        .checkout-footer {
+            position: sticky;
+            bottom: 0;
+            background: #f8f9fa;
+            z-index: 20;
+            box-shadow: 0 -2px 6px rgba(0,0,0,0.06);
+        }
+        .pointer { 
+            cursor: pointer; 
+        }
+        .product-item:hover .card { 
+            border-color: #007bff; 
+            transform: translateY(-2px); 
+            transition: all 0.2s; 
+        }
+        .nav-pills .nav-link.active { 
+            background-color: #007bff; 
+        }
+        .nav-pills .nav-link { 
+            color: #555; 
+            background: #e9ecef; 
+            margin-right: 5px; 
+            margin-bottom: 5px; 
+        }
+        
+        /* Tùy chỉnh thanh cuộn cho đẹp */
+        ::-webkit-scrollbar { 
+            width: 8px; 
+        }
+        ::-webkit-scrollbar-track { 
+            background: #f1f1f1; 
+        }
+        ::-webkit-scrollbar-thumb { 
+            background: #ccc; 
+            border-radius: 4px; 
+        }
+        ::-webkit-scrollbar-thumb:hover { 
+            background: #888; 
+        }
+
+        /* Đảm bảo container full height */
+        .container-fluid.h-100 {
+            height: 100vh;
+        }
+    </style>
 }
