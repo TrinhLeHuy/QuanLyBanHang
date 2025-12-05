@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using QuanLyBanHang.Data.DataContext;
 
@@ -11,9 +12,11 @@ using QuanLyBanHang.Data.DataContext;
 namespace QuanLyBanHang.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251205075639_InitialCreate")]
+    partial class InitialCreate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -203,12 +206,6 @@ namespace QuanLyBanHang.Data.Migrations
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("OrderId"));
 
-                    b.Property<decimal>("CashGiven")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("ChangeAmount")
-                        .HasColumnType("decimal(18,2)");
-
                     b.Property<int?>("CustomerId")
                         .HasColumnType("int");
 
@@ -220,16 +217,6 @@ namespace QuanLyBanHang.Data.Migrations
 
                     b.Property<DateTime>("OrderDate")
                         .HasColumnType("datetime(6)");
-
-                    b.Property<string>("PaymentMethod")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("varchar(50)");
-
-                    b.Property<string>("PaymentStatus")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("varchar(50)");
 
                     b.Property<decimal>("TotalAmount")
                         .HasColumnType("decimal(18,2)");
