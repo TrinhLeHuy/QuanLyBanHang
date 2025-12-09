@@ -34,13 +34,13 @@
 <form asp-action="Create" method="post" id="orderCreateForm">
     <div class="mb-3">
         <label>Khách hàng</label>
-        <select asp-for="CustomerId" class="form-select"
+        <select asp-for="CustomerId" class="form-select w-auto"
                 asp-items="@(new SelectList(ViewBag.Customers, "CustomerId", "FullName"))"></select>
     </div>
 
     <div class="mb-3">
         <label>Nhân viên</label>
-        <select asp-for="EmployeeId" class="form-select"
+        <select asp-for="EmployeeId" class="form-select w-auto"
                 asp-items="@(new SelectList(ViewBag.Employees, "EmployeeId", "FullName"))"></select>
     </div>
 
@@ -50,6 +50,7 @@
                 <th>Sản phẩm</th>
                 <th>Số lượng</th>
                 <th>Đơn giá</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -58,7 +59,7 @@
     </table>
     <div class="mb-3">
         <label>Khuyến mãi</label>
-        <select asp-for="VoucherId" class="form-select" id="selectVoucher">
+        <select asp-for="VoucherId" class="form-select w-auto" id="selectVoucher">
             @foreach (var v in ViewBag.Vouchers)
             {
                 <option value="@v.Id" data-discountvalue="@v.DiscountValue" title="@v.Description" data-qty="@v.Quantity - @v.UsedCount">
@@ -72,7 +73,7 @@
     </div>
     <div class="mb-3">
         <label>Trạng thái đơn</label>
-        <select asp-for="Status" class="form-select"
+        <select asp-for="Status" class="form-select w-auto"
                 asp-items="Html.GetEnumSelectList<OrderStatus>()"></select>
     </div>
 

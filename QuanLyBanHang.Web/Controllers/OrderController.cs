@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using QuanLyBanHang.Data.DataContext;
 using QuanLyBanHang.Data.Entities;
+using QuanLyBanHang.Data.Enums;
 using QuanLyBanHang.Web.Models;
 using System;
 using System.Collections.Generic;
@@ -35,13 +36,61 @@ namespace QuanLyBanHang.Web.Controllers
                 .ToList();
             return PartialView("OrderTable", orders);
         }
-        public IActionResult LoadFilter(string filter)
+        public IActionResult LoadFilter(string filter, string status)
         {
-            var orders = _context.Orders
-                        .Include(o => o.Customer)
-                        .Where(o => o.Customer != null && o.Customer.FullName.ToLower().Contains(filter.ToLower()))
-                        .ToList();
+            var orders = new List<Order>();
+            if(status !="Tất cả")
+            {
+                orders = _context.Orders
+                            .Include(o => o.Customer)
+                            .Where(o => o.Customer != null && o.Customer.FullName.ToLower().Contains(filter.ToLower()) && o.Status.ToString() == status)
+                            .ToList();
+            }
+            else
+            {
+                orders = _context.Orders
+                            .Include(o => o.Customer)
+                            .Where(o => o.Customer != null && o.Customer.FullName.ToLower().Contains(filter.ToLower()))
+                            .ToList();
+            }
+
             return PartialView("OrderTable", orders);
+        }
+
+        public IActionResult LoadFilterDate(DateTime start, DateTime end, string status)
+        {
+            var orders = new List<Order>();
+            if (status != "Tất cả")
+            {
+                orders = _context.Orders
+                            .Include(o => o.Customer)
+                            .Where(o => o.OrderDate>= start && o.OrderDate <= end && o.Status.ToString() == status)
+                            .ToList();
+            }
+            else
+            {
+                orders = _context.Orders
+                            .Include(o => o.Customer)
+                            .Where(o => o.OrderDate >= start && o.OrderDate <= end)
+                            .ToList();
+            }
+
+            return PartialView("OrderTable", orders);
+        }
+
+        public IActionResult LoadFilterStatus(string status)
+        {
+            if (status != "Tất cả")
+            {
+                var orders = _context.Orders
+                        .Where(o => o.Status.ToString() == status)
+                        .ToList();
+                return PartialView("OrderTable", orders);
+            }
+            else
+            {
+                return LoadTable();
+            }
         }
 
         // -------------------- CREATE (GET) --------------------

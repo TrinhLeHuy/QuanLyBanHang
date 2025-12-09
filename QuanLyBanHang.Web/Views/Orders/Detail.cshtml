@@ -83,8 +83,9 @@
     {
         <div class="mb-3">
             <label>Trạng thái đơn</label>
-            <select asp-for="Status" class="form-select"
-                    asp-items="Html.GetEnumSelectList<OrderStatus>()"></select>
+            <select asp-for="Status" class="form-select w-auto"
+                    asp-items="Html.GetEnumSelectList<OrderStatus>()">
+                    </select>
         </div>
         <button type="submit" class="btn btn-success">Cập nhật</button>
     }

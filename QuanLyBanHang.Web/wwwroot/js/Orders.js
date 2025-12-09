@@ -3,22 +3,57 @@ let urlCreate = document.getElementById("orderCreate").value;
 let urlDetail = document.getElementById("orderDetail").value;
 let urlTable = document.getElementById("orderTable").value;
 let urlFilter = document.getElementById("orderFilter").value;
-
+let urlFilterStatus = document.getElementById("orderFilterStatus").value;
+let urlFilterDate = document.getElementById("orderFilterDate").value;
 document.addEventListener("click", function (e) {
     if (e.target.classList.contains("btn-remove")) {
         e.target.closest("tr").remove();
     }
 });
 //----------------Filter-------------------
+
+document.getElementById("filterType").addEventListener("change", function () {
+    const type = this.selectedIndex.value;
+    const inputFilterName = document.getElementById("strFilterOrder");
+    const inputFilterDate = document.getElementById("inputFilterDate");
+    if (type == "1") {
+        inputFilterName.classList.remove("d-none");
+        inputFilterDate.classList.add("d-none");
+    } else {
+        inputFilterName.classList.add("d-none");
+        inputFilterDate.classList.remove("d-none");
+    }
+})
+document.getElementById("filterStatus").addEventListener("change", function () {
+    const status = this.options[this.selectedIndex].text;
+    if (status == "Tất cả") {
+        reloadTable();
+    } else {
+        reloadFilterStatus(status);
+    }
+})
+
 document.getElementById("btnFilterOrder").addEventListener("click", function (e) {
     e.preventDefault();
-    const stringfilter = document.getElementById("strFilterOrder").value.trim();
-    reloadFilter(stringfilter);
+    const type = document.getElementById("filterType").value;
+    const selectStatus = document.getElementById("filterStatus");
+    const status = selectStatus.options[selectStatus.selectedIndex].text;
+    if (type == "1") {
+        const stringfilter = document.getElementById("strFilterOrder").value.trim();
+        reloadFilter(stringfilter, status);
+    } else {
+        const startDate = document.getElementById('startDate').value;
+        const endDate = document.getElementById('endDate').value;
+        reloadFilterDate(startDate, endDate, status)
+    }
+    
     document.getElementById("btnRefreshOrder").style.display = "block";
 });
 document.getElementById("btnRefreshOrder").addEventListener("click", function (e) {
     e.preventDefault();
-    reloadTable();
+    const selectStatus = document.getElementById("filterStatus");
+    const status = selectStatus.options[selectStatus.selectedIndex].text;
+    reloadFilterStatus(status);
     document.getElementById("strFilterOrder").value="";
     this.style.display = "none";
 });
@@ -237,8 +272,36 @@ function reloadTable() {
         .catch(err => console.error("Lỗi reloadTable:", err));
 }
 
-function reloadFilter(stringfilter) {
-    fetch(`${urlFilter}?filter=${stringfilter}`)
+function reloadFilter(stringfilter, status) {
+    const params = new URLSearchParams({
+        filter: stringfilter,
+        status: status
+    });
+    fetch(`${urlFilter}?${params}`)
+        .then(res => res.text())
+        .then(html => {
+            document.querySelector("#orders-table").innerHTML = html;
+        })
+        .catch(err => console.error("Lỗi reloadFilter:", err));
+}
+
+function reloadFilterDate(start, end, status) {
+    const params = new URLSearchParams({
+        start: start,
+        end: end,
+        status: status
+    });
+    fetch(`${urlFilterDate}?${params}`)
+        .then(res => res.text())
+        .then(html => {
+            document.querySelector("#orders-table").innerHTML = html;
+        })
+        .catch(err => console.error("Lỗi reloadFilter:", err));
+}
+
+function reloadFilterStatus(stringfilter) {
+    console.log(stringfilter);
+    fetch(`${urlFilterStatus}?status=${stringfilter}`)
         .then(res => res.text())
         .then(html => {
             document.querySelector("#orders-table").innerHTML = html;
