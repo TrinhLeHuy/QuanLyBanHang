@@ -1,0 +1,25 @@
+﻿@model QuanLyBanHang.Data.Entities.Warehouse
+
+@{
+    ViewData["Title"] = "Xóa Kho Hàng";
+}
+
+<h2 class="mb-4 text-danger">🗑️ Xóa Kho Hàng</h2>
+
+<div class="alert alert-warning">
+    <strong>Bạn chắc chắn muốn xóa kho này?</strong>
+</div>
+
+<ul class="list-group col-md-6 mb-3">
+    <li class="list-group-item"><strong>Mã kho:</strong> @Model.WarehouseId</li>
+    <li class="list-group-item"><strong>Tên kho:</strong> @Model.WarehouseName</li>
+    <li class="list-group-item"><strong>Vị trí:</strong> @Model.Location</li>
+    <li class="list-group-item"><strong>SĐT:</strong> @Model.Phone</li>
+</ul>
+
+<form asp-action="Delete" method="post">
+    <input type="hidden" asp-for="WarehouseId" />
+
+    <button type="submit" class="btn btn-danger">Xóa</button>
+    <a asp-action="Index" class="btn btn-secondary">Hủy</a>
+</form>

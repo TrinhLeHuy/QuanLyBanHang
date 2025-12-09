@@ -1,0 +1,36 @@
+@model IEnumerable<QuanLyBanHang.Data.Entities.Supplier>
+@{
+    ViewData["Title"] = "Danh sách nhà cung cấp";
+}
+<h2 class="text-center">@ViewData["Title"]</h2>
+
+<p>
+    <a class="btn btn-primary" asp-action="Create">+ Thêm nhà cung cấp</a>
+</p>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Tên nhà cung cấp</th>
+            <th>Địa chỉ</th>
+            <th>Điện thoại</th>
+            <th>Email</th>
+            <th>Thao tác</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var ncc in Model)
+        {
+            <tr>
+                <td>@ncc.SupplierName</td>
+                <td>@ncc.Address</td>
+                <td>@ncc.Phone</td>
+                <td>@ncc.Email</td>
+                <td>
+                    <a class="btn btn-sm btn-warning" asp-action="Edit" asp-route-id="@ncc.SupplierId">Sửa</a>
+                    <a class="btn btn-sm btn-danger" asp-action="Delete" asp-route-id="@ncc.SupplierId">Xóa</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

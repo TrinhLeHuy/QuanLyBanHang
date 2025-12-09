@@ -1,0 +1,22 @@
+@model IEnumerable<dynamic>
+@{
+    ViewData["Title"] = "Doanh thu theo nhân viên";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<table class="table">
+    <thead>
+        <tr><th>Nhân viên</th><th>Số đơn</th><th>Tổng doanh thu (VNĐ)</th></tr>
+    </thead>
+    <tbody>
+    @foreach(var r in Model)
+    {
+        <tr>
+            <td>@r.EmployeeName</td>
+            <td>@r.OrdersCount</td>
+            <td>@string.Format("{0:N0}", r.TotalRevenue)</td>
+        </tr>
+    }
+    </tbody>
+</table>

@@ -1,0 +1,29 @@
+@model QuanLyBanHang.Web.Models.LoginViewModel
+@{
+    ViewData["Title"] = "Đăng nhập";
+}
+
+<div class="container mt-5" style="max-width:400px;">
+    <h2 class="text-center mb-4">Đăng nhập hệ thống</h2>
+
+    <form asp-action="Login" method="post">
+        <div class="form-group mb-3">
+            <label>Email</label>
+            <input asp-for="Email" class="form-control" />
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+
+        <div class="form-group mb-3">
+            <label>Mật khẩu</label>
+            <input asp-for="Password" type="password" class="form-control" />
+            <span asp-validation-for="Password" class="text-danger"></span>
+        </div>
+
+        @if (ViewBag.Error != null)
+        {
+            <div class="alert alert-danger mt-3">@ViewBag.Error</div>
+        }
+
+        <button type="submit" class="btn btn-primary w-100 mt-3">Đăng nhập</button>
+    </form>
+</div>

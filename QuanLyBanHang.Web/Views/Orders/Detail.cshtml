@@ -1,0 +1,100 @@
+﻿@model QuanLyBanHang.Data.Entities.Order
+@{
+    ViewData["Title"] = "Chi tiết đơn hàng";
+    Layout = null;
+    var productOptionsHtml = "";
+    foreach (var p in ViewBag.Products)
+    {
+        productOptionsHtml += $"<option value='{p.Id}' data-price='{p.Price}'>{p.Name}</option>";
+    }
+}
+
+<form asp-action="Update" method="post" id="orderUpdateForm">
+    <input type="hidden" asp-for="OrderId"/>
+    @if (@Model.Customer != null)
+    {
+        <div class="mb-3">
+            <label>Khách hàng: <span>@Model.Customer.FullName</span> </label>        
+        </div>
+    }
+    else
+    {
+        <div class="mb-3">
+            <label>Khách hàng: <span>Khách vãng lai</span> </label>        
+        </div>
+    }
+    @if (@Model.Employee != null)
+    {
+       <div class="mb-3">
+            <label>Nhân viên: <span>@Model.Employee.FullName</span></label>
+        </div>
+    }
+    else
+    {
+        <div class="mb-3">
+            <label>Nhân viên: <span>Admin</span></label>
+        </div>
+    }
+    <table class="table table-bordered" id="tableDetailOrders">
+        <thead class="table-light">
+            <tr>
+                <th>Sản phẩm</th>
+                <th>Số lượng</th>
+                <th>Đơn giá</th>
+                <th>Tổng tiền</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (int i = 0; i < Model.OrderDetails.Count; i++)
+            {
+                <tr>
+                    <td>
+                        <span>@ViewBag.Products[@Model.OrderDetails[i].ProductId].Name</span>
+                    </td>
+                    <td>
+                        <span>@Model.OrderDetails[@i].Quantity</span>
+                    </td>
+                    <td>
+                        <span>@Model.OrderDetails[@i].UnitPrice</span>
+                    </td>
+                    <td>
+                        <span>@Model.OrderDetails[@i].SubTotal</span>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    @if (@Model.Voucher != null)
+    {
+        <div class="mb-3">
+            <label>Khuyến mãi: <span>"@($"{Model.Voucher.Code} - {Model.Voucher.Description}")"</span></label>
+        </div>
+    }
+    else
+    {
+        <div class="mb-3">
+            <label>Khuyến mãi: <span>Không áp dụng</span></label>
+        </div>
+    }
+    <div class="mb-3">
+        <label>Tổng tiền: <span id="TotalAmount">@Model.TotalAmount<span> VND</span></span></label>
+    </div>
+    @if(@Model.Status == OrderStatus.Pending)
+    {
+        <div class="mb-3">
+            <label>Trạng thái đơn</label>
+            <select asp-for="Status" class="form-select"
+                    asp-items="Html.GetEnumSelectList<OrderStatus>()"></select>
+        </div>
+        <button type="submit" class="btn btn-success">Cập nhật</button>
+    }
+    else
+    {
+        <div class="mb-3">
+            <label>Trạng thái đơn: </label>
+            <span>@Model.Status</span>
+        </div>
+        @* <button type="submit" class="btn btn-success">Cập nhật</button> *@
+    }
+    <a asp-action="Index" class="btn btn-secondary">Thoát</a>
+</form>

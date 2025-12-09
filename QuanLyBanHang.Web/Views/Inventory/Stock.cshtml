@@ -1,0 +1,31 @@
+﻿@model IEnumerable<QuanLyBanHang.Web.Models.StockViewModel>
+
+@{
+    ViewData["Title"] = "Tồn Kho";
+}
+
+<h2 class="mb-4 fw-bold">📦 Tồn Kho</h2>
+
+<table class="table table-bordered table-striped">
+    <thead class="table-light">
+        <tr>
+            <th>Mã SP</th>
+            <th>Tên Sản Phẩm</th>
+            <th>Mã Kho</th>
+            <th>Tên Kho</th>
+            <th class="text-end">Số Lượng Tồn</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.ProductId</td>
+                <td>@item.ProductName</td>
+                <td>@item.WarehouseId</td>
+                <td>@item.WarehouseName</td>
+                <td class="fw-bold text-end">@item.Quantity</td>
+            </tr>
+        }
+    </tbody>
+</table>

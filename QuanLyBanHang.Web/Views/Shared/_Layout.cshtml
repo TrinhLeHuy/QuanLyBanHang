@@ -1,0 +1,170 @@
+﻿@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+
+@{
+    var employeeName = HttpContextAccessor.HttpContext.Session.GetString("EmployeeName");
+    var employeeRole = HttpContextAccessor.HttpContext.Session.GetString("EmployeeRole");
+    bool isLoggedIn = !string.IsNullOrEmpty(employeeName);
+    ViewBag.AccountName = employeeName;
+    ViewBag.AccountRole = employeeRole;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - QuanLyBanHang.Web</title>
+
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/QuanLyBanHang.Web.styles.css" asp-append-version="true" />
+</head>
+
+<body>
+    @if (isLoggedIn)
+    {
+        <header>
+            <nav class="navbar navbar-expand-sm navbar-light bg-white border-bottom box-shadow mb-3">
+                <div class="container-fluid">
+                    <a class="navbar-brand" asp-controller="Home" asp-action="Index">QUẢN LÝ BÁN HÀNG</a>
+
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                            data-bs-target=".navbar-collapse">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+
+                    <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+
+                        <!-- ========================= -->
+                        <!--          MENU            -->
+                        <!-- ========================= -->
+                        <ul class="navbar-nav flex-grow-1">
+
+                            @if (employeeRole == "Admin")
+                            {
+                                <!-- ========= MENU ADMIN ========= -->
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-controller="Dashboard" asp-action="Index">Dashboard</a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-controller="Product" asp-action="Index">Sản phẩm</a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-controller="Customer" asp-action="Index">Khách hàng</a>
+                                </li>
+                                <li class ="nav-item">
+                                 <a class="nav-link text-dark" asp-controller="Categories" asp-action="Index">Danh mục</a>
+                                </li>
+                                <li class ="nav-item">
+                                 <a class="nav-link text-dark" asp-controller="Orders" asp-action="Index">Đơn hàng</a>
+                                </li>
+                                <li class ="nav-item">
+                                     <a class="nav-link text-dark" asp-controller="POS" asp-action="Index">💰 POS (Thanh toán)</a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-controller="Employee" asp-action="Index">Nhân viên</a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-controller="Statistics" asp-action="Index">Thống kê</a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-controller="Warehouse" asp-action="Index">Kho hàng</a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-controller="Supplier" asp-action="Index">Nhà cung cấp</a>
+                                </li>
+                                <li class="nav-item">
+                                     <a class="nav-link text-dark" asp-controller="Voucher" asp-action="Index">Giảm giá</a>
+                                </li>
+                                       
+
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
+                                        Nhập / Xuất
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" asp-controller="Inventory" asp-action="Import">Nhập kho</a></li>
+                                        <li><a class="dropdown-item" asp-controller="Inventory" asp-action="Export">Xuất kho</a></li>
+                                        <li><a class="dropdown-item" asp-controller="Inventory" asp-action="Stock">Tồn kho</a></li>
+                                        <li><a class="dropdown-item" asp-controller="Inventory" asp-action="Transactions">Lịch sử</a></li>
+                                    </ul>
+                                </li>
+                            }
+                            else
+                            {
+                                <!-- ========= MENU NHÂN VIÊN ========= -->
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-controller="Home" asp-action="Index">Trang chủ</a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-controller="Products" asp-action="Index">Sản phẩm</a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-controller="Order" asp-action="Index">Bán hàng</a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-controller="Inventory" asp-action="Stock">Xem tồn kho</a>
+                                </li>
+                            }
+
+                        </ul>
+
+                        <!-- ========================= -->
+                        <!--        USER INFO          -->
+                        <!-- ========================= -->
+                        <ul class="navbar-nav">
+                            <li class="nav-item">
+                                <span class="nav-link text-muted">
+                                    Xin chào, <strong>@employeeName</strong> (@employeeRole)
+                                </span>
+                            </li>
+
+                            <li class="nav-item">
+                                <form asp-controller="Auth" asp-action="Logout" method="post" class="d-inline">
+                                    <button type="submit" class="btn btn-link nav-link text-dark">Đăng xuất</button>
+                                </form>
+                            </li>
+                        </ul>
+
+                    </div>
+                </div>
+            </nav>
+        </header>
+    }
+
+    <!-- ========================= -->
+    <!--         MAIN BODY         -->
+    <!-- ========================= -->
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <!-- ========================= -->
+    <!--          FOOTER           -->
+    <!-- ========================= -->
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2025 - QuanLyBanHang.Web - <a asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+
+</html>

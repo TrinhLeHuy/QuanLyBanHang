@@ -1,0 +1,27 @@
+﻿@inherits LayoutComponentBase
+@inject UserSessionService Session
+
+<link rel="stylesheet" href="/lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="/css/site.css" asp-append-version="true" />
+
+<div class="page">
+
+    @if (Session.IsLoggedIn)
+    {
+        <header>
+            <NavMenu />
+        </header>
+    }
+
+    <div class="content px-4 py-3">
+        @Body
+    </div>
+
+    <footer class="border-top text-muted mt-4 p-3">
+        <div class="container">
+            © 2025 - QuanLyBanHang.Web
+        </div>
+    </footer>
+</div>
+
+

@@ -1,0 +1,74 @@
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+-+-<div class="container-fluid">
+    <div class="row">
+
+        <!-- CONTENT -->
+        <div class="col-10 p-4">
+            <h2 class="mb-4">📊 Dashboard Tổng Quan</h2>
+
+            <div class="row">
+
+                <div class="col-md-3">
+                    <a asp-controller="Product" asp-action="Index" class="text-decoration-none">
+                        <div class="card text-white bg-primary mb-3">
+                            <div class="card-body">
+                                <h5 class="card-title">Tổng Sản Phẩm</h5>
+                                <p class="card-text">Xem tất cả sản phẩm trong kho</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="col-md-3">
+                    <a asp-controller="Customer" asp-action="Index" class="text-decoration-none">
+                        <div class="card text-white bg-success mb-3">
+                            <div class="card-body">
+                                <h5 class="card-title">Khách Hàng</h5>
+                                <p class="card-text">Quản lý danh sách khách hàng</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="col-md-3">
+                    <a asp-controller="Employee" asp-action="Index" class="text-decoration-none">
+                        <div class="card text-white bg-warning mb-3">
+                            <div class="card-body">
+                                <h5 class="card-title">Nhân Viên</h5>
+                                <p class="card-text">Quản lý nhân viên bán hàng</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="col-md-3">
+                    <a asp-controller="POS" asp-action="Index" class="text-decoration-none">
+                        <div class="card text-white bg-danger mb-3">
+                            <div class="card-body">
+                                <h5 class="card-title">POS</h5>
+                                <p class="card-text">Đi đến màn hình thanh toán</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-md-3">
+                    <a asp-controller="Voucher" asp-action="Index" class="text-decoration-none">
+                        <div class="card text-white bg-danger mb-3">
+                            <div class="card-body">
+                                <h5 class="card-title">Voucher</h5>
+                                <p class="card-text">Quản lý mã giảm giá</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+            </div>
+
+            <hr />
+            <p>Chọn mục ở thanh bên trái để tiếp tục quản lý.</p>
+        </div>
+    </div>
+</div>

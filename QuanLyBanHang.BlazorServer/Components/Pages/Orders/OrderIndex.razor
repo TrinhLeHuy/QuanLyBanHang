@@ -1,0 +1,209 @@
+﻿@page "/orders"
+@inject IOrderService OrderService
+@inject IProductService ProductService
+@inject ICustomerService CustomerService
+@inject IEmployeeService EmployeeService
+@inject IVoucherService VoucherService
+@inject IJSRuntime JS
+@rendermode InteractiveServer
+
+<link rel="stylesheet" href="/css/Orders.css" />
+<h2>Quản lý đơn hàng</h2>
+
+<div class="d-flex mb-3">
+    <input type="text" class="form-control w-25"
+           placeholder="Tìm theo tên khách hàng..."
+           @bind="keyword">
+
+    <button class="btn btn-primary ms-2" @onclick="FilterOrder">Tìm kiếm</button>
+    <button class="btn btn-danger ms-2" id="@(isFiltered ? "" : "btnRefreshOrder")"  @onclick="ResetFilter">Bỏ lọc</button>
+</div>
+
+<button class="btn btn-success mb-3" @onclick="OpenCreate">Tạo đơn hàng</button>
+<div style="max-height: 800px; overflow-y: auto;">
+<OrderTable Orders="orders" OnView="OpenDetail" />
+</div>
+
+<DialogContainer IsOpen="@showDialog" IsOpenChanged="OnDialogChanged">
+    @currentDialog
+</DialogContainer>
+
+@code {
+    private List<Order> orders = new();
+    private List<Product> products = new();
+    private List<Customer> customers = new();
+    private List<Employee> employees = new();
+    private List<Voucher> vouchers = new();
+    string keyword = "";
+    bool showDialog;
+    bool isFiltered = false;
+    RenderFragment? currentDialog;
+
+    protected override async Task OnInitializedAsync()
+    {
+        orders = await OrderService.GetAllAsync();
+    }
+
+    async Task FilterOrder()
+    {
+        orders = await OrderService.GetByFilterNameAsync(keyword);
+        isFiltered = true;
+    }
+
+    async Task<Order?> OrderById(int id)
+    {
+        return await OrderService.GetByIdAsync(id);
+    }
+
+    async Task ResetFilter()
+    {
+        keyword = "";
+        orders = await OrderService.GetAllAsync();
+        isFiltered = false;
+    }
+
+    async Task GetAllProduct()
+    {
+        products = await ProductService.GetAllProductAsync();
+    }
+
+    async Task GetAllResCreate()
+    {
+        products = await ProductService.GetAllProductAsync();
+        customers = await CustomerService.GetAllAsync();
+        employees = await EmployeeService.GetAllAsync();
+        vouchers = await VoucherService.GetAllAsync();
+    }
+
+    async Task OpenCreate()
+    {
+        await GetAllResCreate();
+
+        ShowOrderCreate(products, employees, customers, vouchers);
+    }
+
+    void ShowOrderCreate(List<Product> products, List<Employee> employees, List<Customer> customers, List<Voucher> vouchers)
+    {
+        currentDialog = builder =>
+        {
+            builder.OpenComponent(0, typeof(OrderCreate));
+            builder.AddAttribute(1, "OnCreate", EventCallback.Factory.Create<Order>(this, OnCreate));
+            builder.AddAttribute(2, "products", products);
+            builder.AddAttribute(3, "employees", employees);
+            builder.AddAttribute(4, "customers", customers);
+            builder.AddAttribute(5, "vouchers", vouchers);
+            builder.AddAttribute(6, "ShowErrorValue", EventCallback.Factory.Create<string>(this, ShowErrorValue));
+            // builder.AddAttribute(6, "OnClose", EventCallback.Factory.Create(this, Close));
+            builder.CloseComponent();
+        };
+        showDialog = true;
+    }
+
+    async Task OpenDetail(int id)
+    {
+        var order = await OrderById(id);
+        await GetAllProduct();
+
+        ShowOrderDetail(order, products);
+    }
+
+    void ShowOrderDetail(Order order, List<Product> products)
+    {
+        currentDialog = builder =>
+        {
+            builder.OpenComponent(0, typeof(OrderDetail));
+            builder.AddAttribute(1, "order", order);
+            builder.AddAttribute(2, "Products", products);
+            builder.AddAttribute(3, "OnUpdate", EventCallback.Factory.Create<Order>(this, OnUpdate));
+            // builder.AddAttribute(4, "OnClose", EventCallback.Factory.Create(this, Close));
+            builder.CloseComponent();
+        };
+
+        showDialog = true;
+        StateHasChanged();
+    }
+
+
+
+
+    void Close()
+    {
+        showDialog = false;
+        StateHasChanged();
+    }
+
+    async Task OnCreate(Order order)
+    {
+        try
+        {
+            await OrderService.CreateAsync(order);
+            await ShowSuccessCreate();
+            showDialog = false;
+            await ReloadTable();
+        }catch(Exception ex)
+        {
+            await ShowError();
+        }
+
+    }
+
+    async Task OnUpdate(Order order)
+    {
+        try 
+        {
+            await OrderService.UpdateAsync(order);
+            await ShowSuccessUpdate();
+            showDialog = false;
+            await ReloadTable();
+        }
+        catch (Exception ex)
+        {
+            await ShowError();
+        }
+
+    }
+
+    async Task ReloadTable()
+    {
+        orders = await OrderService.GetAllAsync();
+    }
+
+    Task OnDialogChanged(bool v)
+    {
+        showDialog = v;
+        return Task.CompletedTask;
+    }
+    private async Task ShowSuccessCreate()
+    {
+        await JS.InvokeVoidAsync("SwalInterop.ShowSuccess", "Đã tạo đơn hàng!");
+    }
+
+    private async Task ShowSuccessUpdate()
+    {
+        await JS.InvokeVoidAsync("SwalInterop.ShowSuccess", "Đã cập nhật trạng thái đơn hàng!");
+    }
+
+    private async Task ShowError()
+    {
+        await JS.InvokeVoidAsync("SwalInterop.ShowError", "Có lỗi xảy ra!");
+    }
+
+    private async Task ShowErrorValue(string error)
+    {
+        await JS.InvokeVoidAsync("SwalInterop.ShowError", error);
+    }
+
+    private async Task ShowConfirm()
+    {
+        bool confirmed = await JS.InvokeAsync<bool>("SwalInterop.ShowConfirm", "Bạn muốn xóa mục này?");
+        if (confirmed)
+        {
+            Console.WriteLine("Đã xác nhận");
+        }
+        else
+        {
+            Console.WriteLine("Đã hủy");
+        }
+    }
+}
+

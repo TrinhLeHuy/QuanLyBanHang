@@ -1,0 +1,36 @@
+﻿@model QuanLyBanHang.Data.Entities.Warehouse
+
+@{
+    ViewData["Title"] = "Sửa Kho Hàng";
+}
+
+<h2 class="mb-4">✏️ Sửa Kho Hàng</h2>
+
+<form asp-action="Edit" method="post" class="col-md-6">
+    <input type="hidden" asp-for="WarehouseId" />
+
+    <div class="mb-3">
+        <label asp-for="WarehouseName" class="form-label">Tên kho</label>
+        <input asp-for="WarehouseName" class="form-control" />
+        <span class="text-danger" asp-validation-for="WarehouseName"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Location" class="form-label">Vị trí</label>
+        <input asp-for="Location" class="form-control" />
+        <span class="text-danger" asp-validation-for="Location"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Phone" class="form-label">Điện thoại</label>
+        <input asp-for="Phone" class="form-control" />
+        <span class="text-danger" asp-validation-for="Phone"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Cập nhật</button>
+    <a asp-action="Index" class="btn btn-secondary">Hủy</a>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -1,0 +1,34 @@
+@model IEnumerable<QuanLyBanHang.Data.Entities.Order>
+@{
+    ViewData["title"] = "Quản lý đơn hàng";
+}
+<link rel="stylesheet" href="~/css/Orders.css" />
+<h2>Quản lý đơn hàng</h2>
+
+<form class="d-flex mb-3">
+    <input type="text" id="strFilterOrder" name="keyword" class="form-control w-25" placeholder="Tìm theo tên khách hàng..." />
+    <button class="btn btn-primary ms-2" id="btnFilterOrder">Tìm kiếm</button>
+    <button class="btn btn-danger ms-2" id="btnRefreshOrder">Bỏ lọc</button>
+</form>
+
+<button type="button" class="btn btn-success mb-3" id="btnCreateOrder">Tạo đơn hàng</button>
+<div id="orders-table">
+    @await Html.PartialAsync("OrderTable", Model)
+</div>
+@* <div id="modal-container" class="hidden">
+    <div id="modal-content"></div>
+</div> *@
+
+<div id="create-container" class="hidden">
+    <div id="create-content"></div>
+</div>
+<div id="detail-container" class="hidden">
+    <div id="detail-content""></div>
+</div>
+<input type="hidden" id="orderCreate" value='@Url.Action("Create", "Orders")' />
+<input type="hidden" id="orderDetail" value='@Url.Action("Detail", "Orders")' />
+<input type="hidden" id="orderTable" value='@Url.Action("LoadTable", "Orders")' />
+<input type="hidden" id="orderFilter" value='@Url.Action("LoadFilter", "Orders")' />
+@section Scripts {
+    <script src="~/js/Orders.js"></script>
+}

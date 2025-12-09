@@ -1,0 +1,21 @@
+@model IEnumerable<dynamic>
+@{
+    ViewData["Title"] = "Doanh thu theo tháng";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<table class="table">
+    <thead>
+        <tr><th>Tháng / Năm</th><th>Tổng doanh thu (VNĐ)</th></tr>
+    </thead>
+    <tbody>
+    @foreach(var r in Model)
+    {
+        <tr>
+            <td>@($"{r.Month}/{r.Year}")</td>
+            <td>@string.Format("{0:N0}", r.TotalRevenue)</td>
+        </tr>
+    }
+    </tbody>
+</table>

@@ -1,0 +1,45 @@
+@model QuanLyBanHang.Data.Entities.Customer
+@{
+    ViewData["Title"] = "Thêm khách hàng";
+    Layout = null; // bỏ layout khi nạp qua AJAX
+}
+<link rel="stylesheet" href="~/css/custumerAdd.css" />
+
+<div class="customer-add-container">
+    <h2 class="customer-add-title">@ViewData["Title"]</h2>
+
+    <form id="createForm" asp-action="Create" method="post" class="customer-add-form">
+        <div class="customer-add-field">
+            <label for="FullName">Tên:</label>
+            <input asp-for="FullName" id="FullName" class="form-control" />
+            <span asp-validation-for="FullName" class="customer-add-error"></span>
+        </div>
+
+        <div class="customer-add-field">
+            <label for="Email">Email:</label>
+            <input asp-for="Email" id="Email" class="form-control" />
+            <span asp-validation-for="Email" class="customer-add-error"></span>
+        </div>
+
+        <div class="customer-add-field">
+            <label for="Phone">Điện thoại:</label>
+            <input asp-for="Phone" id="Phone" class="form-control" />
+            <span asp-validation-for="Phone" class="customer-add-error"></span>
+        </div>
+
+        <div class="customer-add-field">
+            <label for="Address">Địa chỉ:</label>
+            <input asp-for="Address" id="Address" class="form-control" />
+            <span asp-validation-for="Address" class="customer-add-error"></span>
+        </div>
+
+        <div class="customer-add-actions">
+            <button type="submit" class="customer-add-btn-save">Lưu</button>
+            <a asp-action="Index" class="customer-add-btn-back">Quay lại</a>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
