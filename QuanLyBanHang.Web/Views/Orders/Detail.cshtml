@@ -14,41 +14,41 @@
     @if (@Model.Customer != null)
     {
         <div class="mb-3">
-            <label>Khách hàng: <span>@Model.Customer.FullName</span> </label>        
+            <label class="fs-5 fw-bold">Khách hàng: <span>@Model.Customer.FullName</span> </label>        
         </div>
     }
     else
     {
         <div class="mb-3">
-            <label>Khách hàng: <span>Khách vãng lai</span> </label>        
+            <label class="fs-5 fw-bold">Khách hàng: <span>Khách vãng lai</span> </label>        
         </div>
     }
     @if (@Model.Employee != null)
     {
        <div class="mb-3">
-            <label>Nhân viên: <span>@Model.Employee.FullName</span></label>
+            <label class="fs-5 fw-bold">Nhân viên: <span>@Model.Employee.FullName</span></label>
         </div>
     }
     else
     {
         <div class="mb-3">
-            <label>Nhân viên: <span>Admin</span></label>
+            <label class="fs-5 fw-bold">Nhân viên: <span>Admin</span></label>
         </div>
     }
-    <table class="table table-bordered" id="tableDetailOrders">
-        <thead class="table-light">
-            <tr>
-                <th>Sản phẩm</th>
-                <th>Số lượng</th>
-                <th>Đơn giá</th>
-                <th>Tổng tiền</th>
+    <table class="table table-bordered table-striped" id="tableDetailOrders">
+        <thead class="table-primary">
+            <tr class="fs-5 fw-bold">
+                <th scope="col">Sản phẩm</th>
+                <th scope="col">Số lượng</th>
+                <th scope="col">Đơn giá</th>
+                <th scope="col">Tổng tiền</th>
             </tr>
         </thead>
         <tbody>
             @for (int i = 0; i < Model.OrderDetails.Count; i++)
             {
-                <tr>
-                    <td>
+                <tr class="fs-5">
+                    <td scope="row">
                         @foreach(var p in ViewBag.Products)
                         {
                             if(p.Id == Model.OrderDetails[i].ProductId)
@@ -73,7 +73,7 @@
     @if (@Model.Voucher != null)
     {
         <div class="mb-3">
-            <label>Khuyến mãi: <span>"@($"{Model.Voucher.Code} - {Model.Voucher.Description}")"</span></label>
+            <label class="fs-5 fw-bold">Khuyến mãi: <span>"@($"{Model.Voucher.Code} - {Model.Voucher.Description}")"</span></label>
         </div>
     }
     else
@@ -83,13 +83,16 @@
         </div>
     }
     <div class="mb-3">
-        <label>Tổng tiền: <span id="TotalAmount">@Model.TotalAmount<span> VND</span></span></label>
+        <label class="fs-5 fw-bold">Phương thức thanh toán: <span id="PaymentMethod">@Model.PaymentMethod</span></label>
+    </div>
+    <div class="mb-3">
+        <label class="fs-5 fw-bold">Tổng tiền: <span id="TotalAmount">@Model.TotalAmount<span> VND</span></span></label>
     </div>
     @if(@Model.Status == OrderStatus.Pending)
     {
         <div class="mb-3">
-            <label>Trạng thái đơn</label>
-            <select asp-for="Status" class="form-select w-auto"
+            <label class="fs-5 fw-bold">Trạng thái đơn</label>
+            <select class="fs-5 fw-bold" asp-for="Status" class="form-select w-auto"
                     asp-items="Html.GetEnumSelectList<OrderStatus>()">
                     </select>
         </div>
@@ -98,8 +101,8 @@
     else
     {
         <div class="mb-3">
-            <label>Trạng thái đơn: </label>
-            <span>@Model.Status</span>
+            <label class="fs-5 fw-bold">Trạng thái đơn: <span>@Model.Status</span></label>
+            
         </div>
         @* <button type="submit" class="btn btn-success">Cập nhật</button> *@
     }

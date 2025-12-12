@@ -44,13 +44,13 @@
                 asp-items="@(new SelectList(ViewBag.Employees, "EmployeeId", "FullName"))"></select>
     </div>
 
-    <table class="table table-bordered" id="tableDetailOrders">
-        <thead class="table-light">
+    <table class="table table-bordered table-striped" id="tableDetailOrders">
+        <thead class="table-primary">
             <tr>
-                <th>Sản phẩm</th>
-                <th>Số lượng</th>
-                <th>Đơn giá</th>
-                <th></th>
+                <th scope="col">Sản phẩm</th>
+                <th scope="col">Số lượng</th>
+                <th scope="col">Đơn giá</th>
+                <th scope="col"></th>
             </tr>
         </thead>
         <tbody>

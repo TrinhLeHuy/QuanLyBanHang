@@ -46,16 +46,16 @@
     @await Html.PartialAsync("OrderTable", Model)
 </div> *@
 <div>
-    <table class="table table-bordered">
-    <thead class="table-light">
+    <table class="table table-bordered table-striped">
+    <thead class="table-primary">
         <tr>
-            <th>Mã đơn</th>
-            <th>Khách hàng</th>
-            <th>Ngày đặt</th>
-            <th>Tổng tiền</th>
-            <th>Giảm giá</th>
+            <th scope="col">Mã đơn</th>
+            <th scope="col">Khách hàng</th>
+            <th scope="col">Ngày đặt</th>
+            <th scope="col">Tổng tiền</th>
+            <th scope="col">Giảm giá</th>
             @* <th>Trạng thái</th> *@
-            <th style="width: 1%">
+            <th scope="col" style="width: 1%">
                 <div class="d-flex align-items-center gap-2">
                     <span>Trạng thái:</span>
                     <select class="form-select w-auto" id="filterStatus" asp-items="Html.GetEnumSelectList<OrderStatus>()">

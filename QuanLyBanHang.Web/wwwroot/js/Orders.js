@@ -157,7 +157,7 @@ function initOrderCreate(content) {
 
         let row = `
                 <tr id="row${index}" data-sum=0>
-                    <td>
+                    <td scope="row">
                         <select name="OrderDetails[${index}].ProductId" class="form-select" id="select${index}">
                             ${productOptions}
                         </select>
