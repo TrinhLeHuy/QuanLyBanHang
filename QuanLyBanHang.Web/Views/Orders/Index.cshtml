@@ -20,9 +20,9 @@
     <input type="text" id="strFilterOrder" name="keyword" class="form-control w-25" placeholder="Tìm theo tên khách hàng..." />
 
     <div class="d-flex align-items-center gap-2 d-none" id="inputFilterDate">
-        <input type="date" id="startDate" class="form-control" value="@today.AddDays(-1).ToString("yyyy-MM-dd")" />
+        <input type="date" id="startDate" class="form-control" value="@today.AddDays(-1).ToString("yyyy-MM-dd")" max="@today.AddDays(-1).ToString("yyyy-MM-dd")"/>
         <span>-</span>
-        <input type="date" id="endDate" class="form-control" value="@today.ToString("yyyy-MM-dd")" />
+        <input type="date" id="endDate" class="form-control" value="@today.ToString("yyyy-MM-dd")" min="2024-01-01" max="@today.ToString("yyyy-MM-dd")"/>
     </div>
 
     @* <div>
@@ -89,5 +89,6 @@
 <input type="hidden" id="orderFilterStatus" value='@Url.Action("LoadFilterStatus", "Orders")' />
 <input type="hidden" id="orderFilterDate" value='@Url.Action("LoadFilterDate", "Orders")' />
 @section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="~/js/Orders.js"></script>
 }

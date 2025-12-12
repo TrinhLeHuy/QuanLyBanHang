@@ -12,8 +12,29 @@ document.addEventListener("click", function (e) {
 });
 //----------------Filter-------------------
 
+
+//--------ValidTime----------
+function updateEndDateMin() {
+    const startInput = document.getElementById("startDate");
+    const endInput = document.getElementById("endDate");
+    const startDate = new Date(startInput.value);
+    const minEnd = new Date(startDate);
+    minEnd.setDate(minEnd.getDate() + 1);
+    const minEndStr = minEnd.toISOString().split("T")[0];
+
+    endInput.min = minEndStr;
+    if (endInput.value < minEndStr) {
+        endInput.value = minEndStr;
+    }
+}
+updateEndDateMin();
+document.getElementById("startDate").addEventListener("change", updateEndDateMin);
+
+//---------------------------
+
 document.getElementById("filterType").addEventListener("change", function () {
-    const type = this.selectedIndex.value;
+    const type = this.value.toString();
+    console.log(type);
     const inputFilterName = document.getElementById("strFilterOrder");
     const inputFilterDate = document.getElementById("inputFilterDate");
     if (type == "1") {
@@ -26,6 +47,8 @@ document.getElementById("filterType").addEventListener("change", function () {
 })
 document.getElementById("filterStatus").addEventListener("change", function () {
     const status = this.options[this.selectedIndex].text;
+    document.getElementById("strFilterOrder").value = "";
+    document.getElementById("btnRefreshOrder").style.display = "none";
     if (status == "Tất cả") {
         reloadTable();
     } else {
@@ -35,7 +58,7 @@ document.getElementById("filterStatus").addEventListener("change", function () {
 
 document.getElementById("btnFilterOrder").addEventListener("click", function (e) {
     e.preventDefault();
-    const type = document.getElementById("filterType").value;
+    const type = document.getElementById("filterType").value.toString();
     const selectStatus = document.getElementById("filterStatus");
     const status = selectStatus.options[selectStatus.selectedIndex].text;
     if (type == "1") {
@@ -54,7 +77,7 @@ document.getElementById("btnRefreshOrder").addEventListener("click", function (e
     const selectStatus = document.getElementById("filterStatus");
     const status = selectStatus.options[selectStatus.selectedIndex].text;
     reloadFilterStatus(status);
-    document.getElementById("strFilterOrder").value="";
+    document.getElementById("strFilterOrder").value = "";
     this.style.display = "none";
 });
 //----------------Create-------------------
@@ -230,7 +253,21 @@ function eventOrderCreate(content) {
                 if (html.includes('<form')) {
                     content.innerHTML = html;
                     eventOrderCreate(content);
+                    Swal.fire({
+                        title: "Lỗi thêm!",
+                        text: "Dữ liệu không hợp lệ, vui lòng nhập lại và chọn đầy đủ các trường!",
+                        icon: "error",
+                        timer: 3000,
+                        showConfirmButton: false
+                    });
                 } else {
+                    Swal.fire({
+                        title: "Đã thêm!",
+                        text: "Thêm hóa đơn thành công!",
+                        icon: "success",
+                        timer: 2000,
+                        showConfirmButton: false
+                    });
                     document.getElementById("create-container").style.display = "none";
                     reloadTable();
                 }
@@ -249,11 +286,25 @@ function eventOrderUpdate(content) {
             .then(html => {
                 if (html.includes('<form')) {
                     content.innerHTML = html;
-                    eventOrderUpdate(content)
+                    eventOrderUpdate(content);
+                    Swal.fire({
+                        title: "Lỗi cập nhật!",
+                        text: "Không thể thay đổi trạng thái của đơn hàng này!",
+                        icon: "error",
+                        timer: 3000,
+                        showConfirmButton: false
+                    });
                 } else if (html.includes('404')) {
                     alert.log("404");
                 }
                 else {
+                    Swal.fire({
+                        title: "Đã cập nhật!",
+                        text: "Cập nhật trạng thái đơn hàng thành công!",
+                        icon: "success",
+                        timer: 2000,
+                        showConfirmButton: false
+                    });
                     document.getElementById("detail-container").style.display = "none";
                     reloadTable();
                 }

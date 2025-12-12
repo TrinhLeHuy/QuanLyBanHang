@@ -1,4 +1,4 @@
-﻿<table class="table table-bordered">
+﻿@* <table class="table table-bordered">
     <thead class="table-light">
         <tr>
             <th>Mã đơn</th>
@@ -10,7 +10,7 @@
             <th>Thao tác</th>
         </tr>
     </thead>
-    <tbody>
+    <tbody> *@
         @foreach (var o in Orders)
         {
             var color = "";
@@ -39,8 +39,8 @@
                 </td>
             </tr>
         }
-    </tbody>
-</table>
+@*     </tbody>
+</table> *@
 
 @code{
     [Parameter] public List<Order> Orders { get; set; }

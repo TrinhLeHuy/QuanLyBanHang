@@ -24,6 +24,25 @@ namespace QuanLyBanHang.Data.Entities
         [Column(TypeName = "ENUM('Pending','Paid','Canceled')")]
         public OrderStatus Status { get; set; } = OrderStatus.Pending;
 
+        //
+        [MaxLength(50)]
+        public string? VoucherCode { get; set; }
+
+        [Column(TypeName = "decimal(18,2)")]
+        [Range(0, double.MaxValue)]
+        public decimal CashGiven { get; set; }
+
+        [Column(TypeName = "decimal(18,2)")]
+        [Range(0, double.MaxValue)]
+        public decimal ChangeAmount { get; set; }
+
+        [MaxLength(50)]
+        public string PaymentMethod { get; set; } = "Cash";
+
+        [MaxLength(50)]
+        public string PaymentStatus { get; set; } = "Completed";
+        //
+
         [ForeignKey(nameof(Customer))]
         public int CustomerId { get; set; }
         public Customer? Customer { get; set; }

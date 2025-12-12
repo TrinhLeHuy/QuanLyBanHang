@@ -138,8 +138,13 @@ namespace QuanLyBanHang.Web.Controllers
             }
             order.OrderDetails = order.OrderDetails.Where(d => d != null).ToList();
             order.OrderDate = DateTime.Now;
+            var temp = _context.Vouchers.FirstOrDefault(v => v.Id == order.VoucherId);
             order.TotalAmount = order.OrderDetails.Sum(d => d.Quantity * d.UnitPrice);
-
+            if (temp != null)
+            {
+                order.DiscountAmount = temp.DiscountType == DiscountType.Percent ? order.TotalAmount*(temp.DiscountValue) : temp.DiscountValue;
+                order.TotalAmount -= order.DiscountAmount;
+            }
             _context.Orders.Add(order);
             _context.SaveChanges();
 
