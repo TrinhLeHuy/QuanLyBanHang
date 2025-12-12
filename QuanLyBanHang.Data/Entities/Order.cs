@@ -1,3 +1,4 @@
+using QuanLyBanHang.Data.Enums;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -10,7 +11,7 @@ namespace QuanLyBanHang.Data.Entities
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int OrderId { get; set; }  // 👈 Đặt tên chuẩn theo convention EF
+        public int OrderId { get; set; }
 
         [Required]
         public DateTime OrderDate { get; set; } = DateTime.Now;
@@ -23,6 +24,10 @@ namespace QuanLyBanHang.Data.Entities
         [Range(0, double.MaxValue)]
         public decimal DiscountAmount { get; set; }
 
+        [Column(TypeName = "ENUM('Pending','Paid','Canceled')")]
+        public OrderStatus Status { get; set; } = OrderStatus.Pending;
+
+        //
         [MaxLength(50)]
         public string? VoucherCode { get; set; }
 
@@ -39,20 +44,21 @@ namespace QuanLyBanHang.Data.Entities
 
         [MaxLength(50)]
         public string PaymentStatus { get; set; } = "Completed";
+        //
 
-        // 🔹 Khóa ngoại khách hàng
         [ForeignKey(nameof(Customer))]
         public int? CustomerId { get; set; }
         public Customer? Customer { get; set; }
 
-        // 🔹 Khóa ngoại nhân viên
+
         [ForeignKey(nameof(Employee))]
         public int EmployeeId { get; set; }
         public Employee? Employee { get; set; }
 
-        // 🔹 Danh sách chi tiết đơn hàng
+        [ForeignKey(nameof(Voucher))]
+        public int? VoucherId { get; set; }
+        public Voucher? Voucher { get; set; }
+
         public List<OrderDetail> OrderDetails { get; set; } = new List<OrderDetail>();
-
-
     }
 }

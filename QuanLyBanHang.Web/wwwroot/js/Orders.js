@@ -1,0 +1,361 @@
+﻿
+let urlCreate = document.getElementById("orderCreate").value;
+let urlDetail = document.getElementById("orderDetail").value;
+let urlTable = document.getElementById("orderTable").value;
+let urlFilter = document.getElementById("orderFilter").value;
+let urlFilterStatus = document.getElementById("orderFilterStatus").value;
+let urlFilterDate = document.getElementById("orderFilterDate").value;
+document.addEventListener("click", function (e) {
+    if (e.target.classList.contains("btn-remove")) {
+        e.target.closest("tr").remove();
+    }
+});
+//----------------Filter-------------------
+
+
+//--------ValidTime----------
+function updateEndDateMin() {
+    const startInput = document.getElementById("startDate");
+    const endInput = document.getElementById("endDate");
+    const startDate = new Date(startInput.value);
+    const minEnd = new Date(startDate);
+    minEnd.setDate(minEnd.getDate() + 1);
+    const minEndStr = minEnd.toISOString().split("T")[0];
+
+    endInput.min = minEndStr;
+    if (endInput.value < minEndStr) {
+        endInput.value = minEndStr;
+    }
+}
+updateEndDateMin();
+document.getElementById("startDate").addEventListener("change", updateEndDateMin);
+
+//---------------------------
+
+document.getElementById("filterType").addEventListener("change", function () {
+    const type = this.value.toString();
+    console.log(type);
+    const inputFilterName = document.getElementById("strFilterOrder");
+    const inputFilterDate = document.getElementById("inputFilterDate");
+    if (type == "1") {
+        inputFilterName.classList.remove("d-none");
+        inputFilterDate.classList.add("d-none");
+    } else {
+        inputFilterName.classList.add("d-none");
+        inputFilterDate.classList.remove("d-none");
+    }
+})
+document.getElementById("filterStatus").addEventListener("change", function () {
+    const status = this.options[this.selectedIndex].text;
+    document.getElementById("strFilterOrder").value = "";
+    document.getElementById("btnRefreshOrder").style.display = "none";
+    if (status == "Tất cả") {
+        reloadTable();
+    } else {
+        reloadFilterStatus(status);
+    }
+})
+
+document.getElementById("btnFilterOrder").addEventListener("click", function (e) {
+    e.preventDefault();
+    const type = document.getElementById("filterType").value.toString();
+    const selectStatus = document.getElementById("filterStatus");
+    const status = selectStatus.options[selectStatus.selectedIndex].text;
+    if (type == "1") {
+        const stringfilter = document.getElementById("strFilterOrder").value.trim();
+        reloadFilter(stringfilter, status);
+    } else {
+        const startDate = document.getElementById('startDate').value;
+        const endDate = document.getElementById('endDate').value;
+        reloadFilterDate(startDate, endDate, status)
+    }
+    
+    document.getElementById("btnRefreshOrder").style.display = "block";
+});
+document.getElementById("btnRefreshOrder").addEventListener("click", function (e) {
+    e.preventDefault();
+    const selectStatus = document.getElementById("filterStatus");
+    const status = selectStatus.options[selectStatus.selectedIndex].text;
+    reloadFilterStatus(status);
+    document.getElementById("strFilterOrder").value = "";
+    this.style.display = "none";
+});
+//----------------Create-------------------
+
+document.getElementById("btnCreateOrder").addEventListener("click", function () {
+
+    fetch(urlCreate)
+        .then(response => response.text())
+        .then(html => {
+            let modal = document.getElementById("create-container");
+            let content = document.getElementById("create-content");
+
+            content.innerHTML = html;
+            modal.style.display = "flex";
+            initOrderCreate(content);
+            eventOrderCreate(content);
+            content.querySelector("#addRow").click();
+            const voucher = content.querySelector(`#selectVoucher`);
+            const totaAmount = content.querySelector(`#TotalAmount`);
+            voucher.addEventListener("change", function () {
+                var discount = Number(voucher.options[voucher.selectedIndex].getAttribute("data-discountvalue"));
+                if (discount < 1.0) {
+                    totaAmount.innerText = (Math.floor(totaAmount.dataset.total) * (1.0 - discount)).toString();
+                } else if (discount > 0) {
+                    totaAmount.innerText = (Math.floor(totaAmount.dataset.total) - Math.floor(discount)).toString();
+                } else {
+                    totaAmount.innerText = (totaAmount.dataset.total).toString();
+                }
+            })
+        })
+        .catch(err => console.error("Lỗi load Create:", err));
+});
+
+document.getElementById("create-container").addEventListener("click", function (e) {
+    if (e.target === this) {
+        this.style.display = "none";
+        document.getElementById("create-content").innerHTML = "";
+    }
+});
+
+//----------------Detail-------------------
+
+document.addEventListener("click", function (e) {
+    if (e.target.classList.contains("btn-info")) {
+        const id = e.target.dataset.id;
+
+        console.log("Xem chi tiết:", id);
+        fetch(`${urlDetail}?orderId=${id}`)
+            .then(response => response.text())
+            .then(html => {
+                let modal = document.getElementById("detail-container");
+                let content = document.getElementById("detail-content");
+                content.innerHTML = html;
+                modal.style.display = "flex";
+                eventOrderUpdate(content);
+            })
+            .catch(err => console.error("Lỗi load Detail:", err));
+    }
+});
+
+
+document.getElementById("detail-container").addEventListener("click", function (e) {
+    if (e.target === this) {
+        this.style.display = "none";
+        document.getElementById("detail-content").innerHTML = "";
+    }
+});
+
+//-----------------------------------
+
+function initOrderCreate(content) {
+    let index = parseInt(content.querySelector("#orderDetailIndex").value);
+    let productOptions = content.querySelector("#productOptionsHtml").textContent;
+
+    content.querySelector("#addRow").addEventListener("click", function () {
+        let table = content.querySelector("#tableDetailOrders tbody");
+
+        let row = `
+                <tr id="row${index}" data-sum=0>
+                    <td scope="row">
+                        <select name="OrderDetails[${index}].ProductId" class="form-select" id="select${index}">
+                            ${productOptions}
+                        </select>
+                    </td>
+                    <td>
+                        <input name="OrderDetails[${index}].Quantity" class="form-control quantity" type="text" value="1" id="quantity${index}"/>
+                    </td>
+                    <td>
+                        <input name="OrderDetails[${index}].UnitPrice" class="form-control  price" type="number" value="0" id="price${index}" readonly />
+                    </td>
+                    <td><button type="button" class="btn btn-danger btn-remove" id="remove${index}">X</button></td>
+                </tr>
+    `;
+        table.insertAdjacentHTML("beforeend", row);
+        const rowselet = content.querySelector(`#row${index}`);
+        const select = content.querySelector(`#select${index}`);
+        const price = content.querySelector(`#price${index}`);
+        const quantity = content.querySelector(`#quantity${index}`);
+        const defaultprice = Number(select.options[0].getAttribute("data-price"));
+        const totaAmount = content.querySelector(`#TotalAmount`);
+        const btnremove = content.querySelector(`#remove${index}`);
+        const voucher = content.querySelector(`#selectVoucher`);
+        var discountdefault = Number(voucher.options[voucher.selectedIndex].getAttribute("data-discountvalue"));
+        price.value = Math.floor(defaultprice * 1.1);
+        rowselet.dataset.sum = Math.floor(price.value);
+        totaAmount.dataset.total = Math.floor(totaAmount.dataset.total) + Math.floor(rowselet.dataset.sum);
+        if (discountdefault < 1) {
+            totaAmount.innerText = (Math.floor(totaAmount.dataset.total) * (1.0 - discountdefault)).toString();
+        } else if (discountdefault > 0) {
+            totaAmount.innerText = (Math.floor(totaAmount.dataset.total) - Math.floor(discountdefault)).toString();
+        } else {
+            totaAmount.innerText = (totaAmount.dataset.total).toString();
+        }
+        
+        select.addEventListener("change", function () {
+            const dataprice = Number(select.options[select.selectedIndex].getAttribute("data-price"));
+            price.value = Math.floor(dataprice * 1.1);
+            var temp1 = Math.floor(rowselet.dataset.sum);
+            const num = parseInt(quantity.value);
+            rowselet.dataset.sum = Math.floor(price.value * num);
+            var discount = Number(voucher.options[voucher.selectedIndex].getAttribute("data-discountvalue"));
+            totaAmount.dataset.total = Math.floor(totaAmount.dataset.total) - temp1 + Math.floor(rowselet.dataset.sum);
+            if (discount < 1) {
+                totaAmount.innerText = (Math.floor(totaAmount.dataset.total) * (1.0 - discount)).toString();
+            } else if (discountt > 0) {
+                totaAmount.innerText = (Math.floor(totaAmount.dataset.total) - Math.floor(discount)).toString();
+            } else {
+                totaAmount.innerText = (totaAmount.dataset.total).toString();
+            }
+        })
+        quantity.addEventListener("change", function () {
+            this.value = this.value.replace(/[^0-9]/g, '');
+            var temp = this.value;
+            var discount = Number(voucher.options[voucher.selectedIndex].getAttribute("data-discountvalue"));
+            if (temp != "") {
+                var temp1 = Math.floor(rowselet.dataset.sum);
+                const num = parseInt(this.value);
+                rowselet.dataset.sum = Math.floor(price.value * num);
+                totaAmount.dataset.total = Math.floor(totaAmount.dataset.total) - temp1 + Math.floor(rowselet.dataset.sum);
+            }
+            if (discount < 1) {
+                totaAmount.innerText = (Math.floor(totaAmount.dataset.total) * (1.0 - discount)).toString();
+            } else if (discount > 0) {
+                totaAmount.innerText = (Math.floor(totaAmount.dataset.total) - Math.floor(discount)).toString();
+            } else {
+                totaAmount.innerText = (totaAmount.dataset.total).toString();
+            }
+        })
+        index++;
+        btnremove.addEventListener("click", function () {
+            var discount = Number(voucher.options[voucher.selectedIndex].getAttribute("data-discountvalue"));
+            totaAmount.dataset.total = Math.floor(totaAmount.dataset.total) - Math.floor(rowselet.dataset.sum);
+            if (discount < 1) {
+                totaAmount.innerText = (Math.floor(totaAmount.dataset.total) * (1.0 - discount)).toString();
+            } else if (discount > 0) {
+                totaAmount.innerText = (Math.floor(totaAmount.dataset.total) - Math.floor(discount)).toString();
+            } else {
+                totaAmount.innerText = (totaAmount.dataset.total).toString();
+            }
+        });
+    });
+
+}
+
+function eventOrderCreate(content) {
+    const form = content.querySelector("#orderCreateForm");
+    form.addEventListener("submit", function (e) {
+        e.preventDefault();
+        const formData = new FormData(form);
+        fetch(form.action, { method: "POST", body: formData })
+            .then(resp => resp.text())
+            .then(html => {
+                if (html.includes('<form')) {
+                    content.innerHTML = html;
+                    eventOrderCreate(content);
+                    Swal.fire({
+                        title: "Lỗi thêm!",
+                        text: "Dữ liệu không hợp lệ, vui lòng nhập lại và chọn đầy đủ các trường!",
+                        icon: "error",
+                        timer: 3000,
+                        showConfirmButton: false
+                    });
+                } else {
+                    Swal.fire({
+                        title: "Đã thêm!",
+                        text: "Thêm hóa đơn thành công!",
+                        icon: "success",
+                        timer: 2000,
+                        showConfirmButton: false
+                    });
+                    document.getElementById("create-container").style.display = "none";
+                    reloadTable();
+                }
+            })
+            .catch(err => console.error(err));
+    });
+}
+
+function eventOrderUpdate(content) {
+    const form = content.querySelector("#orderUpdateForm");
+    form.addEventListener("submit", function (e) {
+        e.preventDefault();
+        const formData = new FormData(form);
+        fetch(form.action, { method: "POST", body: formData })
+            .then(resp => resp.text())
+            .then(html => {
+                if (html.includes('<form')) {
+                    content.innerHTML = html;
+                    eventOrderUpdate(content);
+                    Swal.fire({
+                        title: "Lỗi cập nhật!",
+                        text: "Không thể thay đổi trạng thái của đơn hàng này!",
+                        icon: "error",
+                        timer: 3000,
+                        showConfirmButton: false
+                    });
+                } else if (html.includes('404')) {
+                    alert.log("404");
+                }
+                else {
+                    Swal.fire({
+                        title: "Đã cập nhật!",
+                        text: "Cập nhật trạng thái đơn hàng thành công!",
+                        icon: "success",
+                        timer: 2000,
+                        showConfirmButton: false
+                    });
+                    document.getElementById("detail-container").style.display = "none";
+                    reloadTable();
+                }
+            })
+            .catch(err => console.error(err));
+    });
+}
+
+
+function reloadTable() {
+    fetch(urlTable)
+        .then(res => res.text())
+        .then(html => {
+            document.querySelector("#orders-table").innerHTML = html;
+        })
+        .catch(err => console.error("Lỗi reloadTable:", err));
+}
+
+function reloadFilter(stringfilter, status) {
+    const params = new URLSearchParams({
+        filter: stringfilter,
+        status: status
+    });
+    fetch(`${urlFilter}?${params}`)
+        .then(res => res.text())
+        .then(html => {
+            document.querySelector("#orders-table").innerHTML = html;
+        })
+        .catch(err => console.error("Lỗi reloadFilter:", err));
+}
+
+function reloadFilterDate(start, end, status) {
+    const params = new URLSearchParams({
+        start: start,
+        end: end,
+        status: status
+    });
+    fetch(`${urlFilterDate}?${params}`)
+        .then(res => res.text())
+        .then(html => {
+            document.querySelector("#orders-table").innerHTML = html;
+        })
+        .catch(err => console.error("Lỗi reloadFilter:", err));
+}
+
+function reloadFilterStatus(stringfilter) {
+    console.log(stringfilter);
+    fetch(`${urlFilterStatus}?status=${stringfilter}`)
+        .then(res => res.text())
+        .then(html => {
+            document.querySelector("#orders-table").innerHTML = html;
+        })
+        .catch(err => console.error("Lỗi reloadFilter:", err));
+}

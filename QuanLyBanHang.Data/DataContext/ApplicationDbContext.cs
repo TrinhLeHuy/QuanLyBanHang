@@ -52,6 +52,20 @@ namespace QuanLyBanHang.Data.DataContext
                 Role = "Admin",
                 Phone = "0900000000"
             });
+
+            //----------- Convert : string -> enum Mysql ---------
+            modelBuilder
+                .Entity<Order>()
+                .Property(o => o.Status)
+                .HasConversion<string>();
+            modelBuilder.Entity<Voucher>(entity =>
+            {
+                entity.Property(e => e.Status)
+                      .HasConversion<string>();
+
+                entity.Property(e => e.DiscountType)
+                      .HasConversion<string>();
+            });
         }
 
         // 🧩 Hàm mã hóa SHA256 (giống AuthController)

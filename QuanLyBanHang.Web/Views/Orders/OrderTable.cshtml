@@ -1,0 +1,48 @@
+﻿@model IEnumerable<QuanLyBanHang.Data.Entities.Order>
+@{
+    ViewData["Title"] = "Bảng";
+    Layout = null;
+}
+@* <table class="table table-bordered">
+    <thead class="table-light">
+        <tr>
+            <th>Mã đơn</th>
+            <th>Khách hàng</th>
+            <th>Ngày đặt</th>
+            <th>Tổng tiền</th>
+            <th>Giảm giá</th>
+            <th>Trạng thái</th>
+            <th>Thao tác</th>
+        </tr>
+    </thead> 
+    <tbody>*@
+        @foreach (var o in Model)
+        {
+            var color = "";
+            @if(@o.Status == OrderStatus.Pending)
+            {
+                color = "deepskyblue";
+            }else if(@o.Status == OrderStatus.Paid)
+            {
+                color = "forestgreen";
+            }
+            else
+            {
+                color = "red";
+            }
+            <tr>
+                <td scope="row">@o.OrderId</td>
+                <td>@o.Customer?.FullName</td>
+                <td>@o.OrderDate.ToString("dd/MM/yyyy")</td>
+                <td>@o.TotalAmount.ToString("N0") đ</td>
+                <td>@o.DiscountAmount.ToString("N0") đ</td>
+                <td class="text-center"><span style="background-color: @color;padding: 2px 8px;border-radius: 4px;text-align: center;">@o.Status.ToString()</span></td>
+                <td>
+                    <button type="button" class="btn btn-info btn-sm" data-id="@o.OrderId">Chi tiết</button>
+                    @* <a asp-action="Detail" asp-route-orderID="@o.OrderId" class="btn btn-info btn-sm">Chi tiết</a> *@
+                    @* <a asp-action="Delete" asp-route-id="@o.OrderId" class="btn btn-danger btn-sm">Xóa</a> *@
+                </td>
+            </tr>
+        }
+    @* </tbody> *@
+@* </table> *@
