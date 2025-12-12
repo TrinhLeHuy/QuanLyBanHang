@@ -402,6 +402,7 @@ E:\HocHanh\dotnet\QuanLyBanHang\QuanLyBanHang.Web\obj\Debug\net9.0\compressed\4o
 E:\HocHanh\dotnet\QuanLyBanHang\QuanLyBanHang.Web\obj\Debug\net9.0\compressed\4aycbeeyfw-f9t1prgpih.gz
 E:\HocHanh\dotnet\QuanLyBanHang\QuanLyBanHang.Web\obj\Debug\net9.0\compressed\ocujaxdp2e-b9sayid5wm.gz
 E:\HocHanh\dotnet\QuanLyBanHang\QuanLyBanHang.Web\obj\Debug\net9.0\compressed\gguj6zpjjq-61n19gt1b8.gz
+E:\HocHanh\dotnet\QuanLyBanHang\QuanLyBanHang.Web\obj\Debug\net9.0\compressed\okqjgkjkr0-vko57618iy.gz
 E:\HocHanh\dotnet\QuanLyBanHang\QuanLyBanHang.Web\obj\Debug\net9.0\compressed\8f7rqzj2ai-xtxxf3hu2r.gz
 E:\HocHanh\dotnet\QuanLyBanHang\QuanLyBanHang.Web\obj\Debug\net9.0\compressed\c5jw3qtabx-t1cqhe9u97.gz
 E:\HocHanh\dotnet\QuanLyBanHang\QuanLyBanHang.Web\obj\Debug\net9.0\compressed\nmnnvrio19-c2jlpeoesf.gz
@@ -475,4 +476,3 @@ E:\HocHanh\dotnet\QuanLyBanHang\QuanLyBanHang.Web\obj\Debug\net9.0\refint\QuanLy
 E:\HocHanh\dotnet\QuanLyBanHang\QuanLyBanHang.Web\obj\Debug\net9.0\QuanLyBanHang.Web.pdb
 E:\HocHanh\dotnet\QuanLyBanHang\QuanLyBanHang.Web\obj\Debug\net9.0\QuanLyBanHang.Web.genruntimeconfig.cache
 E:\HocHanh\dotnet\QuanLyBanHang\QuanLyBanHang.Web\obj\Debug\net9.0\ref\QuanLyBanHang.Web.dll
-E:\HocHanh\dotnet\QuanLyBanHang\QuanLyBanHang.Web\obj\Debug\net9.0\compressed\okqjgkjkr0-vko57618iy.gz

@@ -26,13 +26,19 @@ namespace QuanLyBanHang.BlazorServer.Services
             
         }
 
-        public async Task<List<Order>?> GetByFilterNameAsync(string filterName)
+        public async Task<List<Order>?> GetByFilterNameAsync(string status, string filterName)
         {
             if (filterName == null) return null;
-            return await _context.Orders
-                .Include(o => o.Customer)
-                .Where(o => o.Customer != null && o.Customer.FullName.Contains(filterName))
-                .ToListAsync();
+            if (status  == "Tất cả")
+                return await _context.Orders
+                    .Include(o => o.Customer)
+                    .Where(o => o.Customer != null && o.Customer.FullName.Contains(filterName))
+                    .ToListAsync();
+            else
+                return await _context.Orders
+                    .Include(o => o.Customer)
+                    .Where(o => o.Customer != null && o.Customer.FullName.Contains(filterName) && o.Status.ToString() == status)
+                    .ToListAsync();
         }
 
         public async Task<Order?> CreateAsync(Order order)
@@ -62,6 +68,29 @@ namespace QuanLyBanHang.BlazorServer.Services
             _context.Orders.Remove(order);
             await _context.SaveChangesAsync();
             return true;
+        }
+
+        public async Task<List<Order>?> GetByFilterStatusAsync(string Status)
+        {
+            if (Status == "Tất cả") return await GetAllAsync();
+            return await _context.Orders
+                .Include(o => o.Customer)
+                .Where( o => o.Status.ToString() == Status)
+                .ToListAsync();
+        }
+
+        public async Task<List<Order>?> GetByFilterDateAsync(string status, DateTime startTime, DateTime endTime)
+        {
+            if (status == "Tất cả")
+                return await _context.Orders
+                    .Include(o => o.Customer)
+                    .Where(o => o.OrderDate >= startTime && o.OrderDate <= endTime)
+                    .ToListAsync();
+            else
+                return await _context.Orders
+                    .Include(o => o.Customer)
+                    .Where(o => o.OrderDate >= startTime && o.OrderDate <= endTime && o.Status.ToString() == status)
+                    .ToListAsync();
         }
 
     }

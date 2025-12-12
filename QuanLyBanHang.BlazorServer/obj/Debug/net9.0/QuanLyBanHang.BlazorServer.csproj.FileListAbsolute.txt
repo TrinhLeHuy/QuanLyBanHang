@@ -77,12 +77,11 @@ E:\HocHanh\dotnet\QuanLyBanHang\QuanLyBanHang.BlazorServer\obj\Debug\net9.0\comp
 E:\HocHanh\dotnet\QuanLyBanHang\QuanLyBanHang.BlazorServer\obj\Debug\net9.0\compressed\ngxkiru4ca-6ve0fu8xzn.gz
 E:\HocHanh\dotnet\QuanLyBanHang\QuanLyBanHang.BlazorServer\obj\Debug\net9.0\compressed\oeepx52txp-8qmik50wvu.gz
 E:\HocHanh\dotnet\QuanLyBanHang\QuanLyBanHang.BlazorServer\obj\Debug\net9.0\compressed\shbiy95f41-5k5ruuqd4m.gz
-E:\HocHanh\dotnet\QuanLyBanHang\QuanLyBanHang.BlazorServer\obj\Debug\net9.0\compressed\1l5aq9e0jy-318ppqjq8u.gz
 E:\HocHanh\dotnet\QuanLyBanHang\QuanLyBanHang.BlazorServer\obj\Debug\net9.0\compressed\4zk4bnyz6v-b9sayid5wm.gz
+E:\HocHanh\dotnet\QuanLyBanHang\QuanLyBanHang.BlazorServer\obj\Debug\net9.0\compressed\1l5aq9e0jy-318ppqjq8u.gz
 E:\HocHanh\dotnet\QuanLyBanHang\QuanLyBanHang.BlazorServer\obj\Debug\net9.0\compressed\5962erjr6l-61n19gt1b8.gz
 E:\HocHanh\dotnet\QuanLyBanHang\QuanLyBanHang.BlazorServer\obj\Debug\net9.0\compressed\j59xc8fm27-rlekffm8km.gz
 E:\HocHanh\dotnet\QuanLyBanHang\QuanLyBanHang.BlazorServer\obj\Debug\net9.0\compressed\62wa4yzmhi-xtxxf3hu2r.gz
-E:\HocHanh\dotnet\QuanLyBanHang\QuanLyBanHang.BlazorServer\obj\Debug\net9.0\compressed\7szsiqgzoi-q1e7aq7vfu.gz
 E:\HocHanh\dotnet\QuanLyBanHang\QuanLyBanHang.BlazorServer\obj\Debug\net9.0\compressed\m7v6psbgno-t1cqhe9u97.gz
 E:\HocHanh\dotnet\QuanLyBanHang\QuanLyBanHang.BlazorServer\obj\Debug\net9.0\compressed\qgjpxk23sv-c2jlpeoesf.gz
 E:\HocHanh\dotnet\QuanLyBanHang\QuanLyBanHang.BlazorServer\obj\Debug\net9.0\compressed\1wzb3gq8e0-sejl45xvog.gz
@@ -142,6 +141,7 @@ E:\HocHanh\dotnet\QuanLyBanHang\QuanLyBanHang.BlazorServer\obj\Debug\net9.0\comp
 E:\HocHanh\dotnet\QuanLyBanHang\QuanLyBanHang.BlazorServer\obj\Debug\net9.0\compressed\fhllgclrb6-9vr69e8ynj.gz
 E:\HocHanh\dotnet\QuanLyBanHang\QuanLyBanHang.BlazorServer\obj\Debug\net9.0\compressed\1tiw6zn2wm-87fc7y1x7t.gz
 E:\HocHanh\dotnet\QuanLyBanHang\QuanLyBanHang.BlazorServer\obj\Debug\net9.0\compressed\80a2fa9f8u-mlv21k5csn.gz
+E:\HocHanh\dotnet\QuanLyBanHang\QuanLyBanHang.BlazorServer\obj\Debug\net9.0\compressed\7szsiqgzoi-q1e7aq7vfu.gz
 E:\HocHanh\dotnet\QuanLyBanHang\QuanLyBanHang.BlazorServer\obj\Debug\net9.0\compressed\zp0vad471l-4ycadnx8g5.gz
 E:\HocHanh\dotnet\QuanLyBanHang\QuanLyBanHang.BlazorServer\obj\Debug\net9.0\compressed\qe3e5xecu2-4ycadnx8g5.gz
 E:\HocHanh\dotnet\QuanLyBanHang\QuanLyBanHang.BlazorServer\obj\Debug\net9.0\staticwebassets.build.json
