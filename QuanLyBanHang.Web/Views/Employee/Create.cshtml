@@ -1,0 +1,46 @@
+@model QuanLyBanHang.Data.Entities.Employee
+
+@{
+    ViewData["Title"] = "Thêm nhân viên";
+}
+
+<h2>➕ Thêm nhân viên</h2>
+
+<form asp-action="Create" method="post">
+    <div class="mb-3">
+        <label>Họ tên</label>
+        <input asp-for="FullName" class="form-control" />
+        <span asp-validation-for="FullName" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label>Email</label>
+        <input asp-for="Email" class="form-control" />
+        <span asp-validation-for="Email" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label>Số điện thoại</label>
+        <input asp-for="Phone" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label>Mật khẩu</label>
+        <input asp-for="PasswordHash" type="password" class="form-control" required />
+    </div>
+
+    <div class="mb-3">
+        <label>Vai trò</label>
+        <select asp-for="Role" class="form-select">
+            <option value="Staff">Nhân viên</option>
+            <option value="Admin">Quản trị</option>
+        </select>
+    </div>
+
+    <button type="submit" class="btn btn-success">Lưu</button>
+    <a asp-action="Index" class="btn btn-secondary">Quay lại</a>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
