@@ -17,5 +17,8 @@ namespace QuanLyBanHang.BlazorServer.Services
 
         public Task<List<Order>?> GetByFilterStatusAsync(string Status);
         public Task<List<Order>?> GetByFilterDateAsync(string Status, DateTime startTime, DateTime endTime);
+        public Task<List<Order>?> GetAllWithUserIdAsync(int userId);
+        public Task<List<Order>?> GetByFilterStatusWithUserIdAsync(string Status, int userId);
+        public Task<List<Order>?> GetByFilterDateWithUserIdAsync(string status, DateTime startTime, DateTime endTime, int userId);
     }
 }

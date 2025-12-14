@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using QuanLyBanHang.Data.DataContext;
 using QuanLyBanHang.Data.Entities;
+using QuanLyBanHang.Data.Enums;
 
 namespace QuanLyBanHang.BlazorServer.Services
 {
@@ -14,6 +15,10 @@ namespace QuanLyBanHang.BlazorServer.Services
         public async Task<List<Order>> GetAllAsync()
         {
             return await _context.Orders.Include(o => o.Customer).ToListAsync();
+        }
+        public async Task<List<Order>?> GetAllWithUserIdAsync(int userId)
+        {
+            return await _context.Orders.Include(o => o.Customer).Where(o => o.CustomerId == userId ).ToListAsync();
         }
         public async Task<Order?> GetByIdAsync(int orderId)
         {
@@ -44,9 +49,15 @@ namespace QuanLyBanHang.BlazorServer.Services
         public async Task<Order?> CreateAsync(Order order)
         {
             if(order == null) return null;
-            order.OrderDetails= order.OrderDetails.Where(d => d != null).ToList();
+            order.OrderDetails = order.OrderDetails.Where(d => d != null).ToList();
             order.OrderDate = DateTime.Now;
+            var temp = _context.Vouchers.FirstOrDefault(v => v.Id == order.VoucherId);
             order.TotalAmount = order.OrderDetails.Sum(d => d.Quantity * d.UnitPrice);
+            if (temp != null)
+            {
+                order.DiscountAmount = temp.DiscountType == DiscountType.Percent ? order.TotalAmount * (temp.DiscountValue) : temp.DiscountValue;
+                order.TotalAmount -= order.DiscountAmount;
+            }
             _context.Orders.Add(order);
             await _context.SaveChangesAsync();
             return order;
@@ -78,6 +89,14 @@ namespace QuanLyBanHang.BlazorServer.Services
                 .Where( o => o.Status.ToString() == Status)
                 .ToListAsync();
         }
+        public async Task<List<Order>?> GetByFilterStatusWithUserIdAsync(string Status, int userId)
+        {
+            if (Status == "Tất cả") return await GetAllWithUserIdAsync(userId);
+            return await _context.Orders
+                .Include(o => o.Customer)
+                .Where(o => o.Status.ToString() == Status && o.CustomerId == userId)
+                .ToListAsync();
+        }
 
         public async Task<List<Order>?> GetByFilterDateAsync(string status, DateTime startTime, DateTime endTime)
         {
@@ -90,6 +109,20 @@ namespace QuanLyBanHang.BlazorServer.Services
                 return await _context.Orders
                     .Include(o => o.Customer)
                     .Where(o => o.OrderDate >= startTime && o.OrderDate <= endTime && o.Status.ToString() == status)
+                    .ToListAsync();
+        }
+
+        public async Task<List<Order>?> GetByFilterDateWithUserIdAsync(string status, DateTime startTime, DateTime endTime, int userId)
+        {
+            if (status == "Tất cả")
+                return await _context.Orders
+                    .Include(o => o.Customer)
+                    .Where(o => o.OrderDate >= startTime && o.OrderDate <= endTime && o.CustomerId == userId)
+                    .ToListAsync();
+            else
+                return await _context.Orders
+                    .Include(o => o.Customer)
+                    .Where(o => o.OrderDate >= startTime && o.OrderDate <= endTime && o.Status.ToString() == status && o.CustomerId == userId)
                     .ToListAsync();
         }
 

@@ -209,11 +209,11 @@ namespace QuanLyBanHang.Data.Migrations
                     b.Property<decimal>("ChangeAmount")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int>("CustomerId")
+                    b.Property<int?>("CustomerId")
                         .HasColumnType("int");
 
                     b.Property<decimal>("DiscountAmount")
-                        .HasColumnType("decimal(65,30)");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("EmployeeId")
                         .HasColumnType("int");
@@ -392,6 +392,9 @@ namespace QuanLyBanHang.Data.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("longtext");
 
+                    b.Property<decimal>("DiscountPercent")
+                        .HasColumnType("decimal(65,30)");
+
                     b.Property<string>("DiscountType")
                         .IsRequired()
                         .HasColumnType("ENUM('Percent','Fixed')");
@@ -401,6 +404,9 @@ namespace QuanLyBanHang.Data.Migrations
 
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime(6)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("tinyint(1)");
 
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
@@ -496,9 +502,7 @@ namespace QuanLyBanHang.Data.Migrations
                 {
                     b.HasOne("QuanLyBanHang.Data.Entities.Customer", "Customer")
                         .WithMany("Orders")
-                        .HasForeignKey("CustomerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CustomerId");
 
                     b.HasOne("QuanLyBanHang.Data.Entities.Employee", "Employee")
                         .WithMany("Orders")

@@ -1,0 +1,46 @@
+﻿
+@if(!Products.Any())
+{
+    <h5 class="text-center">Không có sản phẩm phù hợp</h5>
+}
+else
+{
+    @foreach(var p in Products )
+    {
+        <div class="product-card-item col-3 col-md-4 col-sm-6">
+            <div class="product-card-content text-decoration-none text-dark d-block h-100 shadow-sm border rounded overflow-hidden">
+        
+                <div class="product-image-wrapper ratio ratio-1x1 bg-light">
+                    <img src="duong_dan_anh_san_pham_1.jpg" alt="Tên Sản Phẩm" class="w-100 h-100 object-fit-cover">
+                </div>
+        
+                <div class="product-info p-2">
+                    <h3 class="product-name fs-6 fw-normal mb-1">
+                        @p.Name
+                    </h3>
+            
+                    <div class="d-flex align-items-center justify-content-between mb-2">
+                        <span class="product-price fs-5 fw-bold text-danger">@p.Price ₫</span>
+                        @* <span class="product-original-price text-muted text-decoration-line-through me-1">150.000₫</span> *@
+                    </div>
+
+                    <div class="product-sold text-end text-secondary small">
+                        Còn lại @p.Stock
+                    </div>
+
+                    <div class="d-grid mt-2">
+                        <button class="btn btn-sm btn-outline-danger fw-bold" 
+                                @onclick="async () => await OnAddCart.InvokeAsync(p.Id)">
+                            <i class="bi bi-cart-plus me-1"></i> Thêm vào giỏ
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+}
+
+@code {
+    [Parameter] public List<Product> Products { get; set; } = new List<Product>();
+    [Parameter] public EventCallback<int> OnAddCart { get; set; }
+}

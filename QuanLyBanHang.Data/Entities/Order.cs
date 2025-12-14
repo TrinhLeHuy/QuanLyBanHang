@@ -19,6 +19,9 @@ namespace QuanLyBanHang.Data.Entities
         [Column(TypeName = "decimal(18,2)")]
         [Range(0, double.MaxValue)]
         public decimal TotalAmount { get; set; }
+
+        [Column(TypeName = "decimal(18,2)")]//Them 2 dong nay
+        [Range(0, double.MaxValue)]//
         public decimal DiscountAmount { get; set; }
 
         [Column(TypeName = "ENUM('Pending','Paid','Canceled')")]
@@ -44,12 +47,12 @@ namespace QuanLyBanHang.Data.Entities
         //
 
         [ForeignKey(nameof(Customer))]
-        public int CustomerId { get; set; }
+        public int? CustomerId { get; set; } // them ?
         public Customer? Customer { get; set; }
 
         
         [ForeignKey(nameof(Employee))]
-        public int EmployeeId { get; set; }
+        public int? EmployeeId { get; set; }
         public Employee? Employee { get; set; }
 
         [ForeignKey(nameof(Voucher))]

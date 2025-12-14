@@ -1,0 +1,110 @@
+﻿<div class="modal-content">
+    <div class="modal-header bg-primary text-white">
+        <h5 class="modal-title">
+            <i class="bi bi-gift me-2"></i> Áp Dụng Voucher & Mã Giảm Giá
+        </h5>
+        <button type="button" class="btn-close btn-close-white" @onclick="() => OnClose.InvokeAsync(false)" aria-label="Close"></button>
+    </div>
+
+    <div class="modal-body p-3">
+        
+        <h6 class="fw-bold mb-2">Nhập Mã Giảm Giá</h6>
+        <div class="input-group mb-4">
+            <input type="text" class="form-control" placeholder="Nhập mã voucher (nếu có)" @bind="InputVoucherCode"/>
+            <button class="btn btn-danger" type="button" @onclick="ApplyInputVoucher">
+                Áp Dụng
+            </button>
+        </div>
+        
+        <h6 class="fw-bold mb-3 border-top pt-3">Voucher Có Thể Sử Dụng</h6>
+        
+        @if (AvailableVouchers.Any())
+        {
+            <div class="list-group">
+                @foreach (var voucher in AvailableVouchers)
+                {
+                    <label class="list-group-item d-flex justify-content-between align-items-center voucher-item @(voucher.Id == SelectedVoucherId ? "border-success bg-light" : "")">
+                        <div class="d-flex align-items-center">
+                            <input class="form-check-input me-3" type="radio" name="voucherRadio" 
+                                   checked="@(voucher.Id == SelectedVoucherId)" 
+                                   @onchange="() => SelectVoucher(voucher.Id)" />
+                            <div>
+                                <strong class="text-primary">
+                                    @GetDiscountDisplay(voucher)
+                                </strong>
+                                <small class="d-block text-muted">Mã: @voucher.Code | Hết hạn: @voucher.EndDate.ToString("dd/MM/yyyy")</small>
+                            </div>
+                        </div>
+                        <span class="badge bg-danger">Áp dụng</span>
+                    </label>
+                }
+            </div>
+        }
+        else
+        {
+            <div class="alert alert-info text-center">
+                Bạn chưa có voucher nào có thể sử dụng.
+            </div>
+        }
+
+    </div>
+
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" @onclick="() => OnClose.InvokeAsync(false)">Đóng</button>
+        <button type="button" class="btn btn-primary" @onclick="ApplySelectedVoucher">
+            Hoàn tất và Áp dụng
+        </button>
+    </div>
+</div>
+
+@code {
+    [Parameter] public EventCallback<bool> OnClose { get; set; }
+    [Parameter] public EventCallback<int> OnVoucherApplied { get; set; }
+    [Parameter] public EventCallback<bool> OnCloseDialog { get; set; }
+    [Parameter] public List<Voucher> AvailableVouchers { get; set; } = new(); 
+
+    private string InputVoucherCode { get; set; } = string.Empty;
+    private int SelectedVoucherId { get; set; } = 0;
+    private string GetDiscountDisplay(Voucher voucher)
+    {
+        if (voucher.DiscountType == DiscountType.Fixed)
+        {
+            return $"Giảm {voucher.DiscountValue.ToString("N0")}₫";
+        }
+        else
+        {
+            return $"Giảm {(voucher.DiscountValue*100).ToString("N0")}%";
+        }
+    }
+    protected override void OnInitialized()
+    {
+
+    }
+
+    private void SelectVoucher(int voucherId)
+    {
+        SelectedVoucherId = voucherId;
+    }
+
+    private void ApplyInputVoucher()
+    {
+        if (!string.IsNullOrWhiteSpace(InputVoucherCode))
+        {
+            var filter = AvailableVouchers.FirstOrDefault(v => v.Code == InputVoucherCode);
+            if (filter != null)
+            {
+                SelectVoucher(filter.Id);
+            }
+        }
+    }
+
+    private async Task ApplySelectedVoucher()
+    {
+        var appliedVoucher = AvailableVouchers.FirstOrDefault(v => v.Id == SelectedVoucherId);
+        
+        string codeToApply = appliedVoucher?.Code ?? string.Empty;
+        
+        await OnVoucherApplied.InvokeAsync(SelectedVoucherId);
+        await OnCloseDialog.InvokeAsync(false);
+    }
+}

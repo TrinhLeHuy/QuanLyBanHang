@@ -13,7 +13,9 @@ namespace QuanLyBanHang.BlazorServer.Services
         }
         public async Task<List<Product>> GetAllProductAsync()
         {
-            return await _context.Products.ToListAsync();
+            return await _context.Products
+                .Include(p => p.Categories)
+                .ToListAsync();
         }
     }
 }

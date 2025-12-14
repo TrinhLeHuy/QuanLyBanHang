@@ -1,0 +1,24 @@
+﻿@foreach(var i in CartItems)
+{
+    <div class="cart-item d-flex mb-2 pb-2 border-bottom">
+        <img src="duong_dan_anh_sp_mini.jpg" class="me-2 rounded" style="width: 50px; height: 50px; object-fit: cover;" />
+        <div>
+            <small class="fw-bold d-block">@i.Product.Name (@("x"+@i.Quantity))</small>
+            <small class="text-danger fw-bold">@i.Product.Price ₫</small>
+        </div>
+    </div>
+}
+  <div class="text-center mt-3">
+    <a class="btn btn-danger w-100" @onclick="HandleOpenCart">Xem Giỏ Hàng & Thanh Toán</a>
+  </div>                  
+
+
+@code {
+    [Parameter] public List<CartItems> CartItems { get; set; } = new List<CartItems>();
+    [Parameter] public EventCallback<int> OnOpenCart { get; set; }
+
+    void HandleOpenCart()
+    {
+        OnOpenCart.InvokeAsync(1);
+    }
+}

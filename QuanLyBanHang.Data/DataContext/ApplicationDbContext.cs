@@ -33,6 +33,7 @@ namespace QuanLyBanHang.Data.DataContext
         public DbSet<Inventory> Inventories { get; set; }
         public DbSet<ProductWarehouse> ProductWarehouses { get; set; }
         public DbSet<InventoryTransaction> InventoryTransactions { get; set; }
+        public DbSet<CartItems> CartItems { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -63,6 +64,11 @@ namespace QuanLyBanHang.Data.DataContext
                       .HasConversion<string>();
 
                 entity.Property(e => e.DiscountType)
+                      .HasConversion<string>();
+            });
+            modelBuilder.Entity<CartItems>(entity =>
+            {
+                entity.Property(e => e.Status)
                       .HasConversion<string>();
             });
 
