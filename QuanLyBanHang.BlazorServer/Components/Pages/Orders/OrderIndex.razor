@@ -33,17 +33,18 @@
     </div>
 </div>
 
-<button class="btn btn-success mb-3" @onclick="OpenCreate">Tạo đơn hàng</button>
+<button class="btn btn-success mb-3 d-none" @onclick="OpenCreate">Tạo đơn hàng</button>
+
 <div style="max-height: 800px; overflow-y: auto;">
-    <table class="table table-bordered">
-    <thead class="table-light">
+    <table class="table table-bordered table-striped">
+    <thead class="table-primary">
         <tr>
-            <th>Mã đơn</th>
-            <th>Khách hàng</th>
-            <th>Ngày đặt</th>
-            <th>Tổng tiền</th>
-            <th>Giảm giá</th>
-            <th style="width: 1%">
+            <th scope="col">Mã đơn</th>
+            <th scope="col">Khách hàng</th>
+            <th scope="col">Ngày đặt</th>
+            <th scope="col">Tổng tiền</th>
+            <th scope="col">Giảm giá</th>
+            <th scope="col" style="width: 1%">
                 <div class="d-flex align-items-center gap-2">
                     <span>Trạng thái:</span>
                     <select class="form-select w-auto" id="filterStatus" @bind="orderStatusFilter" @bind:after="FilterStatus">
@@ -55,7 +56,7 @@
                     </select>
                 </div>
             </th>
-            <th>Thao tác</th>
+            <th scope="col">Thao tác</th>
         </tr>
     </thead>
     <tbody>
@@ -152,7 +153,7 @@
             builder.AddAttribute(3, "employees", employees);
             builder.AddAttribute(4, "customers", customers);
             builder.AddAttribute(5, "vouchers", vouchers);
-            builder.AddAttribute(6, "ShowErrorValue", EventCallback.Factory.Create<string>(this, ShowErrorValue));
+            builder.AddAttribute(6, "ShowErrorValue", EventCallback.Factory.Create<string>(this, ShowError));
             // builder.AddAttribute(6, "OnClose", EventCallback.Factory.Create(this, Close));
             builder.CloseComponent();
         };
@@ -178,7 +179,6 @@
             // builder.AddAttribute(4, "OnClose", EventCallback.Factory.Create(this, Close));
             builder.CloseComponent();
         };
-
         showDialog = true;
         StateHasChanged();
     }
@@ -194,13 +194,16 @@
     {
         try
         {
-            await OrderService.CreateAsync(order);
-            await ShowSuccessCreate();
+            var result = await OrderService.CreateAsync(order);
+            if (result != null)
+            {
+                await ShowSuccess("Đã tạo đơn hàng thành công!");
+            }
             showDialog = false;
             await ReloadTable();
-        }catch(Exception ex)
+        }catch(Exception)
         {
-            await ShowError();
+            await ShowError("Lỗi! Không thể tạo đơn hàng ngay bây giờ");
         }
 
     }
@@ -209,14 +212,24 @@
     {
         try 
         {
-            await OrderService.UpdateAsync(order);
-            await ShowSuccessUpdate();
+            var result = await OrderService.UpdateAsync(order);
+            if (result != null)
+            {
+                if(result.Status == OrderStatus.Paid)
+                {
+                    await ShowSuccess("Đã xác nhận đơn hàng thành công!");
+                }
+                else
+                {
+                    await ShowSuccess("Đã từ chối đơn hàng thành công!");
+                }
+            }
             showDialog = false;
             await ReloadTable();
         }
-        catch (Exception ex)
+        catch (Exception)
         {
-            await ShowError();
+            await ShowError("Lỗi! Không thể cập nhật trạng thái đơn hàng vào lúc này!");
         }
 
     }
@@ -231,37 +244,20 @@
         showDialog = v;
         return Task.CompletedTask;
     }
-    private async Task ShowSuccessCreate()
+    private async Task ShowSuccess(string message)
     {
-        await JS.InvokeVoidAsync("SwalInterop.ShowSuccess", "Đã tạo đơn hàng!");
+        await JS.InvokeVoidAsync("SwalInterop.ShowSuccess", message);
     }
 
-    private async Task ShowSuccessUpdate()
+    private async Task ShowError(string message)
     {
-        await JS.InvokeVoidAsync("SwalInterop.ShowSuccess", "Đã cập nhật trạng thái đơn hàng!");
+        await JS.InvokeVoidAsync("SwalInterop.ShowError", message);
     }
 
-    private async Task ShowError()
+    private async Task<bool> ShowConfirm(string message)
     {
-        await JS.InvokeVoidAsync("SwalInterop.ShowError", "Có lỗi xảy ra!");
-    }
-
-    private async Task ShowErrorValue(string error)
-    {
-        await JS.InvokeVoidAsync("SwalInterop.ShowError", error);
-    }
-
-    private async Task ShowConfirm()
-    {
-        bool confirmed = await JS.InvokeAsync<bool>("SwalInterop.ShowConfirm", "Bạn muốn xóa mục này?");
-        if (confirmed)
-        {
-            Console.WriteLine("Đã xác nhận");
-        }
-        else
-        {
-            Console.WriteLine("Đã hủy");
-        }
+        bool confirmed = await JS.InvokeAsync<bool>("SwalInterop.ShowConfirm", message);
+        return confirmed;
     }
 }
 

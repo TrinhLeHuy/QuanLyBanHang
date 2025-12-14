@@ -1,28 +1,25 @@
-﻿
-<EditForm Model="order" OnValidSubmit="HandleSubmit">
-    <DataAnnotationsValidator />
-    <ValidationSummary />
+﻿@inject IJSRuntime JS
 
     <input type="hidden" value="@order.OrderId" />
 
     <div class="mb-3">
-        <label>
+        <label class="fs-5">
             Khách hàng:
-            <span>@(order.Customer != null ? order.Customer.FullName : "Khách vãng lai")</span>
+            <span class="fst-italic">@(order.Customer != null ? order.Customer.FullName : "Khách vãng lai")</span>
         </label>
     </div>
 
     <div class="mb-3">
-        <label>
+        <label class="fs-5">
             Nhân viên:
-            <span>@(order.Employee != null ? order.Employee.FullName : "Admin")</span>
+            <span class="fst-italic">@(order.Employee != null ? order.Employee.FullName : "Mua hàng online")</span>
         </label>
     </div>
 
     <div style="max-height: 400px; overflow-y: auto;">
-        <table class="table table-bordered">
-            <thead class="table-light">
-                <tr>
+        <table class="table table-bordered table-striped">
+            <thead class="table-primary">
+                <tr class="fs-5 fw-bold">
                     <th>Sản phẩm</th>
                     <th>Số lượng</th>
                     <th>Đơn giá</th>
@@ -32,7 +29,7 @@
             <tbody>
                 @foreach (var detail in order.OrderDetails)
                 {
-                    <tr>
+                    <tr class="fs-5 fst-italic">
                         <td>@(Products.FirstOrDefault(p => p.Id == detail.ProductId)?.Name ?? "Sản phẩm đã xóa")</td>
                         <td>@detail.Quantity</td>
                         <td>@detail.UnitPrice</td>
@@ -44,9 +41,9 @@
     </div>
 
     <div class="mb-3">
-        <label>
+        <label class="fs-5">
             Khuyến mãi:
-            <span>
+            <span class="fst-italic">
                 @(order.Voucher != null
                     ? $"{order.Voucher.Code} - {order.Voucher.Description}"
                     : "Không áp dụng")
@@ -55,33 +52,20 @@
     </div>
 
     <div class="mb-3">
-        <label>
-            Tổng tiền: <span>@order.TotalAmount VND</span>
+        <label class="fs-5">
+            Tổng tiền: <span class="fst-italic">@order.TotalAmount VND</span>
         </label>
     </div>
 
+    <div class="mb-3">
+        <label class="fs-5">Trạng thái đơn: <span class="fst-italic" style="background-color: @color;padding: 2px 8px;border-radius: 4px;text-align: center;">@order.Status</span></label>
+        
+    </div>
     @if (order.Status == OrderStatus.Pending)
     {
-        <div class="mb-3">
-            <label>Trạng thái đơn</label>
-            <InputSelect @bind-Value="_tempStatus" class="form-select">
-                @foreach (OrderStatus status in Enum.GetValues(typeof(OrderStatus)))
-                {
-                    <option value="@status">@status</option>
-                }
-            </InputSelect>
-        </div>
-
-        <button type="submit" class="btn btn-success @(_tempStatus == OrderStatus.Pending ? "d-none" : "")">Cập nhật</button>
+        <button type="button" class="btn btn-success" @onclick="async () => await HandlePaid()">Xác nhận đơn</button>
+        <button type="button" class="btn btn-danger" @onclick="async () => await HandleCanceled()">Từ chối đơn</button>
     }
-    else
-    {
-        <div class="mb-3">
-            <label>Trạng thái đơn: </label>
-            <span>@order.Status</span>
-        </div>
-    }
-</EditForm>
 
 @code {
 
@@ -89,18 +73,39 @@
     [Parameter] public List<Product> Products { get; set; }
     [Parameter] public EventCallback<Order> OnUpdate { get; set; }
     // [Parameter] public EventCallback OnClose { get; set; }
-
-    private OrderStatus _tempStatus;
-    private async Task HandleSubmit()
+    private async Task HandlePaid()
     {
-        order.Status = _tempStatus;
+        order.Status = OrderStatus.Paid;
+        if (await ShowConfirm("Bạn chắc chắn muốn xác nhận đơn hàng này?"))
         await OnUpdate.InvokeAsync(order);
     }
-    // private async Task Close()
+    private async Task HandleCanceled()
+    {
+        order.Status = OrderStatus.Canceled;
+        if (await ShowConfirm("Bạn chắc chắn muốn từ chối đơn hàng này?"))
+        await OnUpdate.InvokeAsync(order);
+    }
 
-    // {
-
-    //     await OnClose.InvokeAsync();
-
-    // }
+    string color
+    {
+        get
+        {
+            @if(order.Status == OrderStatus.Pending)
+            {
+                return "deepskyblue";
+            }else if(order.Status == OrderStatus.Paid)
+            {
+                return  "forestgreen";
+            }
+            else
+            {
+                return "red";
+            }
+        }
+    }
+    private async Task<bool> ShowConfirm(string message)
+    {
+        bool confirmed = await JS.InvokeAsync<bool>("SwalInterop.ShowConfirm", message);
+        return confirmed;
+    }
 }

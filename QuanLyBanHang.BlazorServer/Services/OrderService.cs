@@ -66,9 +66,19 @@ namespace QuanLyBanHang.BlazorServer.Services
         public async Task<Order?> UpdateAsync(Order order)
         {
             if (order == null) return null;
-            var target = await _context.Orders.FirstOrDefaultAsync(o => o.OrderId == order.OrderId);
+            var target = await _context.Orders
+                .Include(o => o.OrderDetails)
+                    .ThenInclude(od => od.Product)
+                .FirstOrDefaultAsync(o => o.OrderId == order.OrderId);
             if(target == null) return null;
             target.Status = order.Status;
+            if(order.Status == OrderStatus.Paid)
+            {
+                foreach (var item in order.OrderDetails)
+                {
+                    item.Product.Stock-=item.Quantity;
+                }
+            }
             await _context.SaveChangesAsync();
             return target;
         }

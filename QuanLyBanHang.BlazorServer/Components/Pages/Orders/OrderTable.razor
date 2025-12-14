@@ -26,12 +26,12 @@
                 color = "red";
             }
             <tr>
-                <td>@o.OrderId</td>
+                <td scope="row">@o.OrderId</td>
                 <td>@o.Customer?.FullName</td>
                 <td>@o.OrderDate.ToString("dd/MM/yyyy")</td>
                 <td>@o.TotalAmount.ToString("N0") đ</td>
                 <td>@o.DiscountAmount.ToString("N0") đ</td>
-                <td><span style="background-color: @color;padding: 2px 8px;border-radius: 4px;text-align: center;">@o.Status.ToString()</span></td>
+                <td class="text-center" ><span style="background-color: @color;padding: 2px 8px;border-radius: 4px;text-align: center;">@o.Status.ToString()</span></td>
                 <td>
                     <button class="btn btn-info btn-sm" @onclick="async () => await OnView.InvokeAsync(o.OrderId)">Chi tiết</button>
                     @* <a asp-action="Detail" asp-route-orderID="@o.OrderId" class="btn btn-info btn-sm">Chi tiết</a> *@

@@ -2,6 +2,8 @@
 @inject ICheckoutService CheckoutService
 @inject ICartService CartService
 @inject IVoucherService VoucherService
+@inject IJSRuntime JS
+
 @rendermode InteractiveServer
 
 <link rel="stylesheet" href="/css/Shop.css" />
@@ -131,9 +133,12 @@
             {
                 cartItems.Add(newCartItem);
             }
+             await ShowSuccess("Đã thêm vào giỏ hàng!");
         }
-
-
+        else
+        {
+            await ShowError("Lỗi! Không thể thêm sản phẩm vào giỏ hàng!");
+        }
     }
     async Task ShowCart()
     {
@@ -175,8 +180,12 @@
 
     async Task RemoveItem(int cartItemId)
     {
-        await CartService.DeleteByIdAsync(cartItemId);
-        cartItems.RemoveAll(c => c.Id == cartItemId);
+        if(await ShowConfirm("Bạn có chắc muốn xóa sản phẩm này khỏi giỏ hàng không?"))
+        {
+            await CartService.DeleteByIdAsync(cartItemId);
+            cartItems.RemoveAll(c => c.Id == cartItemId);
+            await ShowSuccess("Đã xóa khỏi giỏ hàng!");
+        }
     }
     async Task OnCheckout(CheckoutEventAgrs agrs)
     {
@@ -197,12 +206,45 @@
                 VoucherId = agrs.VoucherId,
                 OrderDetails =orderDetails
             };
-        await CheckoutService.PCCreateOrderAsync(UserId, newOrder, agrs.SelectedCartItemIds);
-        cartItems.RemoveAll(c => agrs.SelectedCartItemIds.Contains(c.Id));
+        try
+        {
+            var resullt = await CheckoutService.PCCreateOrderAsync(UserId, newOrder, agrs.SelectedCartItemIds);
+            if (resullt != null)
+            {
+                cartItems.RemoveAll(c => agrs.SelectedCartItemIds.Contains(c.Id));
+                await ShowSuccess("Tạo đơn hàng thành công!");
+
+            }
+            else
+            {
+                await ShowError("Tạo đơn hàng không thành công, vui lòng thử lại sau!");
+            }
+
+        }
+        catch (Exception)
+        {
+            throw;
+        }
     }
     void OnClose(bool v)
     {
         showDialog = v;
         StateHasChanged();
+    }
+
+    private async Task ShowSuccess(string message)
+    {
+        await JS.InvokeVoidAsync("SwalInterop.ShowSuccess", message);
+    }
+
+    private async Task ShowError(string message)
+    {
+        await JS.InvokeVoidAsync("SwalInterop.ShowError", message);
+    }
+
+    private async Task<bool> ShowConfirm(string message)
+    {
+        bool confirmed = await JS.InvokeAsync<bool>("SwalInterop.ShowConfirm", message);
+        return confirmed;
     }
 }

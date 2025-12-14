@@ -1,20 +1,20 @@
 ﻿<h3 class="text-center mb-3">Chi tiết đơn hàng</h3>
     
     <div style="max-height: 400px; overflow-y: auto;">
-        <table class="table table-bordered">
-            <thead class="table-light">
-                <tr>
-                    <th>Sản phẩm</th>
-                    <th>Số lượng</th>
-                    <th>Đơn giá</th>
-                    <th>Tổng tiền</th>
+        <table class="table table-bordered table-striped">
+            <thead class="table-primary">
+                <tr class="fs-5 fw-bold">
+                    <th scope="col">Sản phẩm</th>
+                    <th scope="col">Số lượng</th>
+                    <th scope="col">Đơn giá</th>
+                    <th scope="col">Tổng tiền</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach (var detail in order.OrderDetails)
                 {
-                    <tr>
-                        <td>@(Products.FirstOrDefault(p => p.Id == detail.ProductId)?.Name ?? "Sản phẩm đã xóa")</td>
+                    <tr class="fs-5 fst-italic">
+                        <td scope="row">@(Products.FirstOrDefault(p => p.Id == detail.ProductId)?.Name ?? "Sản phẩm đã xóa")</td>
                         <td>@detail.Quantity</td>
                         <td>@detail.UnitPrice</td>
                         <td>@detail.SubTotal</td>
@@ -25,9 +25,9 @@
     </div>
 
     <div class="mb-3">
-        <label>
+        <label class="fs-5">
             Khuyến mãi:
-            <span>
+            <span class="fst-italic">
                 @(order.Voucher != null
                     ? $"{order.Voucher.Code} - {order.Voucher.Description}"
                     : "Không áp dụng")
@@ -36,19 +36,37 @@
     </div>
 
     <div class="mb-3">
-        <label>
-            Tổng tiền: <span>@order.TotalAmount VND</span>
+        <label class="fs-5">
+            Tổng tiền: <span class="fst-italic">@order.TotalAmount VND</span>
         </label>
     </div>
 
     
     <div class="mb-3">
-        <label>Trạng thái đơn: </label>
-        <span>@order.Status</span>
+        <label class="fs-5">Trạng thái đơn: <span class="fst-italic" style="background-color: @color;padding: 2px 8px;border-radius: 4px;text-align: center;">@order.Status</span></label>
+        
      </div>
 
 @code {
     [Parameter] public Order order { get; set; }
     [Parameter] public List<Product> Products { get; set; }
     // [Parameter] public EventCallback OnClose { get; set; }
+
+    string color
+    {
+        get
+        {
+            @if(order.Status == OrderStatus.Pending)
+            {
+                return "deepskyblue";
+            }else if(order.Status == OrderStatus.Paid)
+            {
+                return  "forestgreen";
+            }
+            else
+            {
+                return "red";
+            }
+        }
+    }
 }

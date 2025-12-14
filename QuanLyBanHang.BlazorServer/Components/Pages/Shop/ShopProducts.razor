@@ -11,7 +11,7 @@ else
             <div class="product-card-content text-decoration-none text-dark d-block h-100 shadow-sm border rounded overflow-hidden">
         
                 <div class="product-image-wrapper ratio ratio-1x1 bg-light">
-                    <img src="duong_dan_anh_san_pham_1.jpg" alt="Tên Sản Phẩm" class="w-100 h-100 object-fit-cover">
+                    <img src="@(defaultUrl+(p.ImageUrl!=null?p.ImageUrl:""))" alt="Tên Sản Phẩm" class="w-100 h-100 object-fit-cover">
                 </div>
         
                 <div class="product-info p-2">
@@ -43,4 +43,5 @@ else
 @code {
     [Parameter] public List<Product> Products { get; set; } = new List<Product>();
     [Parameter] public EventCallback<int> OnAddCart { get; set; }
+    private string defaultUrl = "https://drive.google.com/uc?id="; 
 }

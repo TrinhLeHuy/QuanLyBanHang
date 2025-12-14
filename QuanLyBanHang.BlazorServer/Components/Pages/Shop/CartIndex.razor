@@ -1,4 +1,5 @@
-﻿
+﻿@inject IJSRuntime JS
+
 <div class="modal-content">
     
     <div class="modal-header bg-danger text-white">
@@ -25,7 +26,7 @@
                 <div class="cart-item-row row align-items-center py-2 border-bottom">
                     
                     <div class="col-1 text-center">
-                        <input class="form-check-input" type="checkbox" @onchange="(e) => Onchanged(e,item.Id)"/>
+                        <input class="form-check-input" type="checkbox" @onchange="(e) => Onchanged(e,item.Id)" disabled="@(item.Status == CartItemStatus.OutStock)"/>
                     </div>
 
                     <div class="col-5 d-flex align-items-center">
@@ -173,12 +174,19 @@
     {
         if (SelectedItemIds.Any())
         {
-            await OnCheckout.InvokeAsync(new CheckoutEventAgrs()
+            if(await ShowConfirm("Bạn xác nhận thanh toán đơn hàng này chứ?"))
             {
-                SelectedCartItemIds=SelectedItemIds,
-                VoucherId=voucherApplied?.Id
-            });
-            await OnClose.InvokeAsync(false);
+                await OnCheckout.InvokeAsync(new CheckoutEventAgrs()
+                {
+                    SelectedCartItemIds=SelectedItemIds,
+                    VoucherId=voucherApplied?.Id
+                });
+                await OnClose.InvokeAsync(false);
+            }
+        }
+        else
+        {
+            await ShowError("Vui lòng chọn ít nhất 1 sản phẩm để thành toán!");
         }
     }
     void Onchanged(ChangeEventArgs eventArgs, int cartItemId)
@@ -242,4 +250,19 @@
         StateHasChanged();
     }
 
+    private async Task ShowSuccess(string message)
+    {
+        await JS.InvokeVoidAsync("SwalInterop.ShowSuccess", message);
+    }
+
+    private async Task ShowError(string message)
+    {
+        await JS.InvokeVoidAsync("SwalInterop.ShowError", message);
+    }
+
+    private async Task<bool> ShowConfirm(string message)
+    {
+        bool confirmed = await JS.InvokeAsync<bool>("SwalInterop.ShowConfirm", message);
+        return confirmed;
+    }
 }

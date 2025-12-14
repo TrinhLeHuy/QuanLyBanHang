@@ -21,15 +21,15 @@
 </div>
 
 <div style="max-height: 800px; overflow-y: auto;">
-    <table class="table table-bordered">
-    <thead class="table-light">
+    <table class="table table-bordered table-striped">
+    <thead class="table-primary">
         <tr>
-            <th>Mã đơn</th>
-            <th>Khách hàng</th>
-            <th>Ngày đặt</th>
-            <th>Tổng tiền</th>
-            <th>Giảm giá</th>
-            <th style="width: 1%">
+            <th scope="col">Mã đơn</th>
+            <th scope="col">Khách hàng</th>
+            <th scope="col">Ngày đặt</th>
+            <th scope="col">Tổng tiền</th>
+            <th scope="col">Giảm giá</th>
+            <th scope="col" style="width: 1%">
                 <div class="d-flex align-items-center gap-2">
                     <span>Trạng thái:</span>
                     <select class="form-select w-auto" id="filterStatus" @bind="orderStatusFilter" @bind:after="FilterStatus">
@@ -41,7 +41,7 @@
                     </select>
                 </div>
             </th>
-            <th>Thao tác</th>
+            <th scope="col">Thao tác</th>
         </tr>
     </thead>
     <tbody>
@@ -60,17 +60,17 @@
                 color = "red";
             }
             <tr>
-                <td>@o.OrderId</td>
+                <td scope="row">@o.OrderId</td>
                 <td>@o.Customer?.FullName</td>
                 <td>@o.OrderDate.ToString("dd/MM/yyyy")</td>
                 <td>@o.TotalAmount.ToString("N0") đ</td>
                 <td>@o.DiscountAmount.ToString("N0") đ</td>
-                <td><span style="background-color: @color;padding: 2px 8px;border-radius: 4px;text-align: center;">@o.Status.ToString()</span></td>
+                <td class="text-center"><span style="background-color: @color;padding: 2px 8px;border-radius: 4px;text-align: center;">@o.Status.ToString()</span></td>
                 <td>
-                    <button class="btn btn-info btn-sm" @onclick="async () => await OpenDetail(o.OrderId)">Chi tiết</button>
+                    <button class="btn btn-info btn-sm m-1" @onclick="async () => await OpenDetail(o.OrderId)">Chi tiết</button>
                         @if (o.Status == OrderStatus.Pending)
                         {
-                            <button class="btn btn-danger btn-sm" @onclick="async () => await OnUpdate(o)">Hủy đơn hàng</button>
+                            <button class="btn btn-danger btn-sm m-1" @onclick="async () => await OnUpdate(o)">Hủy đơn</button>
                         } 
                 </td>
             </tr>
@@ -167,51 +167,36 @@
 
     async Task OnUpdate(Order order)
     {
-        try 
+        if(await ShowConfirm("Bạn chắc chắn muốn hủy đơn hàng này sao?"))
         {
-            order.Status = OrderStatus.Canceled;
-            await OrderService.UpdateAsync(order);
-            await ShowSuccessUpdate();
-            showDialog = false;
-            await ReloadTable();
+            try 
+            {
+                order.Status = OrderStatus.Canceled;
+                await OrderService.UpdateAsync(order);
+                await ShowSuccess("Hủy đơn hàng thành công!");
+                showDialog = false;
+                await ReloadTable();
+            }
+            catch (Exception ex)
+            {
+                await ShowError("Không thể hủy đơn hàng vào lúc này! Vui lòng thử lại sau.");
+            }
         }
-        catch (Exception ex)
-        {
-            await ShowError();
-        }
 
     }
 
-    private async Task ShowSuccessCreate()
+    private async Task ShowSuccess(string message)
     {
-        await JS.InvokeVoidAsync("SwalInterop.ShowSuccess", "Đã tạo đơn hàng!");
+        await JS.InvokeVoidAsync("SwalInterop.ShowSuccess", message);
     }
 
-    private async Task ShowSuccessUpdate()
+    private async Task ShowError(string message)
     {
-        await JS.InvokeVoidAsync("SwalInterop.ShowSuccess", "Đã cập nhật trạng thái đơn hàng!");
+        await JS.InvokeVoidAsync("SwalInterop.ShowError", message);
     }
-
-    private async Task ShowError()
+    private async Task<bool> ShowConfirm( string message)
     {
-        await JS.InvokeVoidAsync("SwalInterop.ShowError", "Có lỗi xảy ra!");
-    }
-
-    private async Task ShowErrorValue(string error)
-    {
-        await JS.InvokeVoidAsync("SwalInterop.ShowError", error);
-    }
-
-    private async Task ShowConfirm()
-    {
-        bool confirmed = await JS.InvokeAsync<bool>("SwalInterop.ShowConfirm", "Bạn muốn xóa mục này?");
-        if (confirmed)
-        {
-            Console.WriteLine("Đã xác nhận");
-        }
-        else
-        {
-            Console.WriteLine("Đã hủy");
-        }
+        return await JS.InvokeAsync<bool>("SwalInterop.ShowConfirm", message);
+        
     }
 }
