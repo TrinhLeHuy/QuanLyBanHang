@@ -45,7 +45,11 @@ namespace QuanLyBanHang.Data.Repositories
                 pw.QuantityOnHand += quantity;
                 _context.ProductWarehouses.Update(pw);
             }
-
+            var productTarget = _context.Products.FirstOrDefault(p => p.Id == productId);
+            if (productTarget != null)
+            {
+                productTarget.Stock += quantity;
+            }
             _context.SaveChanges();
         }
 

@@ -58,7 +58,7 @@
                                  <a class="nav-link text-dark" asp-controller="Categories" asp-action="Index">Danh mục</a>
                                 </li>
                                 <li class ="nav-item">
-                                 <a class="nav-link text-dark" asp-controller="Order" asp-action="Index">Đơn hàng</a>
+                                 <a class="nav-link text-dark" asp-controller="Orders" asp-action="Index">Đơn hàng</a>
                                 </li>
                                 <li class ="nav-item">
                                      <a class="nav-link text-dark" asp-controller="POS" asp-action="Index">💰 POS (Thanh toán)</a>
@@ -90,7 +90,7 @@
                                     </a>
                                     <ul class="dropdown-menu">
                                         <li><a class="dropdown-item" asp-controller="Inventory" asp-action="Import">Nhập kho</a></li>
-                                        <li><a class="dropdown-item" asp-controller="Inventory" asp-action="Export">Xuất kho</a></li>
+                                        @* <li><a class="dropdown-item" asp-controller="Inventory" asp-action="Export">Xuất kho</a></li> *@
                                         <li><a class="dropdown-item" asp-controller="Inventory" asp-action="Stock">Tồn kho</a></li>
                                         <li><a class="dropdown-item" asp-controller="Inventory" asp-action="Transactions">Lịch sử</a></li>
                                     </ul>

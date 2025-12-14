@@ -52,7 +52,7 @@ namespace QuanLyBanHang.Data.Entities
 
 
         [ForeignKey(nameof(Employee))]
-        public int EmployeeId { get; set; }
+        public int? EmployeeId { get; set; }
         public Employee? Employee { get; set; }
 
         [ForeignKey(nameof(Voucher))]
