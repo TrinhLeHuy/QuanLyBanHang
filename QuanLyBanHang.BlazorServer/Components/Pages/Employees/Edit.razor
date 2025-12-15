@@ -1,0 +1,50 @@
+@page "/employees/edit/{Id:int}"
+@inject EmployeeService EmployeeService
+@inject NavigationManager Nav
+
+<h3>✏️ Chỉnh sửa nhân viên</h3>
+
+<EditForm Model="employee" OnValidSubmit="Update">
+    <DataAnnotationsValidator />
+
+    <div class="mb-3">
+        <label>Họ tên</label>
+        <InputText class="form-control" @bind-Value="employee.FullName" />
+    </div>
+
+    <div class="mb-3">
+        <label>Email</label>
+        <InputText class="form-control" Value="@employee.Email" disabled />
+    </div>
+
+    <div class="mb-3">
+        <label>Điện thoại</label>
+        <InputText class="form-control" @bind-Value="employee.Phone" />
+    </div>
+
+    <div class="mb-3">
+        <label>Vai trò</label>
+        <InputSelect class="form-select" @bind-Value="employee.Role">
+            <option value="Staff">Nhân viên</option>
+            <option value="Admin">Quản trị</option>
+        </InputSelect>
+    </div>
+
+    <button class="btn btn-success">Cập nhật</button>
+</EditForm>
+
+@code {
+    [Parameter] public int Id { get; set; }
+    Employee employee = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        employee = await EmployeeService.GetByIdAsync(Id);
+    }
+
+    async Task Update()
+    {
+        await EmployeeService.UpdateAsync(employee);
+        Nav.NavigateTo("/employees");
+    }
+}
