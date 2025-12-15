@@ -1,0 +1,34 @@
+@page "/inventory/stock"
+@inject IInventoryService InventoryService
+@using QuanLyBanHang.BlazorServer.Models
+
+<h3>📦 Tồn kho</h3>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Sản phẩm</th>
+            <th>Kho</th>
+            <th>Số lượng</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var s in stocks)
+        {
+            <tr>
+                <td>@s.ProductName</td>
+                <td>@s.WarehouseId</td>
+                <td><b>@s.Quantity</b></td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@code {
+    List<StockViewModel> stocks = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        stocks = await InventoryService.GetStockAsync();
+    }
+}

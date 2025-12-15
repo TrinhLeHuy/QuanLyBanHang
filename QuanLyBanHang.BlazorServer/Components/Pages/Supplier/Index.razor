@@ -1,0 +1,42 @@
+@page "/suppliers"
+@inject ISupplierService SupplierService
+
+<h3>🏭 Nhà cung cấp</h3>
+
+<a class="btn btn-primary mb-2" href="/suppliers/create">+ Thêm</a>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Tên</th>
+            <th>Địa chỉ</th>
+            <th>Điện thoại</th>
+            <th>Email</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var s in suppliers)
+        {
+            <tr>
+                <td>@s.SupplierName</td>
+                <td>@s.Address</td>
+                <td>@s.Phone</td>
+                <td>@s.Email</td>
+                <td>
+                    <a class="btn btn-sm btn-warning" href="/suppliers/edit/@s.SupplierId">Sửa</a>
+                    <a class="btn btn-sm btn-danger" href="/suppliers/delete/@s.SupplierId">Xóa</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@code {
+    List<Supplier> suppliers = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        suppliers = await SupplierService.GetAllAsync();
+    }
+}

@@ -1,0 +1,34 @@
+@page "/suppliers/edit/{id:int}"
+@inject ISupplierService SupplierService
+@using QuanLyBanHang.Data.Entities
+
+<h3>✏️ Sửa nhà cung cấp</h3>
+
+<EditForm Model="supplier" OnValidSubmit="Save">
+    <DataAnnotationsValidator />
+
+    <InputText @bind-Value="supplier.SupplierName" class="form-control" />
+    <InputText @bind-Value="supplier.Address" class="form-control mt-2" />
+    <InputText @bind-Value="supplier.Phone" class="form-control mt-2" />
+    <InputText @bind-Value="supplier.Email" class="form-control mt-2" />
+
+    <button class="btn btn-primary mt-3">Cập nhật</button>
+</EditForm>
+
+@code {
+    [Parameter] public int id { get; set; }
+    Supplier supplier = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        supplier = await SupplierService.GetByIdAsync(id);
+    }
+
+    private async Task Save()
+    {
+        await SupplierService.UpdateAsync(supplier);
+        NavigationManager.NavigateTo("/suppliers");
+    }
+
+    [Inject] NavigationManager NavigationManager { get; set; }
+}

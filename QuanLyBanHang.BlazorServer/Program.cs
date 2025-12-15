@@ -25,6 +25,9 @@ builder.Services.AddScoped<ICheckoutService, CheckoutService>();
 builder.Services.AddScoped<CategoriesService>();
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<ProductService>();
+builder.Services.AddScoped<IInventoryService, InventoryService>();
+builder.Services.AddScoped<ISupplierService, SupplierService>();
+
 
 
 
