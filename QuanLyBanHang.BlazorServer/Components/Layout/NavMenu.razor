@@ -1,0 +1,88 @@
+﻿@inject UserSessionService Session
+
+<nav class="navbar navbar-expand-sm navbar-light bg-white border-bottom box-shadow mb-3">
+    <div class="container-fluid">
+
+        <a class="navbar-brand" href="/">QUẢN LÝ BÁN HÀNG</a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navMenu">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navMenu">
+
+            <!-- LEFT MENU -->
+            <ul class="navbar-nav flex-grow-1">
+
+                @if (Session.EmployeeRole == "Admin")
+                {
+                    <!-- MENU ADMIN -->
+                    <li class="nav-item"><NavLink class="nav-link" href="/dashboard">Dashboard</NavLink></li>
+
+                    <li class="nav-item"><NavLink class="nav-link" href="/products">Sản phẩm</NavLink></li>
+                    <li class="nav-item"><NavLink class="nav-link" href="/customers">Khách hàng</NavLink></li>
+
+                    <li class="nav-item"><NavLink class="nav-link" href="/categories">Danh mục</NavLink></li>
+                    <li class="nav-item"><NavLink class="nav-link" href="/orders">Đơn hàng</NavLink></li>
+                    <li class="nav-item"><NavLink class="nav-link" href="/pos">💰 POS (Thanh toán)</NavLink></li>
+
+                    <li class="nav-item"><NavLink class="nav-link" href="/employees">Nhân viên</NavLink></li>
+                    <li class="nav-item"><NavLink class="nav-link" href="/statistics">Thống kê</NavLink></li>
+                    <li class="nav-item"><NavLink class="nav-link" href="/warehouse">Kho hàng</NavLink></li>
+
+                    <li class="nav-item"><NavLink class="nav-link" href="/supplier">Nhà cung cấp</NavLink></li>
+                    <li class="nav-item"><NavLink class="nav-link" href="/voucher">Giảm giá</NavLink></li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown">
+                            Nhập / Xuất
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><NavLink class="dropdown-item" href="/inventory/import">Nhập kho</NavLink></li>
+                            <li><NavLink class="dropdown-item" href="/inventory/export">Xuất kho</NavLink></li>
+                            <li><NavLink class="dropdown-item" href="/inventory/stock">Tồn kho</NavLink></li>
+                            <li><NavLink class="dropdown-item" href="/inventory/history">Lịch sử</NavLink></li>
+                        </ul>
+                    </li>
+                }
+                else
+                {
+                    <!-- MENU EMPLOYEE -->
+                    <li class="nav-item"><NavLink class="nav-link" href="/">Trang chủ</NavLink></li>
+                    <li class="nav-item"><NavLink class="nav-link" href="/products">Sản phẩm</NavLink></li>
+                    <li class="nav-item"><NavLink class="nav-link" href="/order">Bán hàng</NavLink></li>
+                    <li class="nav-item"><NavLink class="nav-link" href="/inventory/stock">Xem tồn kho</NavLink></li>
+                }
+            </ul>
+
+            <!-- USER INFO -->
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <span class="nav-link text-muted">
+                        Xin chào, <strong>@Session.EmployeeName</strong> (@Session.EmployeeRole)
+                    </span>
+                </li>
+
+                <li class="nav-item">
+                    <button class="btn btn-link nav-link text-dark" @onclick="Logout">
+                        Đăng xuất
+                    </button>
+                </li>
+            </ul>
+
+        </div>
+    </div>
+</nav>
+
+@code {
+    void Logout()
+    {
+        Session.EmployeeName = null;
+        Session.EmployeeRole = null;
+
+        // chuyển hướng về trang login
+        // Navigation.NavigateTo("/login", true);
+    }
+}
+

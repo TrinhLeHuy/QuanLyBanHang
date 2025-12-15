@@ -1,0 +1,206 @@
+﻿@inject IOrderService OrderService
+@inject IProductService ProductService
+@inject ICustomerService CustomerService
+@inject IEmployeeService EmployeeService
+@inject IVoucherService VoucherService
+@inject IJSRuntime JS
+
+<h3 class="mb-3 text-center">Lịch sử đơn hàng</h3>
+<div class="d-flex flex-column flex-md-row align-items-start gap-3 mb-4">
+
+    <div class="d-flex align-items-center gap-2 " id="inputFilterDate">
+        <input type="date" id="startDate" @bind="filterStartDate"  class="form-control" />
+        <span>-</span>
+        <input type="date" id="endDate" @bind="filterEndDate" class="form-control" />
+    </div>
+
+    <div class="d-flex gap-2">
+        <button type="submit" class="btn btn-primary" id="btnFilterOrder" @onclick="FilterOrder">Tìm kiếm</button>
+        <button type="button" class="btn btn-danger @(isFiltered ? "" : "d-none")" @onclick="ResetFilter">Bỏ lọc</button>
+    </div>
+</div>
+
+<div style="max-height: 800px; overflow-y: auto;">
+    <table class="table table-bordered table-striped">
+    <thead class="table-primary">
+        <tr>
+            <th scope="col">Mã đơn</th>
+            <th scope="col">Khách hàng</th>
+            <th scope="col">Ngày đặt</th>
+            <th scope="col">Tổng tiền</th>
+            <th scope="col">Giảm giá</th>
+            <th scope="col">Thanh toán</th>
+            <th scope="col" style="width: 1%">
+                <div class="d-flex align-items-center gap-2">
+                    <span>Trạng thái:</span>
+                    <select class="form-select w-auto" id="filterStatus" @bind="orderStatusFilter" @bind:after="FilterStatus">
+                        <option>Tất cả</option>
+                        @foreach (OrderStatus s in Enum.GetValues(typeof(OrderStatus)))
+                        {
+                            <option value="@s">@s</option>
+                        }
+                    </select>
+                </div>
+            </th>
+            <th scope="col">Thao tác</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var o in orders)
+        {
+            var color = "";
+            @if(@o.Status == OrderStatus.Pending)
+            {
+                color = "deepskyblue";
+            }else if(@o.Status == OrderStatus.Paid)
+            {
+                color = "forestgreen";
+            }
+            else
+            {
+                color = "red";
+            }
+            <tr>
+                <td scope="row">@o.OrderId</td>
+                <td>@o.Customer?.FullName</td>
+                <td>@o.OrderDate.ToString("dd/MM/yyyy")</td>
+                <td>@o.TotalAmount.ToString("N0") đ</td>
+                <td>@o.DiscountAmount.ToString("N0") đ</td>
+                <td>@(o.PaymentMethod=="Cash"?"Tiền mặt":"Chuyển khoản")</td>
+                <td class="text-center">
+                    <span style="background-color: @color;padding: 2px 8px;border-radius: 4px;text-align: center;">@(o.Status==OrderStatus.Pending?"Đang xử lý":(o.Status==OrderStatus.Paid?"Hoàn thành":"Đã hủy"))</span>
+                </td>
+                <td>
+                    <button class="btn btn-info btn-sm m-1" @onclick="async () => await OpenDetail(o.OrderId)">Chi tiết</button>
+                        @if (o.Status == OrderStatus.Pending)
+                        {
+                            <button class="btn btn-danger btn-sm m-1" @onclick="async () => await OnUpdate(o)">Hủy đơn</button>
+                        } 
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+</div>
+
+<DialogContainer IsOpen="@showDialog" IsOpenChanged="OnDialogChanged">
+    @currentDialog
+</DialogContainer>
+@code {
+    [Parameter] public int UserId { get; set; }
+    private List<Order> orders = new();
+    private List<Product> products = new();
+    private List<Customer> customers = new();
+    private List<Employee> employees = new();
+    private List<Voucher> vouchers = new();
+    private DateTime today = DateTime.Now;
+    bool isFiltered { get; set; } = false;
+    string orderStatusFilter { get; set; } = "Tất cả";
+    bool showDialog;
+    DateTime filterStartDate { get; set; } = DateTime.Now.AddDays(-1);
+    DateTime filterEndDate  { get; set; } = DateTime.Now;
+    RenderFragment? currentDialog;
+
+    protected override async Task OnInitializedAsync()
+    {
+        orders = await OrderService.GetAllWithUserIdAsync(UserId);
+    }
+
+    async Task FilterOrder()
+    {
+        orders = await OrderService.GetByFilterDateWithUserIdAsync(orderStatusFilter, filterStartDate, filterEndDate, UserId);
+
+        isFiltered = true;
+    }
+
+    async Task FilterStatus()
+    {
+        orders = await OrderService.GetByFilterStatusWithUserIdAsync(orderStatusFilter, UserId);
+        isFiltered = false;
+
+    }
+    async Task ResetFilter()
+    {
+        orders = await OrderService.GetAllAsync();
+        isFiltered = false;
+    }
+
+    Task OnDialogChanged(bool v)
+    {
+        showDialog = v;
+        return Task.CompletedTask;
+    }
+
+    async Task OpenDetail(int id)
+    {
+        var order = await OrderService.GetByIdAsync(id);
+        await GetAllProduct();
+        if(order!=null)
+            ShowOrderDetail(order, products);
+    }
+    async Task GetAllProduct()
+    {
+        products = await ProductService.GetAllProductAsync();
+    }
+
+    async Task GetAllResCreate()
+    {
+        products = await ProductService.GetAllProductAsync();
+        customers = await CustomerService.GetAllAsync();
+        employees = await EmployeeService.GetAllAsync();
+        vouchers = await VoucherService.GetAllAvailableAsync();
+    }
+    void ShowOrderDetail(Order order, List<Product> products)
+    {
+        currentDialog = builder =>
+        {
+            builder.OpenComponent(0, typeof(HistoriesDetail));
+            builder.AddAttribute(1, "order", order);
+            builder.AddAttribute(2, "Products", products);
+            // builder.AddAttribute(4, "OnClose", EventCallback.Factory.Create(this, Close));
+            builder.CloseComponent();
+        };
+
+        showDialog = true;
+        StateHasChanged();
+    }
+    async Task ReloadTable()
+    {
+        orders = await OrderService.GetAllWithUserIdAsync(UserId);
+    }
+
+    async Task OnUpdate(Order order)
+    {
+        if(await ShowConfirm("Bạn chắc chắn muốn hủy đơn hàng này sao?"))
+        {
+            try 
+            {
+                order.Status = OrderStatus.Canceled;
+                await OrderService.UpdateAsync(order);
+                await ShowSuccess("Hủy đơn hàng thành công!");
+                showDialog = false;
+                await ReloadTable();
+            }
+            catch (Exception ex)
+            {
+                await ShowError("Không thể hủy đơn hàng vào lúc này! Vui lòng thử lại sau.");
+            }
+        }
+
+    }
+
+    private async Task ShowSuccess(string message)
+    {
+        await JS.InvokeVoidAsync("SwalInterop.ShowSuccess", message);
+    }
+
+    private async Task ShowError(string message)
+    {
+        await JS.InvokeVoidAsync("SwalInterop.ShowError", message);
+    }
+    private async Task<bool> ShowConfirm( string message)
+    {
+        return await JS.InvokeAsync<bool>("SwalInterop.ShowConfirm", message);
+        
+    }
+}

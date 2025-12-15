@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace QuanLyBanHang.Data.Entities
 {
+    [Table("products")]
     public class Product
     {
         public int Id { get; set; }
@@ -27,5 +28,7 @@ namespace QuanLyBanHang.Data.Entities
 
         [ForeignKey("CategoryId")]
         public Categories? Categories { get; set; }
+
+        public string? ImageUrl { get; set; }
     }
 }
