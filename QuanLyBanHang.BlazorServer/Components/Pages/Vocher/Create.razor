@@ -1,0 +1,51 @@
+@page "/vouchers/create"
+@inject IVoucherService VoucherService
+@inject NavigationManager Nav
+
+<h3>➕ Thêm Voucher</h3>
+
+<input class="form-control mb-2" placeholder="Mã"
+       @bind="voucher.Code" />
+
+<textarea class="form-control mb-2"
+          placeholder="Mô tả"
+          @bind="voucher.Description"></textarea>
+
+<input type="number" class="form-control mb-2"
+       placeholder="% giảm"
+       @bind="voucher.DiscountPercent" />
+
+<input type="date" class="form-control mb-2"
+       @bind="voucher.StartDate" />
+
+<input type="date" class="form-control mb-2"
+       @bind="voucher.EndDate" />
+
+<input type="number" class="form-control mb-2"
+       placeholder="Số lượng"
+       @bind="voucher.Quantity" />
+
+<label>
+    <input type="checkbox" @bind="voucher.IsActive" />
+    Hoạt động
+</label>
+
+<br /><br />
+
+<button class="btn btn-success" @onclick="Save">Lưu</button>
+<a class="btn btn-secondary" href="/vouchers">Hủy</a>
+
+@code {
+    Voucher voucher = new()
+    {
+        StartDate = DateTime.Today,
+        EndDate = DateTime.Today.AddDays(7),
+        IsActive = true
+    };
+
+    async Task Save()
+    {
+        await VoucherService.CreateAsync(voucher);
+        Nav.NavigateTo("/vouchers");
+    }
+}

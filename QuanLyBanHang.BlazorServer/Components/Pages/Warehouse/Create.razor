@@ -1,0 +1,22 @@
+@page "/warehouses/create"
+@inject IWarehouseService WarehouseService
+@inject NavigationManager Nav
+
+<h3>➕ Thêm kho</h3>
+
+<input class="form-control mb-2" placeholder="Tên kho" @bind="warehouse.WarehouseName" />
+<input class="form-control mb-2" placeholder="Vị trí" @bind="warehouse.Location" />
+<input class="form-control mb-2" placeholder="Điện thoại" @bind="warehouse.Phone" />
+
+<button class="btn btn-success" @onclick="Save">Lưu</button>
+<a class="btn btn-secondary" href="/warehouses">Hủy</a>
+
+@code {
+    Warehouse warehouse = new();
+
+    async Task Save()
+    {
+        await WarehouseService.CreateAsync(warehouse);
+        Nav.NavigateTo("/warehouses");
+    }
+}

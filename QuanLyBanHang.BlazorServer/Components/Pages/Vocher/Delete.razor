@@ -1,0 +1,20 @@
+@page "/vouchers/delete/{id:int}"
+@inject IVoucherService VoucherService
+@inject NavigationManager Nav
+
+<h3 class="text-danger">🗑️ Xóa Voucher</h3>
+
+<p>Bạn có chắc muốn xóa voucher này?</p>
+
+<button class="btn btn-danger" @onclick="Deletes">Xóa</button>
+<a class="btn btn-secondary" href="/vouchers">Hủy</a>
+
+@code {
+    [Parameter] public int id { get; set; }
+
+    async Task Deletes()
+    {
+        await VoucherService.DeleteAsync(id);
+        Nav.NavigateTo("/vouchers");
+    }
+}

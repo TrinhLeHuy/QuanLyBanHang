@@ -1,0 +1,44 @@
+@page "/vouchers/edit/{id:int}"
+@inject IVoucherService VoucherService
+@inject NavigationManager Nav
+
+<h3>✏️ Sửa Voucher</h3>
+
+@if (voucher == null)
+{
+    <p>Đang tải...</p>
+}
+else
+{
+    <input class="form-control mb-2" @bind="voucher.Code" />
+    <textarea class="form-control mb-2" @bind="voucher.Description"></textarea>
+    <input type="number" class="form-control mb-2" @bind="voucher.DiscountPercent" />
+    <input type="date" class="form-control mb-2" @bind="voucher.StartDate" />
+    <input type="date" class="form-control mb-2" @bind="voucher.EndDate" />
+    <input type="number" class="form-control mb-2" @bind="voucher.Quantity" />
+
+    <label>
+        <input type="checkbox" @bind="voucher.IsActive" /> Hoạt động
+    </label>
+
+    <br /><br />
+
+    <button class="btn btn-primary" @onclick="Update">Cập nhật</button>
+    <a class="btn btn-secondary" href="/vouchers">Hủy</a>
+}
+
+@code {
+    [Parameter] public int id { get; set; }
+    Voucher? voucher;
+
+    protected override async Task OnInitializedAsync()
+    {
+        voucher = await VoucherService.GetByIdAsync(id);
+    }
+
+    async Task Update()
+    {
+        await VoucherService.UpdateAsync(voucher!);
+        Nav.NavigateTo("/vouchers");
+    }
+}

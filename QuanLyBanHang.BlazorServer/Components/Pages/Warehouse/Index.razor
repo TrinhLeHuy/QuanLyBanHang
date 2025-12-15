@@ -1,0 +1,47 @@
+@page "/warehouses"
+@inject IWarehouseService WarehouseService
+
+<h3>🏬 Danh sách kho</h3>
+
+<a class="btn btn-success mb-2" href="/warehouses/create">➕ Thêm kho</a>
+
+@if (warehouses == null)
+{
+    <p>Đang tải...</p>
+}
+else
+{
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Tên kho</th>
+                <th>Vị trí</th>
+                <th>Điện thoại</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var w in warehouses)
+            {
+                <tr>
+                    <td>@w.WarehouseName</td>
+                    <td>@w.Location</td>
+                    <td>@w.Phone</td>
+                    <td>
+                        <a class="btn btn-sm btn-warning" href="/warehouses/edit/@w.WarehouseId">Sửa</a>
+                        <a class="btn btn-sm btn-danger" href="/warehouses/delete/@w.WarehouseId">Xóa</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    List<Warehouse>? warehouses;
+
+    protected override async Task OnInitializedAsync()
+    {
+        warehouses = await WarehouseService.GetAllAsync();
+    }
+}
