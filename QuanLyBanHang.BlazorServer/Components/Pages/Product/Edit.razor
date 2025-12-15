@@ -1,0 +1,79 @@
+@page "/products/edit/{Id:int}"
+@inject ProductService ProductService
+@inject NavigationManager Navigation
+
+<h3>Sửa sản phẩm</h3>
+
+@if (product == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <EditForm Model="product" OnValidSubmit="HandleValidSubmit">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+
+        <div class="mb-3">
+            <label>Tên sản phẩm</label>
+            <InputText @bind-Value="product.Name" class="form-control" />
+        </div>
+
+        <div class="mb-3">
+            <label>Giá</label>
+            <InputNumber @bind-Value="product.Price" class="form-control" />
+        </div>
+
+        <div class="mb-3">
+            <label>Stock</label>
+            <InputNumber @bind-Value="product.Stock" class="form-control" />
+        </div>
+
+        <div class="mb-3">
+            <label>Mô tả</label>
+            <InputTextArea @bind-Value="product.Description" class="form-control" />
+        </div>
+
+        <div class="mb-3">
+            <label>Danh mục</label>
+            <InputSelect @bind-Value="product.CategoryId" class="form-control">
+                <option value="">-- Chọn danh mục --</option>
+                @foreach (var c in categories)
+                {
+                    <option value="@c.Id">@c.Name</option>
+                }
+            </InputSelect>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Cập nhật</button>
+        <button type="button" class="btn btn-secondary" @onclick="GoBack">Hủy</button>
+    </EditForm>
+}
+
+@code {
+    [Parameter] // ✨ Đúng cú pháp
+    public int Id { get; set; }
+
+    private Product? product;
+    private List<Categories> categories = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        categories = await ProductService.GetCategoriesAsync();
+        product = await ProductService.GetByIdAsync(Id);
+    }
+
+    private async Task HandleValidSubmit()
+    {
+        if (product != null)
+        {
+            await ProductService.UpdateAsync(product);
+            Navigation.NavigateTo("/products");
+        }
+    }
+
+    private void GoBack()
+    {
+        Navigation.NavigateTo("/products");
+    }
+}

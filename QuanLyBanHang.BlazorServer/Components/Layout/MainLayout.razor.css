@@ -38,10 +38,11 @@ button.accept-policy {
     line-height: inherit;
 }
 
-.footer {
+/* .footer {
     position: absolute;
     bottom: 0;
     width: 100%;
-    white-space: nowrap;
+    text-align: center;
     line-height: 60px;
-}
+} */
+

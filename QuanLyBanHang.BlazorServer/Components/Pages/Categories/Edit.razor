@@ -1,0 +1,51 @@
+@page "/categories/edit/{Id:int}"
+@inject CategoriesService CategoriesService
+@inject NavigationManager Navigation
+
+<h2>Chỉnh sửa Danh Mục</h2>
+
+@if (category == null)
+{
+    <p>Loading...</p>
+}
+else
+{
+    <EditForm Model="category" OnValidSubmit="HandleEdit">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+
+        <div class="mb-3">
+            <label>Tên danh mục</label>
+            <InputText @bind-Value="category.Name" class="form-control" />
+        </div>
+
+        <div class="mb-3">
+            <label>Mô tả</label>
+            <InputTextArea @bind-Value="category.Description" class="form-control" />
+        </div>
+
+        <button type="submit" class="btn btn-primary">Cập nhật</button>
+        <button type="button" class="btn btn-secondary" @onclick="Cancel">Quay lại</button>
+    </EditForm>
+}
+
+@code {
+    [Parameter] public int Id { get; set; }
+    private Categories? category;
+
+    protected override async Task OnInitializedAsync()
+    {
+        category = await CategoriesService.GetByIdAsync(Id);
+    }
+
+    private async Task HandleEdit()
+    {
+        if (category != null)
+        {
+            await CategoriesService.UpdateAsync(category);
+            Navigation.NavigateTo("/categories");
+        }
+    }
+
+    void Cancel() => Navigation.NavigateTo("/categories");
+}
