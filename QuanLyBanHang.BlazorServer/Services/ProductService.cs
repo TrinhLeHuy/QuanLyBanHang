@@ -17,5 +17,12 @@ namespace QuanLyBanHang.BlazorServer.Services
                 .Include(p => p.Categories)
                 .ToListAsync();
         }
+        public async Task<List<Product>> GetAllProductInStockAsync()
+        {
+            return await _context.Products
+                .Include(p => p.Categories)
+                .Where(p => p.Stock >0 )
+                .ToListAsync();
+        }
     }
 }

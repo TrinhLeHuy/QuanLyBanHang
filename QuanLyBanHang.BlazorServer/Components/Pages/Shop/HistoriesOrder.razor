@@ -29,6 +29,7 @@
             <th scope="col">Ngày đặt</th>
             <th scope="col">Tổng tiền</th>
             <th scope="col">Giảm giá</th>
+            <th scope="col">Thanh toán</th>
             <th scope="col" style="width: 1%">
                 <div class="d-flex align-items-center gap-2">
                     <span>Trạng thái:</span>
@@ -65,7 +66,10 @@
                 <td>@o.OrderDate.ToString("dd/MM/yyyy")</td>
                 <td>@o.TotalAmount.ToString("N0") đ</td>
                 <td>@o.DiscountAmount.ToString("N0") đ</td>
-                <td class="text-center"><span style="background-color: @color;padding: 2px 8px;border-radius: 4px;text-align: center;">@o.Status.ToString()</span></td>
+                <td>@(o.PaymentMethod=="Cash"?"Tiền mặt":"Chuyển khoản")</td>
+                <td class="text-center">
+                    <span style="background-color: @color;padding: 2px 8px;border-radius: 4px;text-align: center;">@(o.Status==OrderStatus.Pending?"Đang xử lý":(o.Status==OrderStatus.Paid?"Hoàn thành":"Đã hủy"))</span>
+                </td>
                 <td>
                     <button class="btn btn-info btn-sm m-1" @onclick="async () => await OpenDetail(o.OrderId)">Chi tiết</button>
                         @if (o.Status == OrderStatus.Pending)
@@ -144,7 +148,7 @@
         products = await ProductService.GetAllProductAsync();
         customers = await CustomerService.GetAllAsync();
         employees = await EmployeeService.GetAllAsync();
-        vouchers = await VoucherService.GetAllAsync();
+        vouchers = await VoucherService.GetAllAvailableAsync();
     }
     void ShowOrderDetail(Order order, List<Product> products)
     {

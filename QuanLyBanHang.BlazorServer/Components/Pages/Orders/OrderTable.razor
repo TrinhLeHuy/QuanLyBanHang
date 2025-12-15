@@ -31,6 +31,7 @@
                 <td>@o.OrderDate.ToString("dd/MM/yyyy")</td>
                 <td>@o.TotalAmount.ToString("N0") đ</td>
                 <td>@o.DiscountAmount.ToString("N0") đ</td>
+                <td>@(o.PaymentMethod=="Cash"?"Tiền mặt":"Chuyển khoản")</td>
                 <td class="text-center" ><span style="background-color: @color;padding: 2px 8px;border-radius: 4px;text-align: center;">@o.Status.ToString()</span></td>
                 <td>
                     <button class="btn btn-info btn-sm" @onclick="async () => await OnView.InvokeAsync(o.OrderId)">Chi tiết</button>

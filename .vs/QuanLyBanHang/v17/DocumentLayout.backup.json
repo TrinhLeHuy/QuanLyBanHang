@@ -1,0 +1,176 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "E:\\HocHanh\\dotnet\\QuanLyBanHang\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{BD7C0D71-5A53-41A9-8BC1-A0D72476966F}|QuanLyBanHang.BlazorServer\\QuanLyBanHang.BlazorServer.csproj|e:\\hochanh\\dotnet\\quanlybanhang\\quanlybanhang.blazorserver\\components\\pages\\shop\\historiesdetail.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{BD7C0D71-5A53-41A9-8BC1-A0D72476966F}|QuanLyBanHang.BlazorServer\\QuanLyBanHang.BlazorServer.csproj|solutionrelative:quanlybanhang.blazorserver\\components\\pages\\shop\\historiesdetail.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BD7C0D71-5A53-41A9-8BC1-A0D72476966F}|QuanLyBanHang.BlazorServer\\QuanLyBanHang.BlazorServer.csproj|e:\\hochanh\\dotnet\\quanlybanhang\\quanlybanhang.blazorserver\\components\\pages\\shop\\cartbill.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{BD7C0D71-5A53-41A9-8BC1-A0D72476966F}|QuanLyBanHang.BlazorServer\\QuanLyBanHang.BlazorServer.csproj|solutionrelative:quanlybanhang.blazorserver\\components\\pages\\shop\\cartbill.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BD7C0D71-5A53-41A9-8BC1-A0D72476966F}|QuanLyBanHang.BlazorServer\\QuanLyBanHang.BlazorServer.csproj|e:\\hochanh\\dotnet\\quanlybanhang\\quanlybanhang.blazorserver\\components\\pages\\shop\\historiesorder.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{BD7C0D71-5A53-41A9-8BC1-A0D72476966F}|QuanLyBanHang.BlazorServer\\QuanLyBanHang.BlazorServer.csproj|solutionrelative:quanlybanhang.blazorserver\\components\\pages\\shop\\historiesorder.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BD7C0D71-5A53-41A9-8BC1-A0D72476966F}|QuanLyBanHang.BlazorServer\\QuanLyBanHang.BlazorServer.csproj|e:\\hochanh\\dotnet\\quanlybanhang\\quanlybanhang.blazorserver\\components\\pages\\shop\\cartindex.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{BD7C0D71-5A53-41A9-8BC1-A0D72476966F}|QuanLyBanHang.BlazorServer\\QuanLyBanHang.BlazorServer.csproj|solutionrelative:quanlybanhang.blazorserver\\components\\pages\\shop\\cartindex.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BD7C0D71-5A53-41A9-8BC1-A0D72476966F}|QuanLyBanHang.BlazorServer\\QuanLyBanHang.BlazorServer.csproj|e:\\hochanh\\dotnet\\quanlybanhang\\quanlybanhang.blazorserver\\components\\pages\\orders\\orderdetail.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{BD7C0D71-5A53-41A9-8BC1-A0D72476966F}|QuanLyBanHang.BlazorServer\\QuanLyBanHang.BlazorServer.csproj|solutionrelative:quanlybanhang.blazorserver\\components\\pages\\orders\\orderdetail.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BD7C0D71-5A53-41A9-8BC1-A0D72476966F}|QuanLyBanHang.BlazorServer\\QuanLyBanHang.BlazorServer.csproj|e:\\hochanh\\dotnet\\quanlybanhang\\quanlybanhang.blazorserver\\components\\pages\\shop\\shopindex.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{BD7C0D71-5A53-41A9-8BC1-A0D72476966F}|QuanLyBanHang.BlazorServer\\QuanLyBanHang.BlazorServer.csproj|solutionrelative:quanlybanhang.blazorserver\\components\\pages\\shop\\shopindex.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BD7C0D71-5A53-41A9-8BC1-A0D72476966F}|QuanLyBanHang.BlazorServer\\QuanLyBanHang.BlazorServer.csproj|e:\\hochanh\\dotnet\\quanlybanhang\\quanlybanhang.blazorserver\\components\\pages\\orders\\ordertable.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{BD7C0D71-5A53-41A9-8BC1-A0D72476966F}|QuanLyBanHang.BlazorServer\\QuanLyBanHang.BlazorServer.csproj|solutionrelative:quanlybanhang.blazorserver\\components\\pages\\orders\\ordertable.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BD7C0D71-5A53-41A9-8BC1-A0D72476966F}|QuanLyBanHang.BlazorServer\\QuanLyBanHang.BlazorServer.csproj|e:\\hochanh\\dotnet\\quanlybanhang\\quanlybanhang.blazorserver\\components\\pages\\orders\\orderindex.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{BD7C0D71-5A53-41A9-8BC1-A0D72476966F}|QuanLyBanHang.BlazorServer\\QuanLyBanHang.BlazorServer.csproj|solutionrelative:quanlybanhang.blazorserver\\components\\pages\\orders\\orderindex.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 8,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{eefa5220-e298-11d0-8f78-00a0c9110057}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{56df62a4-05a3-4e5b-aa1a-99371ccfb997}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{b1e99781-ab81-11d0-b683-00aa00a3ee26}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "ShopIndex.razor",
+              "DocumentMoniker": "E:\\HocHanh\\dotnet\\QuanLyBanHang\\QuanLyBanHang.BlazorServer\\Components\\Pages\\Shop\\ShopIndex.razor",
+              "RelativeDocumentMoniker": "QuanLyBanHang.BlazorServer\\Components\\Pages\\Shop\\ShopIndex.razor",
+              "ToolTip": "E:\\HocHanh\\dotnet\\QuanLyBanHang\\QuanLyBanHang.BlazorServer\\Components\\Pages\\Shop\\ShopIndex.razor",
+              "RelativeToolTip": "QuanLyBanHang.BlazorServer\\Components\\Pages\\Shop\\ShopIndex.razor",
+              "ViewState": "AgIAAMIAAAAAAAAAAAAtwN4AAAApAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-12-15T07:21:51.712Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "CartIndex.razor",
+              "DocumentMoniker": "E:\\HocHanh\\dotnet\\QuanLyBanHang\\QuanLyBanHang.BlazorServer\\Components\\Pages\\Shop\\CartIndex.razor",
+              "RelativeDocumentMoniker": "QuanLyBanHang.BlazorServer\\Components\\Pages\\Shop\\CartIndex.razor",
+              "ToolTip": "E:\\HocHanh\\dotnet\\QuanLyBanHang\\QuanLyBanHang.BlazorServer\\Components\\Pages\\Shop\\CartIndex.razor",
+              "RelativeToolTip": "QuanLyBanHang.BlazorServer\\Components\\Pages\\Shop\\CartIndex.razor",
+              "ViewState": "AgIAAEIAAAAAAAAAAAArwHIAAAAfAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-12-15T06:52:00.267Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "CartBill.razor",
+              "DocumentMoniker": "E:\\HocHanh\\dotnet\\QuanLyBanHang\\QuanLyBanHang.BlazorServer\\Components\\Pages\\Shop\\CartBill.razor",
+              "RelativeDocumentMoniker": "QuanLyBanHang.BlazorServer\\Components\\Pages\\Shop\\CartBill.razor",
+              "ToolTip": "E:\\HocHanh\\dotnet\\QuanLyBanHang\\QuanLyBanHang.BlazorServer\\Components\\Pages\\Shop\\CartBill.razor",
+              "RelativeToolTip": "QuanLyBanHang.BlazorServer\\Components\\Pages\\Shop\\CartBill.razor",
+              "ViewState": "AgIAABoAAAAAAAAAAAAtwGsAAAAxAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-12-15T06:47:58.121Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "HistoriesDetail.razor",
+              "DocumentMoniker": "E:\\HocHanh\\dotnet\\QuanLyBanHang\\QuanLyBanHang.BlazorServer\\Components\\Pages\\Shop\\HistoriesDetail.razor",
+              "RelativeDocumentMoniker": "QuanLyBanHang.BlazorServer\\Components\\Pages\\Shop\\HistoriesDetail.razor",
+              "ToolTip": "E:\\HocHanh\\dotnet\\QuanLyBanHang\\QuanLyBanHang.BlazorServer\\Components\\Pages\\Shop\\HistoriesDetail.razor",
+              "RelativeToolTip": "QuanLyBanHang.BlazorServer\\Components\\Pages\\Shop\\HistoriesDetail.razor",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAEAAAAuAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-12-15T06:47:06.986Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "HistoriesOrder.razor",
+              "DocumentMoniker": "E:\\HocHanh\\dotnet\\QuanLyBanHang\\QuanLyBanHang.BlazorServer\\Components\\Pages\\Shop\\HistoriesOrder.razor",
+              "RelativeDocumentMoniker": "QuanLyBanHang.BlazorServer\\Components\\Pages\\Shop\\HistoriesOrder.razor",
+              "ToolTip": "E:\\HocHanh\\dotnet\\QuanLyBanHang\\QuanLyBanHang.BlazorServer\\Components\\Pages\\Shop\\HistoriesOrder.razor",
+              "RelativeToolTip": "QuanLyBanHang.BlazorServer\\Components\\Pages\\Shop\\HistoriesOrder.razor",
+              "ViewState": "AgIAACMAAAAAAAAAAAAtwEgAAAAQAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-12-15T06:45:50.966Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "OrderDetail.razor",
+              "DocumentMoniker": "E:\\HocHanh\\dotnet\\QuanLyBanHang\\QuanLyBanHang.BlazorServer\\Components\\Pages\\Orders\\OrderDetail.razor",
+              "RelativeDocumentMoniker": "QuanLyBanHang.BlazorServer\\Components\\Pages\\Orders\\OrderDetail.razor",
+              "ToolTip": "E:\\HocHanh\\dotnet\\QuanLyBanHang\\QuanLyBanHang.BlazorServer\\Components\\Pages\\Orders\\OrderDetail.razor",
+              "RelativeToolTip": "QuanLyBanHang.BlazorServer\\Components\\Pages\\Orders\\OrderDetail.razor",
+              "ViewState": "AgIAACcAAAAAAAAAAAAtwD0AAABuAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-12-15T06:41:15.948Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "OrderTable.razor",
+              "DocumentMoniker": "E:\\HocHanh\\dotnet\\QuanLyBanHang\\QuanLyBanHang.BlazorServer\\Components\\Pages\\Orders\\OrderTable.razor",
+              "RelativeDocumentMoniker": "QuanLyBanHang.BlazorServer\\Components\\Pages\\Orders\\OrderTable.razor",
+              "ToolTip": "E:\\HocHanh\\dotnet\\QuanLyBanHang\\QuanLyBanHang.BlazorServer\\Components\\Pages\\Orders\\OrderTable.razor",
+              "RelativeToolTip": "QuanLyBanHang.BlazorServer\\Components\\Pages\\Orders\\OrderTable.razor",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACEAAABNAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-12-15T06:35:26.463Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "OrderIndex.razor",
+              "DocumentMoniker": "E:\\HocHanh\\dotnet\\QuanLyBanHang\\QuanLyBanHang.BlazorServer\\Components\\Pages\\Orders\\OrderIndex.razor",
+              "RelativeDocumentMoniker": "QuanLyBanHang.BlazorServer\\Components\\Pages\\Orders\\OrderIndex.razor",
+              "ToolTip": "E:\\HocHanh\\dotnet\\QuanLyBanHang\\QuanLyBanHang.BlazorServer\\Components\\Pages\\Orders\\OrderIndex.razor",
+              "RelativeToolTip": "QuanLyBanHang.BlazorServer\\Components\\Pages\\Orders\\OrderIndex.razor",
+              "ViewState": "AgIAABUAAAAAAAAAAAAAAC4AAAArAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-12-15T06:35:25.763Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

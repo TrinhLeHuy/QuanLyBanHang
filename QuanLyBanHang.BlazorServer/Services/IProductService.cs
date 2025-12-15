@@ -6,5 +6,6 @@ namespace QuanLyBanHang.BlazorServer.Services
     public interface IProductService
     {
         public Task<List<Product>> GetAllProductAsync();
+        public Task<List<Product>> GetAllProductInStockAsync();
     }
 }

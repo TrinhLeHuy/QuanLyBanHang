@@ -58,6 +58,12 @@
     </div>
 
     <div class="mb-3">
+        <label class="fs-5">
+            Thanh toán bằng: <span class="fst-italic">@(order.PaymentMethod=="Cash"?"Tiền mặt":"Chuyển khoản")</span>
+        </label>
+    </div>
+
+    <div class="mb-3">
         <label class="fs-5">Trạng thái đơn: <span class="fst-italic" style="background-color: @color;padding: 2px 8px;border-radius: 4px;text-align: center;">@order.Status</span></label>
         
     </div>

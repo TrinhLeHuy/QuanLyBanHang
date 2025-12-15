@@ -48,6 +48,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xPcmRlcnNcT3JkZXJUYWJsZS5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
+[E:/HocHanh/dotnet/QuanLyBanHang/QuanLyBanHang.BlazorServer/Components/Pages/Shop/CartBill.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xTaG9wXENhcnRCaWxsLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
 [E:/HocHanh/dotnet/QuanLyBanHang/QuanLyBanHang.BlazorServer/Components/Pages/Shop/CartIndex.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xTaG9wXENhcnRJbmRleC5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 

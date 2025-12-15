@@ -44,6 +44,7 @@
             <th scope="col">Ngày đặt</th>
             <th scope="col">Tổng tiền</th>
             <th scope="col">Giảm giá</th>
+            <th scope="col">Thanh toán</th>
             <th scope="col" style="width: 1%">
                 <div class="d-flex align-items-center gap-2">
                     <span>Trạng thái:</span>
@@ -133,7 +134,7 @@
         products = await ProductService.GetAllProductAsync();
         customers = await CustomerService.GetAllAsync();
         employees = await EmployeeService.GetAllAsync();
-        vouchers = await VoucherService.GetAllAsync();
+        vouchers = await VoucherService.GetAllAvailableAsync();
     }
 
     async Task OpenCreate()

@@ -78,6 +78,11 @@ wwwroot\css\Orders.css
 wwwroot\css\Shop.css
 wwwroot\css\site.css
 wwwroot\favicon.ico
+wwwroot\image\default.png
+wwwroot\image\default1.png
+wwwroot\image\iphone15prm.png
+wwwroot\image\mbplusm3.png
+wwwroot\image\sss24ultra.png
 wwwroot\js\Orders.js
 wwwroot\js\site.js
 wwwroot\js\swalInterop.js

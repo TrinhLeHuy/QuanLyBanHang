@@ -4,6 +4,6 @@ namespace QuanLyBanHang.BlazorServer.Services
 {
     public interface IVoucherService
     {
-        public Task<List<Voucher>> GetAllAsync();
+        public Task<List<Voucher>> GetAllAvailableAsync();
     }
 }

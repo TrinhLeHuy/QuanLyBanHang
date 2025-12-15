@@ -30,7 +30,7 @@
                     </div>
 
                     <div class="col-5 d-flex align-items-center">
-                        <img src="" class="me-3 rounded" style="width: 60px; height: 60px; object-fit: cover;" alt="@item.Product.Name" />
+                        <img src="@(item.Product.ImageUrl!=null?item.Product.ImageUrl:"/image/default.png")" class="me-3 rounded" style="width: 60px; height: 60px; object-fit: cover;" alt="@item.Product.Name" />
                         <div>
                             <span class="d-block fw-bold product-name-cart">@item.Product.Name</span>
                             @if (item.Status == CartItemStatus.InStock)
@@ -51,7 +51,7 @@
                     <div class="col-2 text-center">
                         <input type="number" class="form-control form-control-sm text-center" 
                                @bind="item.Quantity" 
-                               min="1" max="@(item.Status == CartItemStatus.InStock ? 100 : 0)" 
+                               min="1" max="@(item.Status == CartItemStatus.InStock ? item.Product.Stock : 0)" 
                                style="max-width: 80px; margin: 0 auto;"
                                />
                     </div>
@@ -106,7 +106,14 @@
             <label class="fs-5 text-muted">Tổng cộng:</label>
             <label class="fs-4 fw-bold text-danger" id="totalPrice">
                 @(TotalPrice.ToString("N0"))₫ 
-                <span class="fs-6 text-muted">(Đã bao gồm VAT)</span>
+                <span class="fs-6 text-muted">(Đã bao gồm VAT(10%))</span>
+            </label>
+        </div>
+
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <label class="fs-5 text-muted">Hình thức thành toán:</label>
+            <label class="fs-6 fw-bold text-danger" id="totalPrice">
+                Chuyển khoản(Transfer)
             </label>
         </div>
 
@@ -143,7 +150,7 @@
             {
                 return CartItems
                 .Where(i => i.Status == CartItemStatus.InStock && SelectedItemIds.Contains(i.Id))
-                .Sum(i => i.Product.Price * i.Quantity);
+                .Sum(i => i.Product.Price * i.Quantity)*1.1M;
             }
             else
             {
@@ -151,13 +158,13 @@
                 {
                     return CartItems
                     .Where(i => i.Status == CartItemStatus.InStock && SelectedItemIds.Contains(i.Id))
-                    .Sum(i => i.Product.Price * i.Quantity)*(1-voucherApplied.DiscountValue);
+                    .Sum(i => i.Product.Price * i.Quantity)*(1-voucherApplied.DiscountValue)*1.1M;
                 }
                 else
                 {
-                    return CartItems
+                    return (CartItems
                     .Where(i => i.Status == CartItemStatus.InStock && SelectedItemIds.Contains(i.Id))
-                    .Sum(i => i.Product.Price * i.Quantity) - voucherApplied.DiscountValue;
+                    .Sum(i => i.Product.Price * i.Quantity) - voucherApplied.DiscountValue)*1.1M;
                 }
             }
 
@@ -181,7 +188,6 @@
                     SelectedCartItemIds=SelectedItemIds,
                     VoucherId=voucherApplied?.Id
                 });
-                await OnClose.InvokeAsync(false);
             }
         }
         else

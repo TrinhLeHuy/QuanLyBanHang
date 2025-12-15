@@ -72,7 +72,6 @@ E:\HocHanh\dotnet\QuanLyBanHang\QuanLyBanHang.BlazorServer\obj\Debug\net9.0\scop
 E:\HocHanh\dotnet\QuanLyBanHang\QuanLyBanHang.BlazorServer\obj\Debug\net9.0\scopedcss\Components\Layout\NavMenu.razor.rz.scp.css
 E:\HocHanh\dotnet\QuanLyBanHang\QuanLyBanHang.BlazorServer\obj\Debug\net9.0\scopedcss\bundle\QuanLyBanHang.BlazorServer.styles.css
 E:\HocHanh\dotnet\QuanLyBanHang\QuanLyBanHang.BlazorServer\obj\Debug\net9.0\scopedcss\projectbundle\QuanLyBanHang.BlazorServer.bundle.scp.css
-E:\HocHanh\dotnet\QuanLyBanHang\QuanLyBanHang.BlazorServer\obj\Debug\net9.0\compressed\hw3beab5f7-bpk8xqwxhs.gz
 E:\HocHanh\dotnet\QuanLyBanHang\QuanLyBanHang.BlazorServer\obj\Debug\net9.0\compressed\n6m3mp39n6-8inm30yfxf.gz
 E:\HocHanh\dotnet\QuanLyBanHang\QuanLyBanHang.BlazorServer\obj\Debug\net9.0\compressed\ngxkiru4ca-6ve0fu8xzn.gz
 E:\HocHanh\dotnet\QuanLyBanHang\QuanLyBanHang.BlazorServer\obj\Debug\net9.0\compressed\oeepx52txp-8qmik50wvu.gz
@@ -156,3 +155,4 @@ E:\HocHanh\dotnet\QuanLyBanHang\QuanLyBanHang.BlazorServer\obj\Debug\net9.0\Quan
 E:\HocHanh\dotnet\QuanLyBanHang\QuanLyBanHang.BlazorServer\obj\Debug\net9.0\ref\QuanLyBanHang.BlazorServer.dll
 E:\HocHanh\dotnet\QuanLyBanHang\QuanLyBanHang.BlazorServer\obj\Debug\net9.0\compressed\e4ic1qc1k3-a95u0jy7lb.gz
 E:\HocHanh\dotnet\QuanLyBanHang\QuanLyBanHang.BlazorServer\obj\Debug\net9.0\compressed\7szsiqgzoi-q1e7aq7vfu.gz
+E:\HocHanh\dotnet\QuanLyBanHang\QuanLyBanHang.BlazorServer\obj\Debug\net9.0\compressed\hw3beab5f7-6gzpyzhau4.gz

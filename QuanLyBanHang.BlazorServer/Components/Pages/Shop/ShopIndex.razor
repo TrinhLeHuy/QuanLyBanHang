@@ -61,7 +61,7 @@
 
 <div class="product-carousel-container my-3 p-2 bg-white border rounded">
     <h2 class="carousel-title fs-5 fw-bold mb-3 p-2 text-danger">
-        Sản phẩm > Tất cả
+        Danh sách sản phẩm
     </h2>
     
     <div class="product-grid-scroll-wrapper p-1"> 
@@ -110,7 +110,7 @@
 
     async Task GetVoucher()
     {
-        vouchers = await VoucherService.GetAllAsync();
+        vouchers = await VoucherService.GetAllAvailableAsync();
     }
 
     async Task OnAddCart(int productId)
@@ -133,7 +133,7 @@
             {
                 cartItems.Add(newCartItem);
             }
-             await ShowSuccess("Đã thêm vào giỏ hàng!");
+            await ShowSuccess("Đã thêm vào giỏ hàng!");
         }
         else
         {
@@ -172,6 +172,19 @@
         StateHasChanged();
     }
 
+    void OnOpenBill(Order order)
+    {
+        currentDialog = builder =>
+        {
+            builder.OpenComponent(0, typeof(CartBill));
+            builder.AddAttribute(1, "NewOrder", order);
+            builder.CloseComponent();
+        };
+
+        showDialog = true;
+        StateHasChanged();
+    }
+
     Task OnDialogChanged(bool v)
     {
         showDialog = v;
@@ -197,23 +210,27 @@
             {
                 ProductId = c.ProductId,
                 Quantity = c.Quantity,
-                UnitPrice = c.Product.Price
+                UnitPrice = c.Product.Price,
+                Product = products.FirstOrDefault(p => p.Id == c.ProductId)
             });
         }
         var newOrder = new Order()
             {
                 CustomerId = UserId,
                 VoucherId = agrs.VoucherId,
-                OrderDetails =orderDetails
+                OrderDetails =orderDetails,
+                Voucher = vouchers.FirstOrDefault(v => v.Id == agrs.VoucherId),
+                PaymentMethod ="Transfer"
             };
         try
         {
-            var resullt = await CheckoutService.PCCreateOrderAsync(UserId, newOrder, agrs.SelectedCartItemIds);
-            if (resullt != null)
+            var result = await CheckoutService.PCCreateOrderAsync(UserId, newOrder, agrs.SelectedCartItemIds);
+            if (result != null)
             {
                 cartItems.RemoveAll(c => agrs.SelectedCartItemIds.Contains(c.Id));
                 await ShowSuccess("Tạo đơn hàng thành công!");
-
+                showDialog = false;
+                OnOpenBill(result);
             }
             else
             {

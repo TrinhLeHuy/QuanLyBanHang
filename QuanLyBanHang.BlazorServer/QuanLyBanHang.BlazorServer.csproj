@@ -10,4 +10,8 @@
     <ProjectReference Include="..\QuanLyBanHang.Data\QuanLyBanHang.Data.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\image\" />
+  </ItemGroup>
+
 </Project>
