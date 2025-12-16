@@ -1,0 +1,70 @@
+@page "/pos"
+@using QuanLyBanHang.Web.Models
+@using QuanLyBanHang.BlazorServer.Services
+@inject PosService PosService
+@inject NavigationManager Nav
+
+<h3>POS - @vm.CurrentEmployee?.FullName</h3>
+
+<div class="row">
+    <div class="col-8">
+        @foreach (var p in vm.Products)
+        {
+            <button class="btn btn-light m-1" @onclick="() => Add(p)">
+                @p.Name - @p.Price.ToString("N0")
+            </button>
+        }
+    </div>
+
+    <div class="col-4">
+        <table class="table">
+            @foreach (var i in cart)
+            {
+                <tr>
+                    <td>@i.ProductName</td>
+                    <td><input type="number" @bind="i.Quantity" /></td>
+                    <td>@i.Total.ToString("N0")</td>
+                    <td><button @onclick="() => Remove(i)">X</button></td>
+                </tr>
+            }
+        </table>
+
+        <p>Tổng: @finalTotal.ToString("N0")</p>
+        <button class="btn btn-success" @onclick="Checkout">Thanh toán</button>
+    </div>
+</div>
+
+@code {
+    POSViewModel vm = new();
+    List<POSItem> cart = new();
+    decimal finalTotal;
+
+    protected override void OnInitialized()
+    {
+        vm = PosService.Load();
+    }
+
+    void Add(Product p)
+    {
+        var item = cart.FirstOrDefault(x => x.ProductId == p.Id);
+        if (item == null)
+            cart.Add(new POSItem { ProductId = p.Id, ProductName = p.Name, Quantity = 1, UnitPrice = p.Price });
+        else item.Quantity++;
+        Calc();
+    }
+
+    void Remove(POSItem i)
+    {
+        cart.Remove(i);
+        Calc();
+    }
+
+    void Calc() => finalTotal = cart.Sum(x => x.Total);
+
+    void Checkout()
+    {
+        var order = PosService.Checkout(vm.EmployeeId, 0, null, "Cash", finalTotal, cart
+            .Select(x => new CartItemDTO { ProductId = x.ProductId, Quantity = x.Quantity }).ToList());
+        Nav.NavigateTo($"/receipt/{order.OrderId}");
+    }
+}

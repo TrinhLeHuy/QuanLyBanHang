@@ -1,0 +1,31 @@
+@page "/receipt/{id:int}"
+@inject PosService PosService
+
+<h3>Hóa đơn</h3>
+
+@if (order != null)
+{
+    <p>Mã: @order.OrderId</p>
+    <p>Thu ngân: @order.Employee?.FullName</p>
+
+    <table class="table">
+        @foreach (var d in order.OrderDetails)
+        {
+            <tr>
+                <td>@d.Product?.Name</td>
+                <td>@d.Quantity</td>
+                <td>@(d.UnitPrice * d.Quantity)</td>
+            </tr>
+        }
+    </table>
+}
+
+@code {
+    [Parameter] public int id { get; set; }
+    Order order;
+
+    protected override void OnInitialized()
+    {
+        order = PosService.GetReceipt(id);
+    }
+}
