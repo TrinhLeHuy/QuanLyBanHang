@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "E:\\HocHanh\\dotnet\\QuanLyBanHang\\QuanLyBanHang.Web\\QuanLyBanHang.Web.csproj": {}
+    "D:\\SGU\\DaiHoc\\HocKi1_Nam4\\congNghe.Net\\project_final\\QuanLyBanHang\\QuanLyBanHang.Web\\QuanLyBanHang.Web.csproj": {}
   },
   "projects": {
-    "E:\\HocHanh\\dotnet\\QuanLyBanHang\\QuanLyBanHang.Data\\QuanLyBanHang.Data.csproj": {
+    "D:\\SGU\\DaiHoc\\HocKi1_Nam4\\congNghe.Net\\project_final\\QuanLyBanHang\\QuanLyBanHang.Data\\QuanLyBanHang.Data.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\HocHanh\\dotnet\\QuanLyBanHang\\QuanLyBanHang.Data\\QuanLyBanHang.Data.csproj",
+        "projectUniqueName": "D:\\SGU\\DaiHoc\\HocKi1_Nam4\\congNghe.Net\\project_final\\QuanLyBanHang\\QuanLyBanHang.Data\\QuanLyBanHang.Data.csproj",
         "projectName": "QuanLyBanHang.Data",
-        "projectPath": "E:\\HocHanh\\dotnet\\QuanLyBanHang\\QuanLyBanHang.Data\\QuanLyBanHang.Data.csproj",
-        "packagesPath": "C:\\Users\\skeeyzi\\.nuget\\packages\\",
-        "outputPath": "E:\\HocHanh\\dotnet\\QuanLyBanHang\\QuanLyBanHang.Data\\obj\\",
+        "projectPath": "D:\\SGU\\DaiHoc\\HocKi1_Nam4\\congNghe.Net\\project_final\\QuanLyBanHang\\QuanLyBanHang.Data\\QuanLyBanHang.Data.csproj",
+        "packagesPath": "C:\\Users\\ADMIN\\.nuget\\packages\\",
+        "outputPath": "D:\\SGU\\DaiHoc\\HocKi1_Nam4\\congNghe.Net\\project_final\\QuanLyBanHang\\QuanLyBanHang.Data\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\skeeyzi\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\ADMIN\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -91,24 +91,24 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.300/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.305/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "E:\\HocHanh\\dotnet\\QuanLyBanHang\\QuanLyBanHang.Web\\QuanLyBanHang.Web.csproj": {
+    "D:\\SGU\\DaiHoc\\HocKi1_Nam4\\congNghe.Net\\project_final\\QuanLyBanHang\\QuanLyBanHang.Web\\QuanLyBanHang.Web.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\HocHanh\\dotnet\\QuanLyBanHang\\QuanLyBanHang.Web\\QuanLyBanHang.Web.csproj",
+        "projectUniqueName": "D:\\SGU\\DaiHoc\\HocKi1_Nam4\\congNghe.Net\\project_final\\QuanLyBanHang\\QuanLyBanHang.Web\\QuanLyBanHang.Web.csproj",
         "projectName": "QuanLyBanHang.Web",
-        "projectPath": "E:\\HocHanh\\dotnet\\QuanLyBanHang\\QuanLyBanHang.Web\\QuanLyBanHang.Web.csproj",
-        "packagesPath": "C:\\Users\\skeeyzi\\.nuget\\packages\\",
-        "outputPath": "E:\\HocHanh\\dotnet\\QuanLyBanHang\\QuanLyBanHang.Web\\obj\\",
+        "projectPath": "D:\\SGU\\DaiHoc\\HocKi1_Nam4\\congNghe.Net\\project_final\\QuanLyBanHang\\QuanLyBanHang.Web\\QuanLyBanHang.Web.csproj",
+        "packagesPath": "C:\\Users\\ADMIN\\.nuget\\packages\\",
+        "outputPath": "D:\\SGU\\DaiHoc\\HocKi1_Nam4\\congNghe.Net\\project_final\\QuanLyBanHang\\QuanLyBanHang.Web\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\skeeyzi\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\ADMIN\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -123,8 +123,8 @@
           "net9.0": {
             "targetAlias": "net9.0",
             "projectReferences": {
-              "E:\\HocHanh\\dotnet\\QuanLyBanHang\\QuanLyBanHang.Data\\QuanLyBanHang.Data.csproj": {
-                "projectPath": "E:\\HocHanh\\dotnet\\QuanLyBanHang\\QuanLyBanHang.Data\\QuanLyBanHang.Data.csproj"
+              "D:\\SGU\\DaiHoc\\HocKi1_Nam4\\congNghe.Net\\project_final\\QuanLyBanHang\\QuanLyBanHang.Data\\QuanLyBanHang.Data.csproj": {
+                "projectPath": "D:\\SGU\\DaiHoc\\HocKi1_Nam4\\congNghe.Net\\project_final\\QuanLyBanHang\\QuanLyBanHang.Data\\QuanLyBanHang.Data.csproj"
               }
             }
           }
@@ -179,7 +179,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.300/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.305/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

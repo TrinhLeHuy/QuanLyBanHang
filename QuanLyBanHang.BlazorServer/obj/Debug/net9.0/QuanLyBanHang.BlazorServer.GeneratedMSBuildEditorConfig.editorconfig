@@ -9,85 +9,97 @@ build_property.EnforceExtendedAnalyzerRules =
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = QuanLyBanHang.BlazorServer
 build_property.RootNamespace = QuanLyBanHang.BlazorServer
-build_property.ProjectDir = E:\HocHanh\dotnet\QuanLyBanHang\QuanLyBanHang.BlazorServer\
+build_property.ProjectDir = D:\SGU\DaiHoc\HocKi1_Nam4\congNghe.Net\project_final\QuanLyBanHang\QuanLyBanHang.BlazorServer\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 build_property.RazorLangVersion = 9.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = E:\HocHanh\dotnet\QuanLyBanHang\QuanLyBanHang.BlazorServer
+build_property.MSBuildProjectDirectory = D:\SGU\DaiHoc\HocKi1_Nam4\congNghe.Net\project_final\QuanLyBanHang\QuanLyBanHang.BlazorServer
 build_property._RazorSourceGeneratorDebug = 
 build_property.EffectiveAnalysisLevelStyle = 9.0
 build_property.EnableCodeStyleSeverity = 
 
-[E:/HocHanh/dotnet/QuanLyBanHang/QuanLyBanHang.BlazorServer/Components/App.razor]
+[D:/SGU/DaiHoc/HocKi1_Nam4/congNghe.Net/project_final/QuanLyBanHang/QuanLyBanHang.BlazorServer/Components/App.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xBcHAucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[E:/HocHanh/dotnet/QuanLyBanHang/QuanLyBanHang.BlazorServer/Components/Pages/DialogContainer.razor]
+[D:/SGU/DaiHoc/HocKi1_Nam4/congNghe.Net/project_final/QuanLyBanHang/QuanLyBanHang.BlazorServer/Components/Pages/DialogContainer.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xEaWFsb2dDb250YWluZXIucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[E:/HocHanh/dotnet/QuanLyBanHang/QuanLyBanHang.BlazorServer/Components/Pages/Error.razor]
+[D:/SGU/DaiHoc/HocKi1_Nam4/congNghe.Net/project_final/QuanLyBanHang/QuanLyBanHang.BlazorServer/Components/Pages/Error.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xFcnJvci5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[E:/HocHanh/dotnet/QuanLyBanHang/QuanLyBanHang.BlazorServer/Components/Pages/Orders/OrderCreate.razor]
+[D:/SGU/DaiHoc/HocKi1_Nam4/congNghe.Net/project_final/QuanLyBanHang/QuanLyBanHang.BlazorServer/Components/Pages/Orders/OrderCreate.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xPcmRlcnNcT3JkZXJDcmVhdGUucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[E:/HocHanh/dotnet/QuanLyBanHang/QuanLyBanHang.BlazorServer/Components/Pages/Orders/OrderDetail.razor]
+[D:/SGU/DaiHoc/HocKi1_Nam4/congNghe.Net/project_final/QuanLyBanHang/QuanLyBanHang.BlazorServer/Components/Pages/Orders/OrderDetail.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xPcmRlcnNcT3JkZXJEZXRhaWwucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[E:/HocHanh/dotnet/QuanLyBanHang/QuanLyBanHang.BlazorServer/Components/Pages/Orders/OrderIndex.razor]
+[D:/SGU/DaiHoc/HocKi1_Nam4/congNghe.Net/project_final/QuanLyBanHang/QuanLyBanHang.BlazorServer/Components/Pages/Orders/OrderIndex.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xPcmRlcnNcT3JkZXJJbmRleC5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[E:/HocHanh/dotnet/QuanLyBanHang/QuanLyBanHang.BlazorServer/Components/Pages/Orders/OrderTable.razor]
+[D:/SGU/DaiHoc/HocKi1_Nam4/congNghe.Net/project_final/QuanLyBanHang/QuanLyBanHang.BlazorServer/Components/Pages/Orders/OrderTable.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xPcmRlcnNcT3JkZXJUYWJsZS5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[E:/HocHanh/dotnet/QuanLyBanHang/QuanLyBanHang.BlazorServer/Components/Pages/Shop/CartIndex.razor]
+[D:/SGU/DaiHoc/HocKi1_Nam4/congNghe.Net/project_final/QuanLyBanHang/QuanLyBanHang.BlazorServer/Components/Pages/Shop/CartIndex.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xTaG9wXENhcnRJbmRleC5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[E:/HocHanh/dotnet/QuanLyBanHang/QuanLyBanHang.BlazorServer/Components/Pages/Shop/CartVoucher.razor]
+[D:/SGU/DaiHoc/HocKi1_Nam4/congNghe.Net/project_final/QuanLyBanHang/QuanLyBanHang.BlazorServer/Components/Pages/Shop/CartVoucher.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xTaG9wXENhcnRWb3VjaGVyLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[E:/HocHanh/dotnet/QuanLyBanHang/QuanLyBanHang.BlazorServer/Components/Pages/Shop/HistoriesDetail.razor]
+[D:/SGU/DaiHoc/HocKi1_Nam4/congNghe.Net/project_final/QuanLyBanHang/QuanLyBanHang.BlazorServer/Components/Pages/Shop/HistoriesDetail.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xTaG9wXEhpc3Rvcmllc0RldGFpbC5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[E:/HocHanh/dotnet/QuanLyBanHang/QuanLyBanHang.BlazorServer/Components/Pages/Shop/HistoriesOrder.razor]
+[D:/SGU/DaiHoc/HocKi1_Nam4/congNghe.Net/project_final/QuanLyBanHang/QuanLyBanHang.BlazorServer/Components/Pages/Shop/HistoriesOrder.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xTaG9wXEhpc3Rvcmllc09yZGVyLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[E:/HocHanh/dotnet/QuanLyBanHang/QuanLyBanHang.BlazorServer/Components/Pages/Shop/ShopIndex.razor]
+[D:/SGU/DaiHoc/HocKi1_Nam4/congNghe.Net/project_final/QuanLyBanHang/QuanLyBanHang.BlazorServer/Components/Pages/Shop/ShopIndex.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xTaG9wXFNob3BJbmRleC5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[E:/HocHanh/dotnet/QuanLyBanHang/QuanLyBanHang.BlazorServer/Components/Pages/Shop/ShopMiniCart.razor]
+[D:/SGU/DaiHoc/HocKi1_Nam4/congNghe.Net/project_final/QuanLyBanHang/QuanLyBanHang.BlazorServer/Components/Pages/Shop/ShopMiniCart.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xTaG9wXFNob3BNaW5pQ2FydC5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[E:/HocHanh/dotnet/QuanLyBanHang/QuanLyBanHang.BlazorServer/Components/Pages/Shop/ShopProducts.razor]
+[D:/SGU/DaiHoc/HocKi1_Nam4/congNghe.Net/project_final/QuanLyBanHang/QuanLyBanHang.BlazorServer/Components/Pages/Shop/ShopProducts.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xTaG9wXFNob3BQcm9kdWN0cy5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[E:/HocHanh/dotnet/QuanLyBanHang/QuanLyBanHang.BlazorServer/Components/Routes.razor]
+[D:/SGU/DaiHoc/HocKi1_Nam4/congNghe.Net/project_final/QuanLyBanHang/QuanLyBanHang.BlazorServer/Components/Routes.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xSb3V0ZXMucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[E:/HocHanh/dotnet/QuanLyBanHang/QuanLyBanHang.BlazorServer/Components/_Imports.razor]
+[D:/SGU/DaiHoc/HocKi1_Nam4/congNghe.Net/project_final/QuanLyBanHang/QuanLyBanHang.BlazorServer/Components/_Imports.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xfSW1wb3J0cy5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[E:/HocHanh/dotnet/QuanLyBanHang/QuanLyBanHang.BlazorServer/Components/Layout/MainLayout.razor]
+[D:/SGU/DaiHoc/HocKi1_Nam4/congNghe.Net/project_final/QuanLyBanHang/QuanLyBanHang.BlazorServer/Components/Layout/MainLayout.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xMYXlvdXRcTWFpbkxheW91dC5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = b-vjfv43pweh
 
-[E:/HocHanh/dotnet/QuanLyBanHang/QuanLyBanHang.BlazorServer/Components/Layout/NavMenu.razor]
+[D:/SGU/DaiHoc/HocKi1_Nam4/congNghe.Net/project_final/QuanLyBanHang/QuanLyBanHang.BlazorServer/Components/Layout/NavMenu.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xMYXlvdXRcTmF2TWVudS5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = b-q90ldupocd
+
+[D:/SGU/DaiHoc/HocKi1_Nam4/congNghe.Net/project_final/QuanLyBanHang/QuanLyBanHang.BlazorServer/Components/Pages/Customer/CustomerCreate.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xDdXN0b21lclxDdXN0b21lckNyZWF0ZS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = b-g2autqsn79
+
+[D:/SGU/DaiHoc/HocKi1_Nam4/congNghe.Net/project_final/QuanLyBanHang/QuanLyBanHang.BlazorServer/Components/Pages/Customer/CustomerEdit.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xDdXN0b21lclxDdXN0b21lckVkaXQucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = b-9fsosdsdsy
+
+[D:/SGU/DaiHoc/HocKi1_Nam4/congNghe.Net/project_final/QuanLyBanHang/QuanLyBanHang.BlazorServer/Components/Pages/Customer/CustomerIndex.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xDdXN0b21lclxDdXN0b21lckluZGV4LnJhem9y
+build_metadata.AdditionalFiles.CssScope = b-er3a2hqenz

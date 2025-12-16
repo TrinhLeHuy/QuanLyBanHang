@@ -1,0 +1,162 @@
+﻿body {
+    font-family: "Segoe UI", Arial, sans-serif;
+    background-color: #f8f9fa;
+    color: #333;
+}
+
+h2 {
+    text-align: center;
+    margin-top: 20px;
+    color: #222;
+}
+
+/* === Search form === */
+form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px auto;
+    gap: 10px;
+}
+
+    form input[type="text"] {
+        width: 280px;
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+    }
+
+    form button {
+        background-color: #007bff;
+        border: none;
+        padding: 8px 14px;
+        color: white;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: background-color 0.2s;
+    }
+
+        form button:hover {
+            background-color: #0056b3;
+        }
+
+    /* Nút thêm mới */
+    form a {
+        background-color: #28a745;
+        color: white;
+        text-decoration: none;
+        padding: 8px 14px;
+        border-radius: 6px;
+        transition: background-color 0.2s;
+    }
+
+        form a:hover {
+            background-color: #218838;
+        }
+
+/* === Table style === */
+table {
+    width: 90%;
+    margin: 0 auto 40px auto;
+    border-collapse: collapse;
+    background-color: white;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+th {
+    background-color: #007bff;
+    color: white;
+    text-align: left;
+    padding: 10px;
+    font-weight: normal;
+}
+
+td {
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+/* === Action links === */
+td a {
+    text-decoration: none;
+    margin: 0 5px;
+    padding: 6px 10px;
+    border-radius: 5px;
+    /*    color: white;*/
+    transition: background-color 0.2s;
+}
+
+    td a[asp-action="Edit"] {
+        background-color: #ffc107;
+    }
+
+        td a[asp-action="Edit"]:hover {
+            background-color: #e0a800;
+        }
+
+    td a[asp-action="Delete"] {
+        background-color: #dc3545;
+    }
+
+        td a[asp-action="Delete"]:hover {
+            background-color: #c82333;
+        }
+/* Overlay nền mờ */
+#overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 3;
+}
+
+    #overlay.hidden {
+        display: none;
+    }
+
+/* Khung nội dung popup */
+#overlay-content {
+    background: white;
+    border-radius: 10px;
+    width: 400px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+/* === Responsive === */
+@media (max-width: 768px) {
+    table {
+        width: 100%;
+        font-size: 14px;
+    }
+
+    form {
+        flex-direction: column;
+    }
+
+        form input {
+            width: 100%;
+        }
+}

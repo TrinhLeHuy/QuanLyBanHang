@@ -94,3 +94,350 @@ button.accept-policy[b-q90ldupocd] {
     white-space: nowrap;
     line-height: 60px;
 }
+/* _content/QuanLyBanHang.BlazorServer/Components/Pages/Customer/CustomerCreate.razor.rz.scp.css */
+/* ✅ Giới hạn phạm vi bằng class tổng */
+.customer-add-container[b-g2autqsn79] {
+    width: 400px;
+    margin: 0 auto;
+    font-family: Arial, sans-serif;
+}
+/*.customer-add-container {
+    width: 100%;
+    max-width: 420px;
+    font-family: Arial, sans-serif;
+}*/
+
+.customer-add-title[b-g2autqsn79] {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.customer-add-form[b-g2autqsn79] {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* Các trường input */
+.customer-add-field[b-g2autqsn79] {
+    display: flex;
+    flex-direction: column;
+}
+
+    .customer-add-field label[b-g2autqsn79] {
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
+
+    .customer-add-field input[b-g2autqsn79] {
+        padding: 8px 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        /*        width: 100%;*/
+        width: 280px;
+        box-sizing: border-box;
+    }
+
+/* Validation message */
+.customer-add-error[b-g2autqsn79] {
+    color: red;
+    font-size: 13px;
+    margin-top: 3px;
+}
+
+/* Các nút */
+.customer-add-actions[b-g2autqsn79] {
+    width: 70%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.customer-add-btn-save[b-g2autqsn79] {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+    .customer-add-btn-save:hover[b-g2autqsn79] {
+        background-color: #218838;
+    }
+
+.customer-add-btn-back[b-g2autqsn79] {
+    color: white;
+    text-decoration: none;
+    background-color: #007bff;
+    padding: 8px 16px;
+    border-radius: 6px;
+    text-align: center;
+    transition: background-color 0.2s;
+}
+
+    .customer-add-btn-back:hover[b-g2autqsn79] {
+        background-color: #0056b3;
+    }
+/* _content/QuanLyBanHang.BlazorServer/Components/Pages/Customer/CustomerEdit.razor.rz.scp.css */
+/* ✅ Vùng tổng thể */
+.customer-edit-container[b-9fsosdsdsy] {
+    width: 420px;
+    margin: 0 auto;
+    background-color: #fff;
+    padding: 20px 25px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    font-family: "Segoe UI", sans-serif;
+}
+
+/* ✅ Tiêu đề */
+.customer-edit-title[b-9fsosdsdsy] {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* ✅ Form tổng thể */
+.customer-edit-form[b-9fsosdsdsy] {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* ✅ Mỗi dòng (label + input) */
+.customer-edit-field[b-9fsosdsdsy] {
+    display: flex;
+    flex-direction: column;
+}
+
+.customer-edit-label[b-9fsosdsdsy] {
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #444;
+}
+
+.customer-edit-input[b-9fsosdsdsy] {
+    padding: 8px 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 14px;
+    /*    width: 100%;*/
+    width: 280px;
+    box-sizing: border-box;
+    transition: border-color 0.2s;
+}
+
+    .customer-edit-input:focus[b-9fsosdsdsy] {
+        border-color: #007bff;
+        outline: none;
+    }
+
+/* ✅ Lỗi validation */
+.customer-edit-error[b-9fsosdsdsy] {
+    color: red;
+    font-size: 13px;
+    margin-top: 3px;
+}
+
+/* ✅ Nút hành động */
+.customer-edit-actions[b-9fsosdsdsy] {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+    width: 75%;
+}
+
+/* Nút “Cập nhật” */
+.customer-edit-btn-save[b-9fsosdsdsy] {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+    .customer-edit-btn-save:hover[b-9fsosdsdsy] {
+        background-color: #218838;
+    }
+
+/* Nút “Quay lại” */
+.customer-edit-btn-cancel[b-9fsosdsdsy] {
+    background-color: #007bff;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 6px;
+    text-decoration: none;
+    transition: background-color 0.2s;
+}
+
+    .customer-edit-btn-cancel:hover[b-9fsosdsdsy] {
+        background-color: #0056b3;
+    }
+/* _content/QuanLyBanHang.BlazorServer/Components/Pages/Customer/CustomerIndex.razor.rz.scp.css */
+body[b-er3a2hqenz] {
+    font-family: "Segoe UI", Arial, sans-serif;
+    background-color: #f8f9fa;
+    color: #333;
+}
+
+h2[b-er3a2hqenz] {
+    text-align: center;
+    margin-top: 20px;
+    color: #222;
+}
+
+/* === Search form === */
+form[b-er3a2hqenz] {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px auto;
+    gap: 10px;
+}
+
+    form input[type="text"][b-er3a2hqenz] {
+        width: 280px;
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+    }
+
+    form button[b-er3a2hqenz] {
+        background-color: #007bff;
+        border: none;
+        padding: 8px 14px;
+        color: white;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: background-color 0.2s;
+    }
+
+        form button:hover[b-er3a2hqenz] {
+            background-color: #0056b3;
+        }
+
+    /* Nút thêm mới */
+    form a[b-er3a2hqenz] {
+        background-color: #28a745;
+        color: white;
+        text-decoration: none;
+        padding: 8px 14px;
+        border-radius: 6px;
+        transition: background-color 0.2s;
+    }
+
+        form a:hover[b-er3a2hqenz] {
+            background-color: #218838;
+        }
+
+/* === Table style === */
+table[b-er3a2hqenz] {
+    width: 90%;
+    margin: 0 auto 40px auto;
+    border-collapse: collapse;
+    background-color: white;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+th[b-er3a2hqenz] {
+    background-color: #007bff;
+    color: white;
+    text-align: left;
+    padding: 10px;
+    font-weight: normal;
+}
+
+td[b-er3a2hqenz] {
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+tr:nth-child(even)[b-er3a2hqenz] {
+    background-color: #f9f9f9;
+}
+
+/* === Action links === */
+td a[b-er3a2hqenz] {
+    text-decoration: none;
+    margin: 0 5px;
+    padding: 6px 10px;
+    border-radius: 5px;
+    /*    color: white;*/
+    transition: background-color 0.2s;
+}
+
+    td a[asp-action="Edit"][b-er3a2hqenz] {
+        background-color: #ffc107;
+    }
+
+        td a[asp-action="Edit"]:hover[b-er3a2hqenz] {
+            background-color: #e0a800;
+        }
+
+    td a[asp-action="Delete"][b-er3a2hqenz] {
+        background-color: #dc3545;
+    }
+
+        td a[asp-action="Delete"]:hover[b-er3a2hqenz] {
+            background-color: #c82333;
+        }
+/* Overlay nền mờ */
+#overlay[b-er3a2hqenz] {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 3;
+}
+
+    #overlay.hidden[b-er3a2hqenz] {
+        display: none;
+    }
+
+/* Khung nội dung popup */
+#overlay-content[b-er3a2hqenz] {
+    background: white;
+    border-radius: 10px;
+    width: 400px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    animation: fadeIn-b-er3a2hqenz 0.3s ease;
+}
+
+@keyframes fadeIn-b-er3a2hqenz {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+/* === Responsive === */
+@media (max-width: 768px) {
+    table[b-er3a2hqenz] {
+        width: 100%;
+        font-size: 14px;
+    }
+
+    form[b-er3a2hqenz] {
+        flex-direction: column;
+    }
+
+        form input[b-er3a2hqenz] {
+            width: 100%;
+        }
+}

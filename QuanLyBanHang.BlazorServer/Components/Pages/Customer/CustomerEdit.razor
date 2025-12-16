@@ -1,0 +1,72 @@
+﻿@using QuanLyBanHang.Data.Entities
+@using Microsoft.AspNetCore.Components.Forms
+
+@inject ICustomerService CustomerService
+
+<div class="customer-edit-container">
+    <h2 class="customer-edit-title">Chỉnh sửa khách hàng</h2>
+
+    <EditForm Model="Customer" OnValidSubmit="HandleSubmit" class="customer-edit-form">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+
+        @* <InputHidden @bind-Value="Customer.CustomerId" /> *@
+
+        <div class="customer-edit-field">
+            <label class="customer-edit-label">Tên:</label>
+            <InputText class="customer-edit-input"
+                       @bind-Value="Customer.FullName" />
+            <ValidationMessage For="@(() => Customer.FullName)" />
+        </div>
+
+        <div class="customer-edit-field">
+            <label class="customer-edit-label">Email:</label>
+            <InputText class="customer-edit-input"
+                       @bind-Value="Customer.Email" />
+            <ValidationMessage For="@(() => Customer.Email)" />
+        </div>
+
+        <div class="customer-edit-field">
+            <label class="customer-edit-label">Điện thoại:</label>
+            <InputText class="customer-edit-input"
+                       @bind-Value="Customer.Phone" />
+            <ValidationMessage For="@(() => Customer.Phone)" />
+        </div>
+
+        <div class="customer-edit-field">
+            <label class="customer-edit-label">Địa chỉ:</label>
+            <InputText class="customer-edit-input"
+                       @bind-Value="Customer.Address" />
+            <ValidationMessage For="@(() => Customer.Address)" />
+        </div>
+
+        <div class="customer-edit-actions">
+            <button type="submit" class="customer-edit-btn-save">
+                Cập nhật
+            </button>
+
+            <button type="button"
+                    class="customer-edit-btn-cancel"
+                    @onclick="Cancel">
+                Quay lại
+            </button>
+        </div>
+    </EditForm>
+</div>
+
+@code {
+    [Parameter] public Customer Customer { get; set; } = new();
+    [Parameter] public EventCallback OnSaved { get; set; }
+    [Parameter] public EventCallback OnCancel { get; set; }
+
+    async Task HandleSubmit()
+    {
+        await CustomerService.UpdateAsync(Customer);
+        await OnSaved.InvokeAsync();
+    }
+
+    async Task Cancel()
+    {
+        await OnCancel.InvokeAsync();
+    }
+}

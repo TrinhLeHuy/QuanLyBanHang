@@ -1,0 +1,97 @@
+﻿/* ✅ Vùng tổng thể */
+.customer-edit-container {
+    width: 420px;
+    margin: 0 auto;
+    background-color: #fff;
+    padding: 20px 25px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    font-family: "Segoe UI", sans-serif;
+}
+
+/* ✅ Tiêu đề */
+.customer-edit-title {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* ✅ Form tổng thể */
+.customer-edit-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* ✅ Mỗi dòng (label + input) */
+.customer-edit-field {
+    display: flex;
+    flex-direction: column;
+}
+
+.customer-edit-label {
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #444;
+}
+
+.customer-edit-input {
+    padding: 8px 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 14px;
+    /*    width: 100%;*/
+    width: 280px;
+    box-sizing: border-box;
+    transition: border-color 0.2s;
+}
+
+    .customer-edit-input:focus {
+        border-color: #007bff;
+        outline: none;
+    }
+
+/* ✅ Lỗi validation */
+.customer-edit-error {
+    color: red;
+    font-size: 13px;
+    margin-top: 3px;
+}
+
+/* ✅ Nút hành động */
+.customer-edit-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+    width: 75%;
+}
+
+/* Nút “Cập nhật” */
+.customer-edit-btn-save {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+    .customer-edit-btn-save:hover {
+        background-color: #218838;
+    }
+
+/* Nút “Quay lại” */
+.customer-edit-btn-cancel {
+    background-color: #007bff;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 6px;
+    text-decoration: none;
+    transition: background-color 0.2s;
+}
+
+    .customer-edit-btn-cancel:hover {
+        background-color: #0056b3;
+    }

@@ -1,0 +1,140 @@
+﻿@page "/customers"
+@rendermode InteractiveServer
+@inject ICustomerService CustomerService
+@inject IJSRuntime JS
+
+<h2>Danh sách khách hàng</h2>
+
+<div class="mb-3">
+    <input class="form-control w-25"
+           placeholder="Tìm kiếm khách hàng..."
+           @bind="keyword"
+           @bind:event="oninput" />
+
+    <button class="btn btn-primary mt-2" @onclick="Search">
+        Tìm
+    </button>
+
+    <button class="btn btn-success mt-2 ms-2" @onclick="OpenCreate">
+        + Thêm mới
+    </button>
+</div>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Tên</th>
+            <th>Email</th>
+            <th>SĐT</th>
+            <th>Địa chỉ</th>
+            <th>Hành động</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var c in customers)
+        {
+            <tr>
+                <td>@c.CustomerId</td>
+                <td>@c.FullName</td>
+                <td>@c.Email</td>
+                <td>@c.Phone</td>
+                <td>@c.Address</td>
+                <td>
+                    <button class="btn btn-warning btn-sm"
+                            @onclick="() => OpenEdit(c)">
+                        Sửa
+                    </button>
+
+                    <button class="btn btn-danger btn-sm ms-2"
+                            @onclick="() => Delete(c.CustomerId)">
+                        Xóa
+                    </button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@if (showDialog)
+{
+    <div class="overlay">
+        <div class="overlay-content">
+            @dialogContent
+        </div>
+    </div>
+}
+
+@code {
+    List<Customer> customers = new();
+    string keyword = "";
+    bool showDialog;
+    RenderFragment? dialogContent;
+
+    protected override async Task OnInitializedAsync()
+    {
+        customers = await CustomerService.GetAllAsync();
+    }
+    // hàm cho tìm kiếm
+    async Task Search()
+    {
+        Console.WriteLine($"SEARCH KEYWORD = '{keyword}'");
+        customers = await CustomerService.SearchAsync(keyword);
+        StateHasChanged();           // 🔥 ép UI cập nhật
+    }
+
+
+    void OpenCreate()
+    {
+       dialogContent = builder =>
+         {
+             builder.OpenComponent<CustomerCreate>(0);
+
+             builder.AddAttribute(1, "OnSaved",
+                 EventCallback.Factory.Create(this, Reload));
+
+             builder.AddAttribute(2, "OnCancel",
+                 EventCallback.Factory.Create(this, CloseDialog));
+
+             builder.CloseComponent();
+         };
+       showDialog = true;
+    }
+
+    void OpenEdit(Customer c)
+    {
+        dialogContent = builder =>
+        {
+            builder.OpenComponent<CustomerEdit>(0);
+
+            builder.AddAttribute(1, "Customer", c);
+
+            builder.AddAttribute(2, "OnSaved",
+                EventCallback.Factory.Create(this, Reload));
+
+            builder.AddAttribute(3, "OnCancel",
+                EventCallback.Factory.Create(this, CloseDialog));
+
+            builder.CloseComponent();
+        };
+        showDialog = true;
+    }
+
+    async Task Delete(int id)
+    {
+        if (await JS.InvokeAsync<bool>("confirm", "Xóa khách hàng?"))
+        {
+            await CustomerService.DeleteAsync(id);
+            await Reload();
+        }
+    }
+    void CloseDialog()
+    {
+        showDialog = false;
+    }
+    async Task Reload()
+    {
+        showDialog = false;
+        customers = await CustomerService.GetAllAsync();
+    }
+}
