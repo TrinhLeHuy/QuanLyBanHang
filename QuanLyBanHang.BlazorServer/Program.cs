@@ -30,6 +30,7 @@ builder.Services.AddScoped<ISupplierService, SupplierService>();
 builder.Services.AddScoped<IWarehouseService, WarehouseService>();
 builder.Services.AddScoped<IVoucherService, VoucherService>();
 builder.Services.AddScoped<EmployeeService>();
+builder.Services.AddScoped<PosService>();
 
 
 
@@ -41,11 +42,6 @@ builder.Services.AddScoped<AuthService>();
 
 // 🔹 ProtectedLocalStorage cho lưu session/cookie
 builder.Services.AddScoped<ProtectedLocalStorage>();
-
-builder.Services.AddServerSideBlazor(options =>
-{
-    options.DetailedErrors = true;
-});
 
 var app = builder.Build();
 

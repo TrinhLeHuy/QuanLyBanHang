@@ -1,0 +1,444 @@
+@page "/pos"
+@inject PosService PosService
+@inject NavigationManager Nav
+@inject IJSRuntime JSRuntime
+@using QuanLyBanHang.Data.Entities
+@implements IAsyncDisposable
+
+<div class="container-fluid h-100">
+    <div class="row h-100">
+        <!-- CỘT TRÁI: SẢN PHẨM -->
+        <div class="col-md-8 bg-light p-0 d-flex flex-column">
+            <div class="p-3 bg-white shadow-sm">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fa fa-barcode"></i></span>
+                    </div>
+                    <input type="text" class="form-control form-control-lg" 
+                           placeholder="Quét mã vạch hoặc nhập tên sản phẩm (F1)..." 
+                           @bind="search" @bind:event="oninput" @ref="searchInput" />
+                </div>
+
+                <ul class="nav nav-pills mt-2">
+                    <li class="nav-item">
+                        <a class="nav-link @(currentCategory == 0 ? "active" : "")"
+                           @onclick="() => FilterCategory(0)">Tất cả</a>
+                    </li>
+                    @foreach (var c in vm.Categories)
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link @(currentCategory == c.Id ? "active" : "")"
+                               @onclick="() => FilterCategory(c.Id)">@c.Name</a>
+                        </li>
+                    }
+                </ul>
+            </div>
+
+            <div class="flex-grow-1 overflow-auto p-3" style="max-height: calc(100vh - 200px); overflow-y: auto;">
+                <div class="row">
+                    @foreach (var p in FilteredProducts)
+                    {
+                        <div class="col-md-3 col-sm-4 mb-3">
+                            <div class="card h-100 shadow-sm pointer" @onclick="() => Add(p)">
+                                <div class="card-img-top bg-light d-flex align-items-center justify-content-center" style="height: 100px;">
+                                    <i class="fa fa-image fa-3x text-muted"></i>
+                                </div>
+                                <div class="card-body p-2 text-center">
+                                    <h6 class="card-title text-truncate">@p.Name</h6>
+                                    <p class="card-text font-weight-bold text-primary">@p.Price.ToString("N0") ₫</p>
+                                    <small class="text-muted">Kho: @p.Stock</small>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <!-- CỘT PHẢI: GIỎ HÀNG -->
+        <div class="col-md-4 bg-white p-0 d-flex flex-column border-start">
+            <div class="p-3 bg-light border-bottom">
+                <div class="input-group mb-2">
+                    <input type="text" class="form-control" @bind="customerSearch" @bind:event="oninput" 
+                           placeholder="Tìm khách (SĐT/Tên)..." />
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-primary" type="button" @onclick="ShowCustomerModal">
+                            <i class="fa fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+                @if (filteredCustomers.Any())
+                {
+                    <div class="list-group small" style="max-height: 180px; overflow-y: auto;">
+                        @foreach (var c in filteredCustomers.Take(10))
+                        {
+                            <a href="#" class="list-group-item list-group-item-action" 
+                               @onclick="() => SelectCustomer(c)" @onclick:preventDefault>
+                                @c.FullName - @c.Phone
+                            </a>
+                        }
+                    </div>
+                }
+                <div class="mt-2">
+                    <select class="form-select form-select-sm" @bind="customerId">
+                        <option value="0">Khách lẻ (Mặc định)</option>
+                        @foreach (var c in vm.Customers)
+                        {
+                            <option value="@c.CustomerId">@c.FullName - @c.Phone</option>
+                        }
+                    </select>
+                </div>
+            </div>
+
+            <div class="flex-grow-1 overflow-auto p-0">
+                <table class="table table-hover table-sm mb-0">
+                    <thead class="thead-light">
+                        <tr>
+                            <th width="40%">Món</th>
+                            <th width="20%">SL</th>
+                            <th width="30%" class="text-right">Thành tiền</th>
+                            <th width="10%"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var i in cart)
+                        {
+                            <tr>
+                                <td class="align-middle">@i.ProductName</td>
+                                <td class="align-middle">
+                                    <input type="number" min="1" class="form-control form-control-sm p-1 text-center" 
+                                           style="width: 60px;"
+                                           @bind="i.Quantity" @bind:event="oninput" 
+                                           @onchange="Calc" />
+                                </td>
+                                <td class="align-middle text-right">@i.Total.ToString("N0") ₫</td>
+                                <td class="align-middle text-center">
+                                    <i class="fa fa-trash text-danger pointer" @onclick="() => Remove(i)" style="cursor: pointer;"></i>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="p-3 bg-light border-top checkout-footer">
+                <div class="input-group mb-2">
+                    <input type="text" class="form-control form-control-sm" @bind="voucherCode" 
+                           placeholder="Mã giảm giá (Voucher)..." />
+                    <div class="input-group-append">
+                        <button class="btn btn-secondary btn-sm" type="button" @onclick="ApplyVoucher">Áp dụng</button>
+                    </div>
+                </div>
+                @if (!string.IsNullOrEmpty(voucherMessage))
+                {
+                    <div class="small mb-2 @(voucherMessageType == "error" ? "text-danger" : voucherMessageType == "success" ? "text-success" : "text-muted")">
+                        @voucherMessage
+                    </div>
+                }
+                <div class="d-flex justify-content-between mb-1">
+                    <span>Tạm tính:</span>
+                    <span class="font-weight-bold">@subTotal.ToString("N0") ₫</span>
+                </div>
+                <div class="d-flex justify-content-between mb-1 text-danger">
+                    <span>Giảm giá:</span>
+                    <span>-@discountAmount.ToString("N0") ₫</span>
+                </div>
+                <div class="form-group mb-2">
+                    <label class="small mb-1">Phương thức thanh toán</label>
+                    <select class="form-control form-control-sm" @bind="paymentMethod">
+                        <option value="Cash">Tiền mặt</option>
+                        <option value="Card">Thẻ</option>
+                        <option value="Transfer">Chuyển khoản</option>
+                    </select>
+                </div>
+                <div class="d-flex justify-content-between mb-3">
+                    <span class="h5">TỔNG CỘNG:</span>
+                    <span class="h4 text-primary">@finalTotal.ToString("N0") ₫</span>
+                </div>
+                <div class="form-group mb-2">
+                    <label class="small mb-1">Khách đưa</label>
+                    <input type="number" min="0" step="1000" class="form-control form-control-sm" 
+                           @bind="cashGiven" @bind:event="oninput" 
+                           placeholder="Nhập số tiền khách đưa..." />
+                </div>
+                <div class="d-flex justify-content-between mb-3">
+                    <span>Tiền thừa:</span>
+                    <span class="h5 text-success">@changeAmount.ToString("N0") ₫</span>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <button type="button" class="btn btn-danger btn-block h-100" @onclick="ClearCart">
+                            Hủy (Esc)
+                        </button>
+                    </div>
+                    <div class="col-6">
+                        <button type="button" class="btn btn-success btn-lg btn-block" @onclick="Checkout" disabled="@(cart.Count == 0)">
+                            <i class="fa fa-print"></i> Thanh Toán (F12)
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@if (!string.IsNullOrEmpty(errorMessage))
+{
+    <div class="alert alert-danger alert-dismissible fade show position-fixed" 
+         style="top: 10px; right: 10px; z-index: 9999;">
+        @errorMessage
+        <button type="button" class="close" @onclick="() => errorMessage = string.Empty">&times;</button>
+    </div>
+}
+
+@code {
+    POSViewModel vm = new();
+    List<POSItem> cart = new();
+    string search = "";
+    int currentCategory = 0;
+    int customerId;
+    string customerSearch = "";
+    string voucherCode = "";
+    string voucherMessage = "";
+    string voucherMessageType = "";
+    string paymentMethod = "Cash";
+    decimal cashGiven = 0;
+    string errorMessage = "";
+
+    decimal subTotal, discountAmount, finalTotal, changeAmount;
+
+    ElementReference searchInput;
+
+    IEnumerable<Product> FilteredProducts => vm.Products
+        .Where(p => (currentCategory == 0 || p.CategoryId == currentCategory)
+                 && (string.IsNullOrEmpty(search) || p.Name.Contains(search, StringComparison.OrdinalIgnoreCase)));
+
+    IEnumerable<Customer> filteredCustomers => string.IsNullOrEmpty(customerSearch)
+        ? vm.Customers.Take(10)
+        : vm.Customers.Where(c => 
+            c.FullName.Contains(customerSearch, StringComparison.OrdinalIgnoreCase) ||
+            (c.Phone != null && c.Phone.Contains(customerSearch)));
+
+    protected override async Task OnInitializedAsync()
+    {
+        vm = await PosService.LoadAsync();
+    }
+
+    private DotNetObjectReference<Pos>? objRef;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            // Load script
+            await JSRuntime.InvokeVoidAsync("eval", "if(typeof posKeyboardShortcuts === 'undefined') { var script = document.createElement('script'); script.src = '/js/pos.js'; document.head.appendChild(script); }");
+            await Task.Delay(100); // Wait for script to load
+            
+            objRef = DotNetObjectReference.Create(this);
+            await JSRuntime.InvokeVoidAsync("posKeyboardShortcuts.init", objRef);
+        }
+    }
+
+    public async ValueTask DisposeAsync()
+    {
+        if (objRef != null)
+        {
+            objRef.Dispose();
+        }
+    }
+
+    [JSInvokable]
+    public void ClearCartFromJS()
+    {
+        ClearCart();
+    }
+
+    void Add(Product p)
+    {
+        if (p.Stock <= 0)
+        {
+            errorMessage = "Sản phẩm tạm hết hàng!";
+            return;
+        }
+
+        var i = cart.FirstOrDefault(x => x.ProductId == p.Id);
+        if (i == null)
+        {
+            cart.Add(new POSItem 
+            { 
+                ProductId = p.Id, 
+                ProductName = p.Name, 
+                Quantity = 1, 
+                UnitPrice = p.Price 
+            });
+        }
+        else
+        {
+            if (i.Quantity >= p.Stock)
+            {
+                errorMessage = "Không đủ hàng trong kho!";
+                return;
+            }
+            i.Quantity++;
+        }
+        Calc();
+        search = "";
+    }
+
+    void Remove(POSItem i) 
+    { 
+        cart.Remove(i); 
+        Calc(); 
+    }
+
+    void Calc()
+    {
+        subTotal = cart.Sum(x => x.Total);
+        finalTotal = Math.Max(0, subTotal - discountAmount);
+        changeAmount = Math.Max(0, cashGiven - finalTotal);
+        StateHasChanged();
+    }
+
+    void FilterCategory(int id) 
+    { 
+        currentCategory = id; 
+    }
+
+    void SelectCustomer(Customer c)
+    {
+        customerId = c.CustomerId;
+        customerSearch = "";
+    }
+
+    void ShowCustomerModal()
+    {
+        errorMessage = "Tính năng thêm khách hàng mới đang được phát triển!";
+    }
+
+    void ApplyVoucher()
+    {
+        voucherMessage = "";
+        voucherMessageType = "";
+
+        if (string.IsNullOrWhiteSpace(voucherCode))
+        {
+            voucherMessage = "Vui lòng nhập mã giảm giá!";
+            voucherMessageType = "error";
+            return;
+        }
+
+        if (cart.Count == 0)
+        {
+            voucherMessage = "Giỏ hàng đang trống, hãy thêm sản phẩm trước.";
+            voucherMessageType = "error";
+            return;
+        }
+
+        var result = PosService.ValidateVoucher(voucherCode);
+        if (result.ok)
+        {
+            discountAmount = Math.Floor(subTotal * result.percent / 100m);
+            voucherMessage = result.msg;
+            voucherMessageType = "success";
+        }
+        else
+        {
+            discountAmount = 0;
+            voucherMessage = result.msg;
+            voucherMessageType = "error";
+        }
+        Calc();
+    }
+
+    void ClearCart()
+    {
+        if (cart.Count == 0) return;
+        cart.Clear();
+        discountAmount = 0;
+        voucherCode = "";
+        voucherMessage = "";
+        cashGiven = 0;
+        Calc();
+    }
+
+    async Task Checkout()
+    {
+        if (cart.Count == 0)
+        {
+            errorMessage = "Giỏ hàng không được để trống!";
+            return;
+        }
+
+        try
+        {
+            var items = cart.Select(x => new CartItemDTO 
+            { 
+                ProductId = x.ProductId, 
+                Quantity = x.Quantity 
+            }).ToList();
+
+            var order = PosService.Checkout(
+                vm.EmployeeId, 
+                customerId, 
+                string.IsNullOrWhiteSpace(voucherCode) ? null : voucherCode,
+                paymentMethod, 
+                cashGiven, 
+                items
+            );
+
+            Nav.NavigateTo($"/receipt/{order.OrderId}");
+        }
+        catch (Exception ex)
+        {
+            errorMessage = "Lỗi thanh toán: " + ex.Message;
+        }
+    }
+}
+
+<style>
+    body, html { 
+        height: 100%; 
+        overflow: hidden; 
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+    }
+    .checkout-footer {
+        position: sticky;
+        bottom: 0;
+        background: #f8f9fa;
+        z-index: 20;
+        box-shadow: 0 -2px 6px rgba(0,0,0,0.06);
+    }
+    .pointer { 
+        cursor: pointer; 
+    }
+    .card:hover { 
+        border-color: #007bff; 
+        transform: translateY(-2px); 
+        transition: all 0.2s; 
+    }
+    .nav-pills .nav-link.active { 
+        background-color: #007bff; 
+    }
+    .nav-pills .nav-link { 
+        color: #555; 
+        background: #e9ecef; 
+        margin-right: 5px; 
+        margin-bottom: 5px; 
+    }
+    ::-webkit-scrollbar { 
+        width: 8px; 
+    }
+    ::-webkit-scrollbar-track { 
+        background: #f1f1f1; 
+    }
+    ::-webkit-scrollbar-thumb { 
+        background: #ccc; 
+        border-radius: 4px; 
+    }
+    ::-webkit-scrollbar-thumb:hover { 
+        background: #888; 
+    }
+    .container-fluid.h-100 {
+        height: 100vh;
+    }
+</style>

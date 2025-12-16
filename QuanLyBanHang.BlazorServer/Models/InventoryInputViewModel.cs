@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.ComponentModel.DataAnnotations;
 
-namespace QuanLyBanHang.Web.Models
+namespace QuanLyBanHang.BlazorServer.Models
 {
     public class InventoryInputViewModel
     {
