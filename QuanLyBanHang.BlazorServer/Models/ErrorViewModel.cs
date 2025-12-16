@@ -1,4 +1,4 @@
-namespace QuanLyBanHang.Web.Models;
+namespace QuanLyBanHang.BlazorServer.Models;
 
 public class ErrorViewModel
 {

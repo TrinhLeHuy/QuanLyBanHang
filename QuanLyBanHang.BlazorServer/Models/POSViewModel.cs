@@ -2,7 +2,7 @@ using QuanLyBanHang.Data.Entities;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace QuanLyBanHang.Web.Models
+namespace QuanLyBanHang.BlazorServer.Models
 {
     public class POSViewModel
     {

@@ -1,6 +1,6 @@
 ﻿using QuanLyBanHang.Data.Enums;
 
-namespace QuanLyBanHang.Web.Models
+namespace QuanLyBanHang.BlazorServer.Models
 {
     public class OrderUpdateViewModel
     {

@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace QuanLyBanHang.Web.Models
+namespace QuanLyBanHang.BlazorServer.Models
 {
     public class CheckoutRequest
     {

@@ -43,11 +43,6 @@ builder.Services.AddScoped<AuthService>();
 // 🔹 ProtectedLocalStorage cho lưu session/cookie
 builder.Services.AddScoped<ProtectedLocalStorage>();
 
-builder.Services.AddServerSideBlazor(options =>
-{
-    options.DetailedErrors = true;
-});
-
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

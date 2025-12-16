@@ -1,31 +1,163 @@
 @page "/receipt/{id:int}"
 @inject PosService PosService
+@inject NavigationManager Nav
+@inject IJSRuntime JSRuntime
+@using QuanLyBanHang.Data.Entities
 
-<h3>Hóa đơn</h3>
+<div class="container py-4 print-area">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-sm">
+                <div class="card-header bg-success text-white d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0"><i class="fa fa-check-circle"></i> Hóa đơn hoàn tất</h5>
+                    <span>Trạng thái: <strong>Completed</strong></span>
+                </div>
+                <div class="card-body">
+                    @if (order != null)
+                    {
+                        var customerName = order.Customer?.FullName ?? "Khách lẻ";
+                        var employeeName = order.Employee?.FullName ?? "N/A";
 
-@if (order != null)
-{
-    <p>Mã: @order.OrderId</p>
-    <p>Thu ngân: @order.Employee?.FullName</p>
+                        <div class="mb-3">
+                            <div class="d-flex justify-content-between">
+                                <span>Mã hóa đơn:</span>
+                                <strong>#@order.OrderId</strong>
+                            </div>
+                            <div class="d-flex justify-content-between">
+                                <span>Ngày:</span>
+                                <span>@order.OrderDate.ToString("dd/MM/yyyy HH:mm")</span>
+                            </div>
+                            <div class="d-flex justify-content-between">
+                                <span>Khách hàng:</span>
+                                <span>@customerName</span>
+                            </div>
+                            <div class="d-flex justify-content-between">
+                                <span>Thu ngân:</span>
+                                <span>@employeeName</span>
+                            </div>
+                        </div>
 
-    <table class="table">
-        @foreach (var d in order.OrderDetails)
-        {
-            <tr>
-                <td>@d.Product?.Name</td>
-                <td>@d.Quantity</td>
-                <td>@(d.UnitPrice * d.Quantity)</td>
-            </tr>
-        }
-    </table>
-}
+                        <hr />
+
+                        <h6>Sản phẩm</h6>
+                        <table class="table table-sm">
+                            <thead>
+                                <tr>
+                                    <th>Tên</th>
+                                    <th class="text-right">SL</th>
+                                    <th class="text-right">Đơn giá</th>
+                                    <th class="text-right">Thành tiền</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in order.OrderDetails)
+                                {
+                                    <tr>
+                                        <td>@item.Product?.Name</td>
+                                        <td class="text-right">@item.Quantity</td>
+                                        <td class="text-right">@item.UnitPrice.ToString("N0") ₫</td>
+                                        <td class="text-right">@((item.UnitPrice * item.Quantity).ToString("N0")) ₫</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+
+                        <hr />
+
+                        <div class="d-flex justify-content-between">
+                            <span>Tạm tính:</span>
+                            <strong>@((order.TotalAmount + order.DiscountAmount).ToString("N0")) ₫</strong>
+                        </div>
+                        <div class="d-flex justify-content-between text-danger">
+                            <span>Giảm giá:</span>
+                            <strong>-@order.DiscountAmount.ToString("N0") ₫</strong>
+                        </div>
+                        @if (!string.IsNullOrEmpty(order.VoucherCode))
+                        {
+                            <div class="d-flex justify-content-between small text-muted">
+                                <span>Mã voucher:</span>
+                                <span>@order.VoucherCode</span>
+                            </div>
+                        }
+                        <div class="d-flex justify-content-between">
+                            <span>Phương thức thanh toán:</span>
+                            <strong>@order.PaymentMethod</strong>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <span>Khách đưa:</span>
+                            <strong>@order.CashGiven.ToString("N0") ₫</strong>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <span>Tiền thừa:</span>
+                            <strong class="text-success">@order.ChangeAmount.ToString("N0") ₫</strong>
+                        </div>
+                        <div class="d-flex justify-content-between mt-2">
+                            <span class="h5">Tổng tiền:</span>
+                            <span class="h4 text-primary">@order.TotalAmount.ToString("N0") ₫</span>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="alert alert-warning">
+                            Không tìm thấy hóa đơn.
+                        </div>
+                    }
+                </div>
+                <div class="card-footer d-flex justify-content-between no-print">
+                    <a class="btn btn-outline-secondary" href="/pos">Tạo đơn mới</a>
+                    <button class="btn btn-primary" @onclick="PrintReceipt">
+                        <i class="fa fa-print"></i> In hóa đơn
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 @code {
     [Parameter] public int id { get; set; }
-    Order order;
+    Order? order;
 
     protected override void OnInitialized()
     {
-        order = PosService.GetReceipt(id);
+        try
+        {
+            order = PosService.GetReceipt(id);
+        }
+        catch
+        {
+            order = null;
+        }
+    }
+
+    private async Task PrintReceipt()
+    {
+        await JSRuntime.InvokeVoidAsync("window.print");
     }
 }
+
+<style>
+    @@media print {
+        body * {
+            visibility: hidden;
+        }
+        .print-area, .print-area * {
+            visibility: visible;
+        }
+        .print-area {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+        }
+        .no-print,
+        header, nav, footer,
+        .navbar, .sidebar, .btn-group {
+            display: none !important;
+        }
+        .card {
+            box-shadow: none;
+            border: none;
+        }
+    }
+</style>

@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc.Rendering;
 
-namespace QuanLyBanHang.Web.ViewModels
+namespace QuanLyBanHang.BlazorServer.ViewModels
 {
     public class ExportViewModel
     {
