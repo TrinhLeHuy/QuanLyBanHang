@@ -1,0 +1,80 @@
+﻿/* ✅ Giới hạn phạm vi bằng class tổng */
+.customer-add-container {
+    width: 400px;
+    margin: 0 auto;
+    font-family: Arial, sans-serif;
+}
+
+.customer-add-title {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.customer-add-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* Các trường input */
+.customer-add-field {
+    display: flex;
+    flex-direction: column;
+}
+
+    .customer-add-field label {
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
+
+    .customer-add-field input {
+        padding: 8px 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+/*        width: 100%;*/
+        width: 280px;
+        box-sizing: border-box;
+    }
+
+/* Validation message */
+.customer-add-error {
+    color: red;
+    font-size: 13px;
+    margin-top: 3px;
+}
+
+/* Các nút */
+.customer-add-actions {
+    width: 70%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.customer-add-btn-save {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+    .customer-add-btn-save:hover {
+        background-color: #218838;
+    }
+
+.customer-add-btn-back {
+    color: white;
+    text-decoration: none;
+    background-color: #007bff;
+    padding: 8px 16px;
+    border-radius: 6px;
+    text-align: center;
+    transition: background-color 0.2s;
+}
+
+    .customer-add-btn-back:hover {
+        background-color: #0056b3;
+    }

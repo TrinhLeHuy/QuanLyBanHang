@@ -1,53 +1,87 @@
 @model QuanLyBanHang.Data.Entities.Order
-
 @{
-    ViewData["Title"] = "Tạo đơn hàng";
+    ViewData["Title"] = "Tạo đơn hàng mới";
+    Layout = null;
+    var productOptionsHtml = "";
+    foreach (var p in ViewBag.Products)
+    {
+        productOptionsHtml += $"<option value='{p.Id}' data-price='{p.Price}'>{p.Name}</option>";
+    }
+    var AccountId = ViewBag.AccountId; 
 }
 
-<h2>Tạo đơn hàng mới</h2>
-<hr />
+@* @if (ViewBag.Errors != null)
+{
+    <div class="alert alert-danger">
+        <h5>Validation Errors:</h5>
+        <ul>
+            @foreach(var err in ViewBag.Errors)
+            {
+                <li>
+                    <strong>@err.Property:</strong>
+                    <ul>
+                        @foreach(var msg in err.Messages)
+                        {
+                            <li>@msg</li>
+                        }
+                    </ul>
+                </li>
+            }
+        </ul>
+    </div>
+} *@
 
-<form asp-action="Create" method="post">
+<form asp-action="Create" method="post" id="orderCreateForm">
     <div class="mb-3">
         <label>Khách hàng</label>
-        <select asp-for="CustomerId" class="form-select"
-                asp-items="@(new SelectList(ViewBag.Customers, "Id", "Name"))"></select>
+        <select asp-for="CustomerId" class="form-select w-auto"
+                asp-items="@(new SelectList(ViewBag.Customers, "CustomerId", "FullName"))"></select>
     </div>
 
     <div class="mb-3">
         <label>Nhân viên</label>
-        <select asp-for="EmployeeId" class="form-select"
-                asp-items="@(new SelectList(ViewBag.Employees, "Id", "Name"))"></select>
+        <select asp-for="EmployeeId" class="form-select w-auto"
+                asp-items="@(new SelectList(ViewBag.Employees, "EmployeeId", "FullName"))"></select>
     </div>
 
-    <table class="table table-bordered">
-        <thead class="table-light">
+    <table class="table table-bordered table-striped" id="tableDetailOrders">
+        <thead class="table-primary">
             <tr>
-                <th>Sản phẩm</th>
-                <th>Số lượng</th>
-                <th>Đơn giá</th>
+                <th scope="col">Sản phẩm</th>
+                <th scope="col">Số lượng</th>
+                <th scope="col">Đơn giá</th>
+                <th scope="col"></th>
             </tr>
         </thead>
         <tbody>
-            @for (int i = 0; i < Model.OrderDetails.Count; i++)
-            {
-                <tr>
-                    <td>
-                        <select asp-for="OrderDetails[@i].ProductId"
-                                asp-items="@(new SelectList(ViewBag.Products, "Id", "Name"))"
-                                class="form-select"></select>
-                    </td>
-                    <td>
-                        <input asp-for="OrderDetails[@i].Quantity" class="form-control" />
-                    </td>
-                    <td>
-                        <input asp-for="OrderDetails[@i].UnitPrice" class="form-control" />
-                    </td>
-                </tr>
-            }
+             
         </tbody>
     </table>
+    <div class="mb-3">
+        <label>Khuyến mãi</label>
+        <select asp-for="VoucherId" class="form-select w-auto" id="selectVoucher">
+            @foreach (var v in ViewBag.Vouchers)
+            {
+                <option value="@v.Id" data-discountvalue="@v.DiscountValue" title="@v.Description" data-qty="@v.Quantity - @v.UsedCount">
+                    @v.Code
+                </option>
+            }
+        </select>
+    </div>
+    <div class="mb-3">
+        <label>Tổng tiền: <span id="TotalAmount" data-total=0>0</span><span> VND</span></label>
+    </div>
+    <div class="mb-3">
+        <label>Trạng thái đơn</label>
+        <select asp-for="Status" class="form-select w-auto"
+                asp-items="Html.GetEnumSelectList<OrderStatus>()"></select>
+    </div>
 
+    <button type="button" class="btn btn-primary" id="addRow">Thêm sản phẩm</button>
     <button type="submit" class="btn btn-success">Lưu đơn hàng</button>
     <a asp-action="Index" class="btn btn-secondary">Hủy</a>
 </form>
+<input type="hidden" id="orderDetailIndex" value="@Model.OrderDetails.Count"/>
+<script id="productOptionsHtml" type="text/plain">
+    @Html.Raw(productOptionsHtml)
+</script>

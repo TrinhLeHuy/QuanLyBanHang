@@ -1,0 +1,71 @@
+@page "/vouchers"
+@inject IVoucherService VoucherService
+
+<h3>🎟️ Quản lý Voucher</h3>
+
+<div class="row mb-3">
+    <div class="col-3">
+        <input class="form-control" placeholder="Tìm mã / mô tả"
+               @bind="search" />
+    </div>
+    <div class="col-3">
+        <select class="form-select" @bind="active">
+            <option value="">-- Tất cả --</option>
+            <option value="true">Hoạt động</option>
+            <option value="false">Ngừng</option>
+        </select>
+    </div>
+    <div class="col">
+        <button class="btn btn-primary" @onclick="Load">Lọc</button>
+        <a class="btn btn-success ms-2" href="/vouchers/create">➕ Thêm</a>
+    </div>
+</div>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Mã</th>
+            <th>Mô tả</th>
+            <th>% Giảm</th>
+            <th>Thời gian</th>
+            <th>Số lượng</th>
+            <th>Đã dùng</th>
+            <th>Trạng thái</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var v in vouchers)
+        {
+            <tr>
+                <td>@v.Code</td>
+                <td>@v.Description</td>
+                <td>@v.DiscountPercent</td>
+                <td>@v.StartDate:d - @v.EndDate:d</td>
+                <td>@v.Quantity</td>
+                <td>@v.UsedCount</td>
+                <td>@(v.IsActive ? "Hoạt động" : "Ngừng")</td>
+                <td>
+                    <a class="btn btn-sm btn-warning" href="/vouchers/edit/@v.Id">Sửa</a>
+                    <a class="btn btn-sm btn-danger" href="/vouchers/delete/@v.Id">Xóa</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@code {
+    List<Voucher> vouchers = new();
+    string? search;
+    bool? active;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await Load();
+    }
+
+    async Task Load()
+    {
+        vouchers = await VoucherService.GetAllAsync(search, active);
+    }
+}

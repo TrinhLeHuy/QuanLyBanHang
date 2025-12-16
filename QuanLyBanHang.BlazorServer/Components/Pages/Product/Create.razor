@@ -1,0 +1,65 @@
+@page "/products/create"
+@inject ProductService ProductService
+@inject NavigationManager Navigation
+
+<h3>Thêm sản phẩm</h3>
+
+<EditForm Model="product" OnValidSubmit="HandleValidSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div class="mb-3">
+        <label>Tên sản phẩm</label>
+        <InputText @bind-Value="product.Name" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label>Giá</label>
+        <InputNumber @bind-Value="product.Price" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label>Stock</label>
+        <InputNumber @bind-Value="product.Stock" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label>Mô tả</label>
+        <InputTextArea @bind-Value="product.Description" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label>Danh mục</label>
+        <InputSelect @bind-Value="product.CategoryId" class="form-control">
+            <option value="">-- Chọn danh mục --</option>
+            @foreach (var c in categories)
+            {
+                <option value="@c.Id">@c.Name</option>
+            }
+        </InputSelect>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Thêm</button>
+    <button type="button" class="btn btn-secondary" @onclick="GoBack">Hủy</button>
+</EditForm>
+
+@code {
+    private Product product = new();
+    private List<Categories> categories = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        categories = await ProductService.GetCategoriesAsync();
+    }
+
+    private async Task HandleValidSubmit()
+    {
+        await ProductService.AddAsync(product);
+        Navigation.NavigateTo("/products");
+    }
+
+    private void GoBack()
+    {
+        Navigation.NavigateTo("/products");
+    }
+}

@@ -33,6 +33,7 @@ namespace QuanLyBanHang.Data.DataContext
         public DbSet<Inventory> Inventories { get; set; }
         public DbSet<ProductWarehouse> ProductWarehouses { get; set; }
         public DbSet<InventoryTransaction> InventoryTransactions { get; set; }
+        public DbSet<CartItems> CartItems { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -52,6 +53,26 @@ namespace QuanLyBanHang.Data.DataContext
                 Role = "Admin",
                 Phone = "0900000000"
             });
+
+            //----------- Convert : string -> enum Mysql ---------
+            modelBuilder
+                .Entity<Order>()
+                .Property(o => o.Status)
+                .HasConversion<string>();
+            modelBuilder.Entity<Voucher>(entity =>
+            {
+                entity.Property(e => e.Status)
+                      .HasConversion<string>();
+
+                entity.Property(e => e.DiscountType)
+                      .HasConversion<string>();
+            });
+            modelBuilder.Entity<CartItems>(entity =>
+            {
+                entity.Property(e => e.Status)
+                      .HasConversion<string>();
+            });
+
         }
 
         // 🧩 Hàm mã hóa SHA256 (giống AuthController)

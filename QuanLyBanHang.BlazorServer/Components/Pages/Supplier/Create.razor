@@ -1,0 +1,40 @@
+@page "/suppliers/create"
+@inject ISupplierService SupplierService
+@using QuanLyBanHang.Data.Entities
+
+<h3>➕ Thêm nhà cung cấp</h3>
+
+@if (!string.IsNullOrEmpty(error))
+{
+    <div class="alert alert-danger">@error</div>
+}
+
+<EditForm Model="supplier" OnValidSubmit="Save">
+    <DataAnnotationsValidator />
+
+    <InputText @bind-Value="supplier.SupplierName" class="form-control" placeholder="Tên" />
+    <InputText @bind-Value="supplier.Address" class="form-control mt-2" placeholder="Địa chỉ" />
+    <InputText @bind-Value="supplier.Phone" class="form-control mt-2" placeholder="Điện thoại" />
+    <InputText @bind-Value="supplier.Email" class="form-control mt-2" placeholder="Email" />
+
+    <button class="btn btn-success mt-3">Lưu</button>
+</EditForm>
+
+@code {
+    Supplier supplier = new();
+    string? error;
+
+    private async Task Save()
+    {
+        var ok = await SupplierService.CreateAsync(supplier);
+        if (!ok)
+        {
+            error = "Tên, Email hoặc SĐT đã tồn tại";
+            return;
+        }
+
+        NavigationManager.NavigateTo("/suppliers");
+    }
+
+    [Inject] NavigationManager NavigationManager { get; set; }
+}

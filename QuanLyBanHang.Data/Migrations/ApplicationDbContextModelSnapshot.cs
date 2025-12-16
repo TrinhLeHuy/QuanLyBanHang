@@ -203,8 +203,17 @@ namespace QuanLyBanHang.Data.Migrations
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("OrderId"));
 
-                    b.Property<int>("CustomerId")
+                    b.Property<decimal>("CashGiven")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("ChangeAmount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int?>("CustomerId")
                         .HasColumnType("int");
+
+                    b.Property<decimal>("DiscountAmount")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("EmployeeId")
                         .HasColumnType("int");
@@ -212,14 +221,37 @@ namespace QuanLyBanHang.Data.Migrations
                     b.Property<DateTime>("OrderDate")
                         .HasColumnType("datetime(6)");
 
+                    b.Property<string>("PaymentMethod")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
+
+                    b.Property<string>("PaymentStatus")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("ENUM('Pending','Paid','Canceled')");
+
                     b.Property<decimal>("TotalAmount")
                         .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("VoucherCode")
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
+
+                    b.Property<int?>("VoucherId")
+                        .HasColumnType("int");
 
                     b.HasKey("OrderId");
 
                     b.HasIndex("CustomerId");
 
                     b.HasIndex("EmployeeId");
+
+                    b.HasIndex("VoucherId");
 
                     b.ToTable("Orders");
                 });
@@ -363,6 +395,13 @@ namespace QuanLyBanHang.Data.Migrations
                     b.Property<decimal>("DiscountPercent")
                         .HasColumnType("decimal(65,30)");
 
+                    b.Property<string>("DiscountType")
+                        .IsRequired()
+                        .HasColumnType("ENUM('Percent','Fixed')");
+
+                    b.Property<decimal>("DiscountValue")
+                        .HasColumnType("decimal(65,30)");
+
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime(6)");
 
@@ -375,12 +414,16 @@ namespace QuanLyBanHang.Data.Migrations
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime(6)");
 
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("ENUM('Active','Inactive')");
+
                     b.Property<int>("UsedCount")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Vouchers");
+                    b.ToTable("vouchers");
                 });
 
             modelBuilder.Entity("QuanLyBanHang.Data.Entities.Warehouse", b =>
@@ -459,9 +502,7 @@ namespace QuanLyBanHang.Data.Migrations
                 {
                     b.HasOne("QuanLyBanHang.Data.Entities.Customer", "Customer")
                         .WithMany("Orders")
-                        .HasForeignKey("CustomerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CustomerId");
 
                     b.HasOne("QuanLyBanHang.Data.Entities.Employee", "Employee")
                         .WithMany("Orders")
@@ -469,9 +510,15 @@ namespace QuanLyBanHang.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("QuanLyBanHang.Data.Entities.Voucher", "Voucher")
+                        .WithMany()
+                        .HasForeignKey("VoucherId");
+
                     b.Navigation("Customer");
 
                     b.Navigation("Employee");
+
+                    b.Navigation("Voucher");
                 });
 
             modelBuilder.Entity("QuanLyBanHang.Data.Entities.OrderDetail", b =>

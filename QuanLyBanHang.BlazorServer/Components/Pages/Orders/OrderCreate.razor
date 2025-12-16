@@ -1,0 +1,184 @@
+﻿<EditForm Model="order" OnValidSubmit="HandleSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div class="mb-3">
+        <label>Khách hàng</label>
+        <select class="form-select" @bind="order.CustomerId">
+            <option value="">-- Chọn khách hàng --</option>
+            @foreach (var c in customers)
+            {
+                <option value="@c.CustomerId">@c.FullName</option>
+            }
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label>Nhân viên</label>
+        <select class="form-select" @bind="order.EmployeeId">
+            <option value="">-- Chọn nhân viên --</option>
+            @foreach (var e in employees)
+            {
+                <option value="@e.EmployeeId">@e.FullName</option>
+            }
+        </select>
+    </div>
+
+    <div style="max-height: 400px; overflow-y: auto;">
+        <table class="table table-bordered" id="tableDetailOrders">
+            <thead class="table-light">
+                <tr>
+                    <th>Sản phẩm</th>
+                    <th>Số lượng</th>
+                    <th>Đơn giá</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var o in order.OrderDetails)
+                {
+                    <tr>
+                        <td>
+                            <select class="form-select" @bind="o.ProductId">
+                                <option value="">Chọn sản phẩm</option>
+                                @foreach (var p in products)
+                                {
+                                    <option value="@p.Id" data-price="@p.Price">@p.Name</option>
+                                }
+                            </select>
+                        </td>
+                        <td><InputNumber @bind-Value="o.Quantity" class="form-control" oninput="this.value = this.value.replace(/[^0-9]/g, '')"/></td>
+                        <td>@(products.FirstOrDefault(p => p.Id == o.ProductId)?.Price ?? 0)</td>
+                        <td>
+                            <button type="button" class="btn btn-danger btn-sm" @onclick="() => RemoveDetail(o)">Xóa</button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <div class="mb-3">
+        <label>Khuyến mãi</label>
+        <select class="form-select" @bind="order.VoucherId">
+            <option value="">Không áp dụng</option>
+            @foreach (var v in vouchers)
+            {
+                <option value="@v.Id" title="@v.Description" data-discountvalue="@v.DiscountValue" data-qty="@(v.Quantity - v.UsedCount)">
+                    @v.Code
+                </option>
+            }
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label>
+            Tổng tiền: <span>@TotalAmountDiscount</span> VND
+        </label>
+    </div>
+
+    <div class="mb-3">
+        <label>Trạng thái đơn</label>
+        <InputSelect @bind-Value="order.Status" class="form-select">
+            @foreach (OrderStatus s in Enum.GetValues(typeof(OrderStatus)))
+            {
+                <option value="@s">@s</option>
+            }
+        </InputSelect>
+    </div>
+
+    <button type="button" class="btn btn-primary" @onclick="AddDetail">Thêm sản phẩm</button>
+    <button type="submit" class="btn btn-success">Lưu đơn hàng</button>
+    @* <button type="button" class="btn btn-secondary" @onclick="Close">Hủy</button> *@
+</EditForm>
+
+@code {
+    [Parameter] public EventCallback<Order> OnCreate { get; set; }
+    [Parameter] public List<Product> products { get; set; }
+    [Parameter] public List<Employee> employees { get; set; }
+    [Parameter] public List<Customer> customers { get; set; }
+    [Parameter] public List<Voucher> vouchers { get; set; }
+    [Parameter] public EventCallback<string> ShowErrorValue { get; set; }
+    // [Parameter] public EventCallback OnClose { get; set; }
+
+    private Order order = new Data.Entities.Order(){OrderDetails= new List<Data.Entities.OrderDetail>()};
+    // private List<Product> products = new();
+    // private List<Customer> customers = new();
+    // private List<Employee> employees = new();
+    // private List<Voucher> vouchers = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        AddDetail();
+        // products = await ProductService.GetAllProductAsync();
+        // customers = await CustomerService.GetAllAsync();
+        // employees = await EmployeeService.GetAllAsync();
+        // vouchers = await VoucherService.GetAllAsync();
+    }
+
+    private void AddDetail()
+    {
+        order.OrderDetails.Add(new Data.Entities.OrderDetail());
+    }
+
+    private void RemoveDetail( Data.Entities.OrderDetail o)
+    {
+        order.OrderDetails.Remove(o);
+    }
+
+    private decimal TotalAmount => order.OrderDetails.Sum(d =>
+        (products.FirstOrDefault(p => p.Id == d.ProductId)?.Price ?? 0) * d.Quantity
+    );
+
+    private decimal TotalAmountDiscount
+    {
+        get
+        {
+            var discountAmount = vouchers.FirstOrDefault(v => v.Id == order.VoucherId)?.DiscountValue ?? 0;
+            if (discountAmount > 1)
+            {
+                return TotalAmount - discountAmount;
+            }
+            else if (discountAmount > 0)
+            {
+                return TotalAmount * (1 - discountAmount);
+            }
+            return TotalAmount;
+        }
+    }
+
+
+    private async Task HandleSubmit()
+    {
+        string error = "";
+        if (order.CustomerId == null)
+        {
+            error += "Vui lòng  chọn khách hàng!\n";
+        }
+        if (order.EmployeeId == null)
+        {
+            error += "Vui lòng  chọn nhân viên!\n";
+        }
+        if (error != "")
+        {
+            await ValidField(error);
+        }
+        else
+        {
+            await OnCreate.InvokeAsync(order);
+        }
+    }
+
+    private async Task ValidField(string error)
+    {
+        await ShowErrorValue.InvokeAsync(error);
+    }
+
+    // private async Task Close()
+    // {
+    //     if (OnClose.HasDelegate)
+    //     {
+    //         await OnClose.InvokeAsync();
+    //     }
+    // }
+}

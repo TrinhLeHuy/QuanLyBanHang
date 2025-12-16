@@ -1,0 +1,32 @@
+@page "/inventory/import"
+@inject IInventoryService InventoryService
+
+<h3>📥 Nhập kho</h3>
+
+<select @bind="productId">
+    <option value="0">-- Sản phẩm --</option>
+    @foreach (var p in products)
+    {
+        <option value="@p.Id">@p.Name</option>
+    }
+</select>
+
+<input type="number" @bind="quantity" />
+<button @onclick="ImportAsync">Lưu</button>
+
+@code {
+    List<Product> products = new();
+    int productId;
+    int quantity;
+    int warehouseId = 1;
+
+    protected override async Task OnInitializedAsync()
+    {
+        products = await InventoryService.GetProductsAsync();
+    }
+
+    private async Task ImportAsync()
+    {
+        await InventoryService.ImportAsync(productId, warehouseId, quantity, "Nhập kho");
+    }
+}

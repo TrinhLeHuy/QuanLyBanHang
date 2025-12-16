@@ -1,0 +1,35 @@
+@page "/warehouses/edit/{id:int}"
+@inject IWarehouseService WarehouseService
+@inject NavigationManager Nav
+
+<h3>✏️ Sửa kho</h3>
+
+@if (warehouse == null)
+{
+    <p>Đang tải...</p>
+}
+else
+{
+    <input class="form-control mb-2" @bind="warehouse.WarehouseName" />
+    <input class="form-control mb-2" @bind="warehouse.Location" />
+    <input class="form-control mb-2" @bind="warehouse.Phone" />
+
+    <button class="btn btn-primary" @onclick="Update">Cập nhật</button>
+    <a class="btn btn-secondary" href="/warehouses">Hủy</a>
+}
+
+@code {
+    [Parameter] public int id { get; set; }
+    Warehouse? warehouse;
+
+    protected override async Task OnInitializedAsync()
+    {
+        warehouse = await WarehouseService.GetByIdAsync(id);
+    }
+
+    async Task Update()
+    {
+        await WarehouseService.UpdateAsync(warehouse!);
+        Nav.NavigateTo("/warehouses");
+    }
+}

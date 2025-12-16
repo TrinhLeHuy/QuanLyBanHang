@@ -1,0 +1,35 @@
+@page "/categories/create"
+@inject CategoriesService CategoriesService
+@inject NavigationManager Navigation
+
+<h2>Thêm danh mục mới</h2>
+
+<EditForm Model="category" OnValidSubmit="HandleCreate">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div class="mb-3">
+        <label>Tên danh mục</label>
+        <InputText @bind-Value="category.Name" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label>Mô tả</label>
+        <InputTextArea @bind-Value="category.Description" class="form-control" />
+    </div>
+
+    <button type="submit" class="btn btn-success">Lưu</button>
+    <button type="button" class="btn btn-secondary" @onclick="Cancel">Hủy</button>
+</EditForm>
+
+@code {
+    private Categories category = new();
+
+    private async Task HandleCreate()
+    {
+        await CategoriesService.AddAsync(category);
+        Navigation.NavigateTo("/categories");
+    }
+
+    void Cancel() => Navigation.NavigateTo("/categories");
+}

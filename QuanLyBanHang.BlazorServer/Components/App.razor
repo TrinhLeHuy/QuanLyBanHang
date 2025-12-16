@@ -1,0 +1,11 @@
+﻿﻿@using QuanLyBanHang.BlazorServer.Components.Layout
+@using QuanLyBanHang.BlazorServer.Components
+
+<Router AppAssembly="@typeof(App).Assembly">
+    <Found Context="routeData">
+        <RouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" />
+    </Found>
+    <NotFound>
+        <RedirectToLogin />
+    </NotFound>
+</Router>

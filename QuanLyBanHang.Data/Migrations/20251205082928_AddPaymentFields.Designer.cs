@@ -12,8 +12,8 @@ using QuanLyBanHang.Data.DataContext;
 namespace QuanLyBanHang.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20251125081743_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20251205082928_AddPaymentFields")]
+    partial class AddPaymentFields
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -206,8 +206,17 @@ namespace QuanLyBanHang.Data.Migrations
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("OrderId"));
 
-                    b.Property<int>("CustomerId")
+                    b.Property<decimal>("CashGiven")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("ChangeAmount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int?>("CustomerId")
                         .HasColumnType("int");
+
+                    b.Property<decimal>("DiscountAmount")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("EmployeeId")
                         .HasColumnType("int");
@@ -215,8 +224,22 @@ namespace QuanLyBanHang.Data.Migrations
                     b.Property<DateTime>("OrderDate")
                         .HasColumnType("datetime(6)");
 
+                    b.Property<string>("PaymentMethod")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
+
+                    b.Property<string>("PaymentStatus")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
+
                     b.Property<decimal>("TotalAmount")
                         .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("VoucherCode")
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
 
                     b.HasKey("OrderId");
 
@@ -462,9 +485,7 @@ namespace QuanLyBanHang.Data.Migrations
                 {
                     b.HasOne("QuanLyBanHang.Data.Entities.Customer", "Customer")
                         .WithMany("Orders")
-                        .HasForeignKey("CustomerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CustomerId");
 
                     b.HasOne("QuanLyBanHang.Data.Entities.Employee", "Employee")
                         .WithMany("Orders")

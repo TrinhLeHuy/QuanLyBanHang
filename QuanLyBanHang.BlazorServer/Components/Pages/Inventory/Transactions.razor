@@ -1,0 +1,55 @@
+@page "/inventory/transactions"
+@inject IInventoryService InventoryService
+
+<h3>📜 Lịch sử nhập / xuất</h3>
+
+@if (transactions == null)
+{
+    <p>Đang tải...</p>
+}
+else
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Ngày</th>
+                <th>Loại</th>
+                <th>Sản phẩm</th>
+                <th>Kho</th>
+                <th>Số lượng</th>
+                <th>Ghi chú</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var t in transactions)
+            {
+                <tr>
+                    <td>@t.TransactionDate.ToString("dd/MM/yyyy HH:mm")</td>
+                    <td>
+                        @if (t.TransactionType == "IN")
+                        {
+                            <span style="color:green">Nhập</span>
+                        }
+                        else
+                        {
+                            <span style="color:red">Xuất</span>
+                        }
+                    </td>
+                    <td>@t.Product?.Name</td>
+                    <td>@t.Warehouse?.WarehouseName</td>
+                    <td>@t.Quantity</td>
+                    <td>@t.Note</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    List<InventoryTransaction>? transactions;
+
+    protected override async Task OnInitializedAsync()
+    {
+        transactions = await InventoryService.GetTransactionsAsync();
+    }
+}

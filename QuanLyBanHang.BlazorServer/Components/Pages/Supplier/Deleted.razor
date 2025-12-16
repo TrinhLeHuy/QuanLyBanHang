@@ -1,0 +1,21 @@
+@page "/suppliers/delete/{id:int}"
+@inject ISupplierService SupplierService
+
+<h3 class="text-danger">⚠️ Xóa nhà cung cấp</h3>
+
+<p>Bạn chắc chắn muốn xóa?</p>
+
+<button class="btn btn-danger" @onclick="Delete">Xóa</button>
+<a class="btn btn-secondary" href="/suppliers">Hủy</a>
+
+@code {
+    [Parameter] public int id { get; set; }
+
+    private async Task Delete()
+    {
+        await SupplierService.DeleteAsync(id);
+        NavigationManager.NavigateTo("/suppliers");
+    }
+
+    [Inject] NavigationManager NavigationManager { get; set; }
+}

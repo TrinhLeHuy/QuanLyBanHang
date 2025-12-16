@@ -1,0 +1,20 @@
+@page "/warehouses/delete/{id:int}"
+@inject IWarehouseService WarehouseService
+@inject NavigationManager Nav
+
+<h3 class="text-danger">🗑️ Xóa kho</h3>
+
+<p>Bạn có chắc muốn xóa kho này?</p>
+
+<button class="btn btn-danger" @onclick="Delete">Xóa</button>
+<a class="btn btn-secondary" href="/warehouses">Hủy</a>
+
+@code {
+    [Parameter] public int id { get; set; }
+
+    async Task Delete()
+    {
+        await WarehouseService.DeleteAsync(id);
+        Nav.NavigateTo("/warehouses");
+    }
+}

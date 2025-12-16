@@ -1,37 +1,94 @@
 @model IEnumerable<QuanLyBanHang.Data.Entities.Order>
+@{
+    ViewData["title"] = "Quản lý đơn hàng";
+    var today = DateTime.Now;
+}
+<link rel="stylesheet" href="~/css/Orders.css" />
 
-<h2>Quản lý đơn hàng</h2>
+<h2 class="mb-4 text-center">Quản lý đơn hàng</h2>
 
-<form method="get" class="d-flex mb-3">
-    <input type="text" name="keyword" class="form-control w-25" placeholder="Tìm theo tên khách hàng..." />
-    <button class="btn btn-primary ms-2">Tìm kiếm</button>
+<div class="d-flex align-items-center mb-4 gap-2">
+    <label for="filterType" class="form-label mb-0">Lọc theo:</label>
+    <select id="filterType" class="form-select w-auto">
+        <option value="1">Tên khách hàng</option>
+        <option value="2">Khoảng thời gian</option>
+    </select>
+</div>
+
+
+<form class="d-flex flex-column flex-md-row align-items-start gap-3 mb-4">
+    <input type="text" id="strFilterOrder" name="keyword" class="form-control w-25" placeholder="Tìm theo tên khách hàng..." />
+
+    <div class="d-flex align-items-center gap-2 d-none" id="inputFilterDate">
+        <input type="date" id="startDate" class="form-control" value="@today.AddDays(-1).ToString("yyyy-MM-dd")" max="@today.AddDays(-1).ToString("yyyy-MM-dd")"/>
+        <span>-</span>
+        <input type="date" id="endDate" class="form-control" value="@today.ToString("yyyy-MM-dd")" min="2024-01-01" max="@today.ToString("yyyy-MM-dd")"/>
+    </div>
+
+    @* <div>
+        <label for="filterStatus" class="form-label">Trạng thái đơn:</label>
+        <select class="form-select" id="filterStatus" asp-items="Html.GetEnumSelectList<OrderStatus>()">
+            <option>Tất cả</option>
+        </select>
+    </div> *@
+
+    <div class="d-flex gap-2">
+        <button type="submit" class="btn btn-primary" id="btnFilterOrder">Tìm kiếm</button>
+        <button type="button" class="btn btn-danger" id="btnRefreshOrder">Bỏ lọc</button>
+    </div>
 </form>
 
-<a asp-action="Create" class="btn btn-success mb-3">+ Tạo đơn hàng</a>
+<div class="mb-4">
+    <button type="button" class="btn btn-success" id="btnCreateOrder">Tạo đơn hàng</button>
+</div>
 
-<table class="table table-bordered">
-    <thead class="table-light">
+@* <div id="orders-table">
+    @await Html.PartialAsync("OrderTable", Model)
+</div> *@
+<div>
+    <table class="table table-bordered table-striped">
+    <thead class="table-primary">
         <tr>
-            <th>Mã đơn</th>
-            <th>Khách hàng</th>
-            <th>Ngày đặt</th>
-            <th>Tổng tiền</th>
+            <th scope="col">Mã đơn</th>
+            <th scope="col">Khách hàng</th>
+            <th scope="col">Ngày đặt</th>
+            <th scope="col">Tổng tiền</th>
+            <th scope="col">Giảm giá</th>
+            @* <th>Trạng thái</th> *@
+            <th scope="col" style="width: 1%">
+                <div class="d-flex align-items-center gap-2">
+                    <span>Trạng thái:</span>
+                    <select class="form-select w-auto" id="filterStatus" asp-items="Html.GetEnumSelectList<OrderStatus>()">
+                        <option>Tất cả</option>
+                    </select>
+                </div>
+            </th>
             <th>Thao tác</th>
         </tr>
     </thead>
-    <tbody>
-        @foreach (var o in Model)
-        {
-            <tr>
-                <td>@o.OrderId</td>
-                <td>@o.Customer?.FullName</td>
-                <td>@o.OrderDate.ToString("dd/MM/yyyy")</td>
-                <td>@o.TotalAmount.ToString("N0") đ</td>
-                <td>
-                    <a asp-action="Details" asp-route-id="@o.OrderId" class="btn btn-info btn-sm">Chi tiết</a>
-                    <a asp-action="Delete" asp-route-id="@o.OrderId" class="btn btn-danger btn-sm">Xóa</a>
-                </td>
-            </tr>
-        }
+    <tbody id="orders-table">
+        @await Html.PartialAsync("OrderTable", Model)
     </tbody>
 </table>
+</div>
+
+@* <div id="modal-container" class="hidden">
+    <div id="modal-content"></div>
+</div> *@
+
+<div id="create-container" class="hidden">
+    <div id="create-content"></div>
+</div>
+<div id="detail-container" class="hidden">
+    <div id="detail-content""></div>
+</div>
+<input type="hidden" id="orderCreate" value='@Url.Action("Create", "Orders")' />
+<input type="hidden" id="orderDetail" value='@Url.Action("Detail", "Orders")' />
+<input type="hidden" id="orderTable" value='@Url.Action("LoadTable", "Orders")' />
+<input type="hidden" id="orderFilter" value='@Url.Action("LoadFilter", "Orders")' />
+<input type="hidden" id="orderFilterStatus" value='@Url.Action("LoadFilterStatus", "Orders")' />
+<input type="hidden" id="orderFilterDate" value='@Url.Action("LoadFilterDate", "Orders")' />
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="/js/Orders.js"></script>
+}
