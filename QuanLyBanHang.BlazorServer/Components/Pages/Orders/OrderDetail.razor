@@ -82,16 +82,16 @@
     private async Task HandlePaid()
     {
         if (await ShowConfirm("Bạn chắc chắn muốn xác nhận đơn hàng này?")){
-        await OnUpdate.InvokeAsync(order);
         order.Status = OrderStatus.Paid;
+        await OnUpdate.InvokeAsync(order);
 
         }
     }
     private async Task HandleCanceled()
     {
         if (await ShowConfirm("Bạn chắc chắn muốn từ chối đơn hàng này?")){
-        await OnUpdate.InvokeAsync(order);
         order.Status = OrderStatus.Canceled;
+        await OnUpdate.InvokeAsync(order);
 
         }
     }

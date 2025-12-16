@@ -56,14 +56,19 @@
     </tbody>
 </table>
 
-@if (showDialog)
+@* @if (showDialog)
 {
     <div class="overlay">
         <div class="overlay-content">
             @dialogContent
         </div>
     </div>
-}
+
+} *@
+
+<DialogContainer IsOpen="@showDialog" IsOpenChanged="OnDialogChanged">
+    @dialogContent
+</DialogContainer>
 
 @code {
     List<Customer> customers = new();
@@ -136,5 +141,10 @@
     {
         showDialog = false;
         customers = await CustomerService.GetAllAsync();
+    }
+    Task OnDialogChanged(bool v)
+    {
+        showDialog = v;
+        return Task.CompletedTask;
     }
 }

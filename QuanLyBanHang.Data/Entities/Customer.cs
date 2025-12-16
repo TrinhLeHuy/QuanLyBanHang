@@ -21,7 +21,6 @@ namespace QuanLyBanHang.Data.Entities
         [StringLength(200)]
         public string Address { get; set; }
 
-        [StringLength(200)]
         public string? Password { get; set; }
 
         public ICollection<Order> Orders { get; set; } = new List<Order>();

@@ -1,7 +1,24 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "E:\\HocHanh\\dotnet\\QuanLyBanHang\\",
-  "Documents": [],
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{2CC499FB-6D54-479C-BCCE-B693C6A974E6}|QuanLyBanHang.Data\\QuanLyBanHang.Data.csproj|e:\\hochanh\\dotnet\\quanlybanhang\\quanlybanhang.data\\entities\\voucher.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2CC499FB-6D54-479C-BCCE-B693C6A974E6}|QuanLyBanHang.Data\\QuanLyBanHang.Data.csproj|solutionrelative:quanlybanhang.data\\entities\\voucher.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A3B7641E-5B55-C300-A077-D4AC9CC071C4}|QuanLyBanHang.BlazorServer\\QuanLyBanHang.BlazorServer.csproj|e:\\hochanh\\dotnet\\quanlybanhang\\quanlybanhang.blazorserver\\services\\voucherservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A3B7641E-5B55-C300-A077-D4AC9CC071C4}|QuanLyBanHang.BlazorServer\\QuanLyBanHang.BlazorServer.csproj|solutionrelative:quanlybanhang.blazorserver\\services\\voucherservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A3B7641E-5B55-C300-A077-D4AC9CC071C4}|QuanLyBanHang.BlazorServer\\QuanLyBanHang.BlazorServer.csproj|e:\\hochanh\\dotnet\\quanlybanhang\\quanlybanhang.blazorserver\\components\\pages\\shop\\shopindex.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{A3B7641E-5B55-C300-A077-D4AC9CC071C4}|QuanLyBanHang.BlazorServer\\QuanLyBanHang.BlazorServer.csproj|solutionrelative:quanlybanhang.blazorserver\\components\\pages\\shop\\shopindex.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{04D9BC9D-F7EF-4A0B-B352-A2450C5A962A}|QuanLyBanHang.Web\\QuanLyBanHang.Web.csproj|e:\\hochanh\\dotnet\\quanlybanhang\\quanlybanhang.web\\views\\orders\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{04D9BC9D-F7EF-4A0B-B352-A2450C5A962A}|QuanLyBanHang.Web\\QuanLyBanHang.Web.csproj|solutionrelative:quanlybanhang.web\\views\\orders\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
@@ -9,7 +26,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": -1,
+          "SelectedChildIndex": 7,
           "Children": [
             {
               "$type": "Bookmark",
@@ -38,6 +55,58 @@
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Voucher.cs",
+              "DocumentMoniker": "E:\\HocHanh\\dotnet\\QuanLyBanHang\\QuanLyBanHang.Data\\Entities\\Voucher.cs",
+              "RelativeDocumentMoniker": "QuanLyBanHang.Data\\Entities\\Voucher.cs",
+              "ToolTip": "E:\\HocHanh\\dotnet\\QuanLyBanHang\\QuanLyBanHang.Data\\Entities\\Voucher.cs",
+              "RelativeToolTip": "QuanLyBanHang.Data\\Entities\\Voucher.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-16T09:39:14.783Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "VoucherService.cs",
+              "DocumentMoniker": "E:\\HocHanh\\dotnet\\QuanLyBanHang\\QuanLyBanHang.BlazorServer\\Services\\VoucherService.cs",
+              "RelativeDocumentMoniker": "QuanLyBanHang.BlazorServer\\Services\\VoucherService.cs",
+              "ToolTip": "E:\\HocHanh\\dotnet\\QuanLyBanHang\\QuanLyBanHang.BlazorServer\\Services\\VoucherService.cs",
+              "RelativeToolTip": "QuanLyBanHang.BlazorServer\\Services\\VoucherService.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-16T09:38:37.593Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "ShopIndex.razor",
+              "DocumentMoniker": "E:\\HocHanh\\dotnet\\QuanLyBanHang\\QuanLyBanHang.BlazorServer\\Components\\Pages\\Shop\\ShopIndex.razor",
+              "RelativeDocumentMoniker": "QuanLyBanHang.BlazorServer\\Components\\Pages\\Shop\\ShopIndex.razor",
+              "ToolTip": "E:\\HocHanh\\dotnet\\QuanLyBanHang\\QuanLyBanHang.BlazorServer\\Components\\Pages\\Shop\\ShopIndex.razor",
+              "RelativeToolTip": "QuanLyBanHang.BlazorServer\\Components\\Pages\\Shop\\ShopIndex.razor",
+              "ViewState": "AgIAAHIAAAAAAAAAAAAAAAIAAAAgAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-12-16T09:30:54.584Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "E:\\HocHanh\\dotnet\\QuanLyBanHang\\QuanLyBanHang.Web\\Views\\Orders\\Index.cshtml",
+              "RelativeDocumentMoniker": "QuanLyBanHang.Web\\Views\\Orders\\Index.cshtml",
+              "ToolTip": "E:\\HocHanh\\dotnet\\QuanLyBanHang\\QuanLyBanHang.Web\\Views\\Orders\\Index.cshtml",
+              "RelativeToolTip": "QuanLyBanHang.Web\\Views\\Orders\\Index.cshtml",
+              "ViewState": "AgIAABIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-12-16T09:25:23.664Z",
+              "EditorCaption": ""
             }
           ]
         }
