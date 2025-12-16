@@ -85,7 +85,7 @@
     private List<Product> productFilter { get; set; } = new List<Product>();
     private List<Voucher> vouchers { get; set; } = new();
     public string SearchTerm { get; set; } = string.Empty;
-    private int UserId { get; set; } = 1;
+    private int UserId { get; set; } = Session.CurrentUserId ?? 1;
     bool showDialog;
     RenderFragment? currentDialog;
     private void HandleSearch()
@@ -104,7 +104,7 @@
     protected override async Task OnInitializedAsync()
     {
         products = await CheckoutService.PCGetAllProductAsync();
-        cartItems = await CartService.GetAllByCustomerIdAsync(1);
+        cartItems = await CartService.GetAllByCustomerIdAsync(UserId);
         productFilter = products.ToList();
     }
 
@@ -118,7 +118,7 @@
         var newCartItem = await CartService.CreateAsync(new CartItems()
         {
             ProductId = productId,
-            CustomerId = 1,
+            CustomerId = UserId,
             Quantity = 1
 
         });

@@ -81,15 +81,19 @@
     // [Parameter] public EventCallback OnClose { get; set; }
     private async Task HandlePaid()
     {
-        order.Status = OrderStatus.Paid;
-        if (await ShowConfirm("Bạn chắc chắn muốn xác nhận đơn hàng này?"))
+        if (await ShowConfirm("Bạn chắc chắn muốn xác nhận đơn hàng này?")){
         await OnUpdate.InvokeAsync(order);
+        order.Status = OrderStatus.Paid;
+
+        }
     }
     private async Task HandleCanceled()
     {
-        order.Status = OrderStatus.Canceled;
-        if (await ShowConfirm("Bạn chắc chắn muốn từ chối đơn hàng này?"))
+        if (await ShowConfirm("Bạn chắc chắn muốn từ chối đơn hàng này?")){
         await OnUpdate.InvokeAsync(order);
+        order.Status = OrderStatus.Canceled;
+
+        }
     }
 
     string color

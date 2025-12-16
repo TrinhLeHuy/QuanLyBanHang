@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace QuanLyBanHang.Web.Controllers
 {
-    [AdminAuthorize] // Chỉ admin mới quản lý Product
+    [AdminAuthorize]
     public class ProductController : Controller
     {
         private readonly ApplicationDbContext _context;

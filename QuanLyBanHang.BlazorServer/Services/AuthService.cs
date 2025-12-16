@@ -15,42 +15,38 @@ namespace QuanLyBanHang.BlazorServer.Services
     public class AuthService
     {
         private readonly ApplicationDbContext _context;
-        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public AuthService(IHttpContextAccessor httpContextAccessor, ApplicationDbContext context)
+        public AuthService(ApplicationDbContext context)
         {
             _context = context;
-            _httpContextAccessor = httpContextAccessor;
         }
 
-        public async Task<ClaimsPrincipal?> LoginAsync(LoginViewModel loginModel)
+        public async Task<bool> LoginAsync(LoginViewModel loginModel)
         {
             string hashedPassword = ComputeSha256Hash(loginModel.Password);
             var user = await _context.Employees.FirstOrDefaultAsync(e => e.Email == loginModel.Email && e.PasswordHash == hashedPassword);
 
-            if (user == null) return null;
+            if (user == null)
+            {
+                var customer = await _context.Customers.FirstOrDefaultAsync(e => e.Email == loginModel.Email && e.Password == hashedPassword);
+                if (customer == null)
+                {
+                    return false;
+                }
+                Session.CurrentUserId = customer.CustomerId;
+                Session.CurrentUserRole = "Customer";
+                return true;
+            }
+            Session.CurrentUserId = user.EmployeeId;
+            Session.CurrentUserRole = user.Role;
+            return true;
 
-            var claims = new List<Claim>
-        {
-            new Claim(ClaimTypes.NameIdentifier, user.EmployeeId.ToString()),
-            new Claim(ClaimTypes.Name, user.FullName),
-            new Claim(ClaimTypes.Role, user.Role),
-            // Thêm bất kỳ thông tin cần thiết nào khác
-        };
 
-            var claimsIdentity = new ClaimsIdentity(claims, IdentityConstants.ApplicationScheme);
-            var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
-
-            return claimsPrincipal;
         }
 
         public async Task LogoutAsync()
         {
-            var httpContext = _httpContextAccessor.HttpContext;
-            if (httpContext != null)
-            {
-                await httpContext.SignOutAsync(IdentityConstants.ApplicationScheme);
-            }
+            await Task.CompletedTask;
         }
 
         private string ComputeSha256Hash(string rawData)

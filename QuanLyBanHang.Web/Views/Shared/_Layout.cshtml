@@ -43,9 +43,9 @@
                             @if (employeeRole == "Admin")
                             {
                                 <!-- ========= MENU ADMIN ========= -->
-                                <li class="nav-item">
+                                @* <li class="nav-item">
                                     <a class="nav-link text-dark" asp-controller="Dashboard" asp-action="Index">Dashboard</a>
-                                </li>
+                                </li> *@
 
                                 <li class="nav-item">
                                     <a class="nav-link text-dark" asp-controller="Product" asp-action="Index">Sản phẩm</a>
@@ -99,18 +99,16 @@
                             else
                             {
                                 <!-- ========= MENU NHÂN VIÊN ========= -->
+                          
                                 <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-controller="Home" asp-action="Index">Trang chủ</a>
+                                    <a class="nav-link text-dark" asp-controller="Orders" asp-action="Index">Bán hàng</a>
                                 </li>
-
                                 <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-controller="Products" asp-action="Index">Sản phẩm</a>
+                                    <a class="nav-link text-dark" asp-controller="Customer" asp-action="Index">Khách hàng</a>
                                 </li>
-
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-controller="Order" asp-action="Index">Bán hàng</a>
+                                <li class ="nav-item">
+                                     <a class="nav-link text-dark" asp-controller="POS" asp-action="Index">💰 POS (Thanh toán)</a>
                                 </li>
-
                                 <li class="nav-item">
                                     <a class="nav-link text-dark" asp-controller="Inventory" asp-action="Stock">Xem tồn kho</a>
                                 </li>

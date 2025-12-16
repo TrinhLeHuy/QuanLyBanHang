@@ -1,10 +1,13 @@
-﻿namespace QuanLyBanHang.BlazorServer.Services
+﻿public class UserSessionService
 {
-    public class UserSessionService
-    {
-        public string? EmployeeName { get; set; }
-        public string? EmployeeRole { get; set; }
+    public string? EmployeeName { get; set; }
+    public string? EmployeeRole { get; set; }
 
-        public bool IsLoggedIn => !string.IsNullOrEmpty(EmployeeName);
+    public bool IsLoggedIn => !string.IsNullOrEmpty(EmployeeRole);
+
+    public void Logout()
+    {
+        EmployeeName = null;
+        EmployeeRole = null;
     }
 }

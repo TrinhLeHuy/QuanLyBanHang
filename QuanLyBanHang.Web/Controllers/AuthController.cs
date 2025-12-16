@@ -57,9 +57,9 @@ namespace QuanLyBanHang.Web.Controllers
 
            
             if (employee.Role == "Admin")
-                return RedirectToAction("Index", "Dashboard");
+                return RedirectToAction("Index", "Orders");
             else
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "POS");
         
         }
 

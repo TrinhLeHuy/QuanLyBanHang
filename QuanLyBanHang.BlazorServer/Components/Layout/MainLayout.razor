@@ -1,11 +1,19 @@
 ﻿@inherits LayoutComponentBase
-@inject UserSessionService Session
+@inject NavigationManager Navigation
 
 <link rel="stylesheet" href="/lib/bootstrap/dist/css/bootstrap.min.css" />
-<link rel="stylesheet" href="/css/site.css"/>
+<link rel="stylesheet" href="/css/site.css" />
+
+@{
+    // Danh sách path mà bạn muốn ẩn Nav
+    var hideNavPages = new[] { "/", "/login","/shop" };
+    var path = new Uri(Navigation.Uri).AbsolutePath.ToLower();
+    var showNav = !hideNavPages.Contains(path);
+}
+
 
 <div class="page">
-    @if (Session.IsLoggedIn)
+    @if (showNav)
     {
         <header>
             <NavMenu />
@@ -13,7 +21,7 @@
     }
 
     <div class="container">
-        <div class="content px-4 py-3 pb-3">
+        <div class="content px-4 py-3">
             @Body
         </div>
     </div>

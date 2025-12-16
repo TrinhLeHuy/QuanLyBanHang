@@ -1,6 +1,5 @@
 @page "/login"
 @page "/"
-@attribute [AllowAnonymous]
 @using QuanLyBanHang.BlazorServer.Models
 @using QuanLyBanHang.BlazorServer.Services
 @using Microsoft.AspNetCore.Http
@@ -15,6 +14,8 @@
 @inject IHttpContextAccessor HttpContextAccessor
 @inject AuthenticationStateProvider AuthenticationStateProvider
 @inject IJSRuntime JsRuntime
+
+ 
 
 <div class="d-flex justify-content-center align-items-center" style="min-height: 100vh;">
     <div class="card shadow-lg p-4" style="width: 100%; max-width: 400px;">
@@ -77,39 +78,12 @@
 
         var claimsPrincipal = await AuthService.LoginAsync(loginModel);
         
-        if (claimsPrincipal != null)
+        if (claimsPrincipal)
         {
-            
-            try
-            {
-                await HttpContextAccessor.HttpContext!.SignInAsync(
-                    CookieAuthenticationDefaults.AuthenticationScheme,
-                    claimsPrincipal,
-                    new AuthenticationProperties { IsPersistent = true });
-
-            }
-            catch (InvalidOperationException ex) when (ex.Message.Contains("Headers are read-only"))
-            {
-                Console.WriteLine($"Auth Error (Ignored for redirect): {ex.Message}");
-            }
-            catch (Exception ex)
-            {
-                errorMessage = "Có lỗi xảy ra khi xác thực. Vui lòng thử lại.";
-                Console.WriteLine($"Unexpected Auth Error: {ex.Message}");
-                isProcessing = false;
-                return;
-            }
-
-            var uri = new Uri(Navigation.Uri);
-            var query = QueryHelpers.ParseQuery(uri.Query);
-            query.TryGetValue("returnUrl", out var returnUrl);
-
-            var target = returnUrl.ToString();
-            if (string.IsNullOrEmpty(target) || target.Contains("/login", StringComparison.OrdinalIgnoreCase))
-            {
-                target = "/shop"; 
-            }
-            await JsRuntime.InvokeVoidAsync("eval", $"window.location.href = '{target}'");
+            if(Session.CurrentUserRole != "Customer")
+                Navigation.NavigateTo("/products", true);
+            else
+                Navigation.NavigateTo("/shop", true);
         }
         else
         {
