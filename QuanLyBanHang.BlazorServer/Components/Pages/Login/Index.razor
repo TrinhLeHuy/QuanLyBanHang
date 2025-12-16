@@ -1,54 +1,121 @@
 @page "/login"
+@page "/"
+@attribute [AllowAnonymous]
 @using QuanLyBanHang.BlazorServer.Models
 @using QuanLyBanHang.BlazorServer.Services
-@using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage
+@using Microsoft.AspNetCore.Http
+@using System.Security.Claims
+@using Microsoft.AspNetCore.Authentication
+@using Microsoft.AspNetCore.Authentication.Cookies
+@using Microsoft.AspNetCore.Components.Authorization
 @inject NavigationManager Navigation
 @inject AuthService AuthService
-@inject ProtectedLocalStorage LocalStorage
+@using Microsoft.AspNetCore.WebUtilities;
+@rendermode InteractiveServer
+@inject IHttpContextAccessor HttpContextAccessor
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject IJSRuntime JsRuntime
 
-<EditForm Model="loginModel" OnValidSubmit="HandleLogin">
-    <DataAnnotationsValidator />
-    <ValidationSummary />
+<div class="d-flex justify-content-center align-items-center" style="min-height: 100vh;">
+    <div class="card shadow-lg p-4" style="width: 100%; max-width: 400px;">
+        <div class="card-body">
+            <h3 class="card-title text-center mb-4">Đăng Nhập Hệ Thống</h3>
+            <hr />
 
-    <div class="form-group mb-3">
-        <label>Email</label>
-        <InputText @bind-Value="loginModel.Email" class="form-control" />
-        <ValidationMessage For="@(() => loginModel.Email)" />
+            @* Hiển thị thông báo lỗi nếu đăng nhập thất bại *@
+            @if (!string.IsNullOrEmpty(errorMessage))
+            {
+                <div class="alert alert-danger" role="alert">
+                    @errorMessage
+                </div>
+            }
+
+            <form @onsubmit="HandleLogin">
+                <div class="form-floating mb-3">
+                    <InputText @bind-Value="loginModel.Email" class="form-control" placeholder="name@example.com" id="emailInput" />
+                    <label for="emailInput">Email</label>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <InputText @bind-Value="loginModel.Password" type="password" class="form-control" placeholder="Mật khẩu" id="passwordInput" />
+                    <label for="passwordInput">Mật khẩu</label>
+                </div>
+
+                <button type="submit" class="btn btn-primary w-100 mt-3" disabled="@isProcessing">
+                    @if (isProcessing)
+                    {
+                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true">Đang xử lý...</span>
+                        
+                    }
+                    else
+                    {
+                        <span>Đăng Nhập</span>
+                    }
+                </button>
+            </form>
+
+            <div class="text-center mt-3">
+                <a href="#">Quên mật khẩu?</a>
+            </div>
+        </div>
     </div>
-
-    <div class="form-group mb-3">
-        <label>Password</label>
-        <InputText @bind-Value="loginModel.Password" type="password" class="form-control" />
-        <ValidationMessage For="@(() => loginModel.Password)" />
-    </div>
-
-    @if (!string.IsNullOrEmpty(ErrorMessage))
-    {
-        <div class="alert alert-danger mt-3">@ErrorMessage</div>
-    }
-
-    <button type="submit" class="btn btn-primary w-100 mt-3">Login</button>
-</EditForm>
+</div>
 
 @code {
     private LoginViewModel loginModel = new();
-    private string ErrorMessage;
+    private string errorMessage = string.Empty;
+    private bool isProcessing = false; // Trạng thái xử lý
 
     private async Task HandleLogin()
     {
-        var employee = await AuthService.LoginAsync(loginModel.Email, loginModel.Password);
-        if (employee == null)
+        
+        errorMessage = string.Empty;
+        isProcessing = true;
+        
+        
+        StateHasChanged(); 
+
+        var claimsPrincipal = await AuthService.LoginAsync(loginModel);
+        
+        if (claimsPrincipal != null)
         {
-            ErrorMessage = "Email hoặc mật khẩu không chính xác!";
-            return;
+            
+            try
+            {
+                await HttpContextAccessor.HttpContext!.SignInAsync(
+                    CookieAuthenticationDefaults.AuthenticationScheme,
+                    claimsPrincipal,
+                    new AuthenticationProperties { IsPersistent = true });
+
+            }
+            catch (InvalidOperationException ex) when (ex.Message.Contains("Headers are read-only"))
+            {
+                Console.WriteLine($"Auth Error (Ignored for redirect): {ex.Message}");
+            }
+            catch (Exception ex)
+            {
+                errorMessage = "Có lỗi xảy ra khi xác thực. Vui lòng thử lại.";
+                Console.WriteLine($"Unexpected Auth Error: {ex.Message}");
+                isProcessing = false;
+                return;
+            }
+
+            var uri = new Uri(Navigation.Uri);
+            var query = QueryHelpers.ParseQuery(uri.Query);
+            query.TryGetValue("returnUrl", out var returnUrl);
+
+            var target = returnUrl.ToString();
+            if (string.IsNullOrEmpty(target) || target.Contains("/login", StringComparison.OrdinalIgnoreCase))
+            {
+                target = "/shop"; 
+            }
+            await JsRuntime.InvokeVoidAsync("eval", $"window.location.href = '{target}'");
         }
-
-        await LocalStorage.SetAsync("EmployeeName", employee.FullName);
-        await LocalStorage.SetAsync("EmployeeRole", employee.Role);
-
-        if (employee.Role == "Admin")
-            Navigation.NavigateTo("/dashboard");
         else
-            Navigation.NavigateTo("/home");
+        {
+            errorMessage = "Email hoặc mật khẩu không chính xác.";
+            isProcessing = false;
+            StateHasChanged(); 
+        }
     }
 }
